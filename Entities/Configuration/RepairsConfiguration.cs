@@ -70,7 +70,7 @@ namespace Entities.Configuration
                     Name = "Fixing the problem",
                     ProductId = new Guid("338afc0c-7290-4c15-a5f5-cb091dea6ad3")
                 }
-                );
+            );
         }
     }
 }

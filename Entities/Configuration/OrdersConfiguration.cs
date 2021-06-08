@@ -100,7 +100,7 @@ namespace Entities.Configuration
                     ProductId = new Guid("cae134c8-1faf-4e65-b08d-864367afeb21"),
                     AdvancedInfo = "Advanced info is empty"
                 }
-                );
+            );
         }
     }
 }

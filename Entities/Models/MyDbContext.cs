@@ -26,7 +26,7 @@ namespace Entities.Models
                 .HasOne(r => r.Repair)
                 .WithMany(r => r.RepairsInfo)
                 .OnDelete(DeleteBehavior.Cascade);
-
+            
             modelBuilder.Entity<ReplacedPart>()
                 .HasOne(r => r.Repair)
                 .WithMany(r => r.ReplacedParts)

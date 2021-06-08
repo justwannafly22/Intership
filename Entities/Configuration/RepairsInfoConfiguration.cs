@@ -90,7 +90,7 @@ namespace Entities.Configuration
                     StatusId = new Guid("23ea6ac5-a0a1-4da2-9102-5e7c472aa663"),
                     RepairId = new Guid("29b9d37c-3f23-4507-96b5-8506b291218b")
                 }
-                );
+            );
         }
     }
 }
