@@ -21,8 +21,8 @@ namespace Entities.Models
         
         [Column("product_description")]
         [Required(ErrorMessage = "Product description is a required field.")]
-        public string ContactNumber { get; set; }
-
+        public string Description { get; set; }
+        
         public ICollection<Order> Orders { get; set; }
         public ICollection<ReplacedPart> ReplacedParts { get; set; }
     }

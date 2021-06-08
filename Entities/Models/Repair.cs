@@ -20,5 +20,6 @@ namespace Entities.Models
         public Product Product { get; set; }
 
         public ICollection<ReplacedPart> ReplacedParts { get; set; }
+        public ICollection<RepairInfo> RepairsInfo { get; set; }
     }
 }
