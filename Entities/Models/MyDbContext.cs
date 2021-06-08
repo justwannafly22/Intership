@@ -21,7 +21,7 @@ namespace Entities.Models
             modelBuilder.ApplyConfiguration(new StatusesConfiguration());
             modelBuilder.ApplyConfiguration(new RepairsInfoConfiguration());
             modelBuilder.ApplyConfiguration(new ReplacedPartsConfiguration());
-
+            
             modelBuilder.Entity<RepairInfo>()
                 .HasOne(r => r.Repair)
                 .WithMany(r => r.RepairsInfo)

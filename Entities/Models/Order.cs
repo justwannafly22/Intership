@@ -23,11 +23,13 @@ namespace Entities.Models
 
         [ForeignKey(nameof(Client))]
         [Column("client_id")]
+        [Required(ErrorMessage = "ClientId is a required field.")]
         public Guid ClientId { get; set; }
         public Client Client { get; set; }
 
         [ForeignKey(nameof(Product))]
         [Column("product_id")]
+        [Required(ErrorMessage = "ProductId is a required field.")]
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
         
