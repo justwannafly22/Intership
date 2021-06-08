@@ -35,7 +35,7 @@ namespace Entities.Configuration
                     Id = new Guid("23ea6ac5-a0a1-4da2-9102-5e7c472aa663"),
                     StatusInfo = "Completed"
                 }
-                );
+            );
         }
     }
 }

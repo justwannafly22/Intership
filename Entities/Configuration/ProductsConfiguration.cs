@@ -80,7 +80,7 @@ namespace Entities.Configuration
                     Price = 50,
                     Description = "Active noise cancellation"
                 }
-                );
+            );
         }
     }
 }

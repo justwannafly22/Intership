@@ -100,7 +100,7 @@ namespace Entities.Configuration
                     Email = "pavlik@mail.ru",
                     ContactNumber = "+375 (29) 238-55-39"
                 }
-                );
+            );
         }
     }
 }
