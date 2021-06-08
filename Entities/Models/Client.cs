@@ -21,6 +21,7 @@ namespace Entities.Models
         public string Surname { get; set; }
 
         [Column("age")]
+        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Age is required and it can`t be lower than 0.")]
         public int? Age { get; set; }
 
