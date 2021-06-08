@@ -16,6 +16,7 @@ namespace Entities.Models
         public string Name { get; set; }
 
         [ForeignKey(nameof(Product))]
+        [Column("product_id")]
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
 

@@ -27,12 +27,14 @@ namespace Entities.Models
         [Required(ErrorMessage = "Advanced info is a required field.")]
         [MaxLength(500, ErrorMessage = "Max length for AdvancedInfo is 500 characters.")]
         public string AdvancedInfo { get; set; }
-        
+
         [ForeignKey(nameof(Repair))]
+        [Column("repair_id")]
         public Guid RepairId { get; set; }
         public Repair Repair { get; set; }
         
         [ForeignKey(nameof(Product))]
+        [Column("product_id")]
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
 

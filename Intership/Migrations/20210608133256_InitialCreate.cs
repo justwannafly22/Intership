@@ -58,21 +58,21 @@ namespace Intership.Migrations
                     order_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     count = table.Column<int>(type: "int", nullable: false),
                     advanced_info = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    client_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    product_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Orders_Clients_ClientId",
-                        column: x => x.ClientId,
+                        name: "FK_Orders_Clients_client_id",
+                        column: x => x.client_id,
                         principalTable: "Clients",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Products_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_Orders_Products_product_id",
+                        column: x => x.product_id,
                         principalTable: "Products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -84,14 +84,14 @@ namespace Intership.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    product_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Repairs", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Repairs_Products_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_Repairs_Products_product_id",
+                        column: x => x.product_id,
                         principalTable: "Products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -104,21 +104,21 @@ namespace Intership.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     repair_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     advanced_info = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    StatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RepairId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    status_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    repair_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RepairsInfo", x => x.id);
                     table.ForeignKey(
-                        name: "FK_RepairsInfo_Repairs_RepairId",
-                        column: x => x.RepairId,
+                        name: "FK_RepairsInfo_Repairs_repair_id",
+                        column: x => x.repair_id,
                         principalTable: "Repairs",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RepairsInfo_Statuses_StatusId",
-                        column: x => x.StatusId,
+                        name: "FK_RepairsInfo_Statuses_status_id",
+                        column: x => x.status_id,
                         principalTable: "Statuses",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -133,21 +133,21 @@ namespace Intership.Migrations
                     price = table.Column<double>(type: "float", nullable: false),
                     replaced_part_count = table.Column<int>(type: "int", nullable: false),
                     advanced_info = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    RepairId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    repair_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    product_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReplacedParts", x => x.id);
                     table.ForeignKey(
-                        name: "FK_ReplacedParts_Products_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_ReplacedParts_Products_product_id",
+                        column: x => x.product_id,
                         principalTable: "Products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ReplacedParts_Repairs_RepairId",
-                        column: x => x.RepairId,
+                        name: "FK_ReplacedParts_Repairs_repair_id",
+                        column: x => x.repair_id,
                         principalTable: "Repairs",
                         principalColumn: "id");
                 });
@@ -200,7 +200,7 @@ namespace Intership.Migrations
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "id", "advanced_info", "ClientId", "count", "order_date", "ProductId" },
+                columns: new[] { "id", "advanced_info", "client_id", "count", "order_date", "product_id" },
                 values: new object[,]
                 {
                     { new Guid("b2333228-6d8e-43ae-8009-95e64ea50938"), "Advanced info is empty", new Guid("116f6c7f-cc8c-4526-a3d5-ca799bf440a2"), 1, new DateTime(2021, 6, 8, 14, 35, 0, 0, DateTimeKind.Unspecified), new Guid("80abbca8-554d-4b16-b5de-024705497d4a") },
@@ -217,7 +217,7 @@ namespace Intership.Migrations
 
             migrationBuilder.InsertData(
                 table: "Repairs",
-                columns: new[] { "id", "name", "ProductId" },
+                columns: new[] { "id", "name", "product_id" },
                 values: new object[,]
                 {
                     { new Guid("7478668c-1c7a-47ad-82c8-48c3744a1fdb"), "Fixing the problem", new Guid("95bdd46a-f616-4188-9f1a-3dc2eb1a3a64") },
@@ -234,7 +234,7 @@ namespace Intership.Migrations
 
             migrationBuilder.InsertData(
                 table: "RepairsInfo",
-                columns: new[] { "id", "advanced_info", "repair_date", "RepairId", "StatusId" },
+                columns: new[] { "id", "advanced_info", "repair_date", "repair_id", "status_id" },
                 values: new object[,]
                 {
                     { new Guid("8a0d3ba9-0381-4ecd-8f08-a44b8a012c99"), "Advanced info is empty", new DateTime(2021, 6, 9, 13, 22, 12, 0, DateTimeKind.Unspecified), new Guid("b70d7e3e-35c7-4c24-acda-1472ae0c1d55"), new Guid("38b4bbaa-2da2-4cec-b6c2-a84f9dd3fa32") },
@@ -251,7 +251,7 @@ namespace Intership.Migrations
 
             migrationBuilder.InsertData(
                 table: "ReplacedParts",
-                columns: new[] { "id", "advanced_info", "replaced_part_count", "replaced_part_name", "price", "ProductId", "RepairId" },
+                columns: new[] { "id", "advanced_info", "replaced_part_count", "replaced_part_name", "price", "product_id", "repair_id" },
                 values: new object[,]
                 {
                     { new Guid("e41aeec6-b638-4e13-ab30-92fdc681721c"), "Advanced info is empty", 50, "Replacement part", 1.5, new Guid("cae134c8-1faf-4e65-b08d-864367afeb21"), new Guid("c016f3c3-5189-469a-a580-1798d88882ee") },
@@ -267,39 +267,39 @@ namespace Intership.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ClientId",
+                name: "IX_Orders_client_id",
                 table: "Orders",
-                column: "ClientId");
+                column: "client_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ProductId",
+                name: "IX_Orders_product_id",
                 table: "Orders",
-                column: "ProductId");
+                column: "product_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Repairs_ProductId",
+                name: "IX_Repairs_product_id",
                 table: "Repairs",
-                column: "ProductId");
+                column: "product_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RepairsInfo_RepairId",
+                name: "IX_RepairsInfo_repair_id",
                 table: "RepairsInfo",
-                column: "RepairId");
+                column: "repair_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RepairsInfo_StatusId",
+                name: "IX_RepairsInfo_status_id",
                 table: "RepairsInfo",
-                column: "StatusId");
+                column: "status_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReplacedParts_ProductId",
+                name: "IX_ReplacedParts_product_id",
                 table: "ReplacedParts",
-                column: "ProductId");
+                column: "product_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReplacedParts_RepairId",
+                name: "IX_ReplacedParts_repair_id",
                 table: "ReplacedParts",
-                column: "RepairId");
+                column: "repair_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

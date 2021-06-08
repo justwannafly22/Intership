@@ -20,10 +20,12 @@ namespace Entities.Models
         public string AdvancedInfo { get; set; }
         
         [ForeignKey(nameof(Status))]
+        [Column("status_id")]
         public Guid StatusId { get; set; }
         public Status Status { get; set; }
 
         [ForeignKey(nameof(Repair))]
+        [Column("repair_id")]
         public Guid RepairId { get; set; }
         public Repair Repair { get; set; }
     }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Intership.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210608132819_InitialCreate")]
+    [Migration("20210608133256_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -180,7 +180,8 @@ namespace Intership.Migrations
                         .HasColumnName("advanced_info");
 
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("client_id");
 
                     b.Property<int>("Count")
                         .HasColumnType("int")
@@ -191,7 +192,8 @@ namespace Intership.Migrations
                         .HasColumnName("order_date");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("product_id");
 
                     b.HasKey("Id");
 
@@ -407,7 +409,8 @@ namespace Intership.Migrations
                         .HasColumnName("name");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("product_id");
 
                     b.HasKey("Id");
 
@@ -496,10 +499,12 @@ namespace Intership.Migrations
                         .HasColumnName("repair_date");
 
                     b.Property<Guid>("RepairId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("repair_id");
 
                     b.Property<Guid>("StatusId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("status_id");
 
                     b.HasKey("Id");
 
@@ -620,10 +625,12 @@ namespace Intership.Migrations
                         .HasColumnName("price");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("product_id");
 
                     b.Property<Guid>("RepairId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("repair_id");
 
                     b.HasKey("Id");
 

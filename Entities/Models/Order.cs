@@ -22,10 +22,12 @@ namespace Entities.Models
         public string AdvancedInfo { get; set; }
 
         [ForeignKey(nameof(Client))]
+        [Column("client_id")]
         public Guid ClientId { get; set; }
         public Client Client { get; set; }
 
         [ForeignKey(nameof(Product))]
+        [Column("product_id")]
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
         

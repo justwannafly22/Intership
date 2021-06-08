@@ -178,7 +178,8 @@ namespace Intership.Migrations
                         .HasColumnName("advanced_info");
 
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("client_id");
 
                     b.Property<int>("Count")
                         .HasColumnType("int")
@@ -189,7 +190,8 @@ namespace Intership.Migrations
                         .HasColumnName("order_date");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("product_id");
 
                     b.HasKey("Id");
 
@@ -405,7 +407,8 @@ namespace Intership.Migrations
                         .HasColumnName("name");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("product_id");
 
                     b.HasKey("Id");
 
@@ -494,10 +497,12 @@ namespace Intership.Migrations
                         .HasColumnName("repair_date");
 
                     b.Property<Guid>("RepairId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("repair_id");
 
                     b.Property<Guid>("StatusId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("status_id");
 
                     b.HasKey("Id");
 
@@ -618,10 +623,12 @@ namespace Intership.Migrations
                         .HasColumnName("price");
 
                     b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("product_id");
 
                     b.Property<Guid>("RepairId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("repair_id");
 
                     b.HasKey("Id");
 
