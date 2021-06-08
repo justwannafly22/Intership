@@ -20,7 +20,7 @@ namespace Entities.Configuration
                 },
                 new RepairInfo()
                 {
-                    Id = new Guid("030d6a66-27eb-48bc-b5d1-b232dd136d83"),
+                    Id = new Guid("df698265-4600-4233-a43b-a14cefa0ce84"),
                     Date = new DateTime(2021, 6, 12, 21, 32, 23),
                     AdvancedInfo = "Advanced info is empty",
                     StatusId = new Guid("38b4bbaa-2da2-4cec-b6c2-a84f9dd3fa32"),
@@ -29,7 +29,7 @@ namespace Entities.Configuration
                 new RepairInfo()
                 {
                     Id = new Guid("7103bcce-ef4c-438d-bb7b-54843bc5876f"),
-                    Date = new DateTime(2021, 6, 22, 23, 56, 46),
+                    Date = new DateTime(2021, 6, 22, 21, 56, 46),
                     AdvancedInfo = "Advanced info is empty",
                     StatusId = new Guid("38b4bbaa-2da2-4cec-b6c2-a84f9dd3fa32"),
                     RepairId = new Guid("260e7b03-cf9e-4824-8e3d-174f6fb73e49")
@@ -39,21 +39,21 @@ namespace Entities.Configuration
                     Id = new Guid("ce657751-0172-404c-bee1-86577748fda7"),
                     Date = new DateTime(2021, 6, 17, 12, 40, 40),
                     AdvancedInfo = "Advanced info is empty",
-                    StatusId = new Guid("Waiting to processing by agent"),
+                    StatusId = new Guid("95b2d4fc-5356-42d8-9087-f1e292bd6bfb"),
                     RepairId = new Guid("7478668c-1c7a-47ad-82c8-48c3744a1fdb")
                 },
                 new RepairInfo() //5;
                 {
                     Id = new Guid("06ed2ac8-bd78-49e5-8541-6c05fca1c900"),
-                    Date = new DateTime(2021, 6, 15, 33, 40, 30),
+                    Date = new DateTime(2021, 6, 15, 23, 40, 30),
                     AdvancedInfo = "Advanced info is empty",
-                    StatusId = new Guid("Waiting to processing by agent"),
+                    StatusId = new Guid("95b2d4fc-5356-42d8-9087-f1e292bd6bfb"),
                     RepairId = new Guid("7d844508-2b92-4fe5-afc8-5e05382b9761")
                 },
                 new RepairInfo()
                 {
                     Id = new Guid("a806068a-828d-48c3-b708-08db47019bd0"),
-                    Date = new DateTime(2021, 6, 12, 11, 0, 45),
+                    Date = new DateTime(2021, 6, 12, 11, 1, 45),
                     AdvancedInfo = "Advanced info is empty",
                     StatusId = new Guid("38b4bbaa-2da2-4cec-b6c2-a84f9dd3fa32"),
                     RepairId = new Guid("633693ac-2891-4fa9-99e9-ffbb9d33aa4b")

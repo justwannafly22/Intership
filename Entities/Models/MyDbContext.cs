@@ -7,9 +7,9 @@ namespace Entities.Models
 {
     public class MyDbContext : DbContext
     {
-        public MyDbContext() //for now it will be empty
+        public MyDbContext(DbContextOptions options) :
+            base(options)
         {
-            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,22 +20,17 @@ namespace Entities.Models
             modelBuilder.ApplyConfiguration(new RepairsConfiguration());
             modelBuilder.ApplyConfiguration(new StatusesConfiguration());
             modelBuilder.ApplyConfiguration(new RepairsInfoConfiguration());
-
+            modelBuilder.ApplyConfiguration(new ReplacedPartsConfiguration());
 
             modelBuilder.Entity<RepairInfo>()
                 .HasOne(r => r.Repair)
                 .WithMany(r => r.RepairsInfo)
                 .OnDelete(DeleteBehavior.Cascade);
-            
-            modelBuilder.Entity<RepairInfo>()//if statuses was deleted, repairs info need to leave alive in system;
-                .HasOne(r => r.Status)
-                .WithMany(s => s.RepairsInfo)
-                .OnDelete(DeleteBehavior.SetNull);
 
-            modelBuilder.Entity<Order>()//if we wanna delete the product we shouldn`t delete orders by this product; 50\50
-                .HasOne(o => o.Product)
-                .WithMany(p => p.Orders)
-                .OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<ReplacedPart>()
+                .HasOne(r => r.Repair)
+                .WithMany(r => r.ReplacedParts)
+                .OnDelete(DeleteBehavior.NoAction);
         }
         
         public DbSet<Client> Clients { get; set; }

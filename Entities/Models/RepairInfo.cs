@@ -19,12 +19,12 @@ namespace Entities.Models
         [MaxLength(500, ErrorMessage = "Max length for AdvancedInfo is 500 characters.")]
         public string AdvancedInfo { get; set; }
         
+        [ForeignKey(nameof(Status))]
+        public Guid StatusId { get; set; }
+        public Status Status { get; set; }
+
         [ForeignKey(nameof(Repair))]
         public Guid RepairId { get; set; }
         public Repair Repair { get; set; }
-        
-        [ForeignKey(nameof(Status))]
-        public Guid StatusId { get; set; }
-        public Repair Status { get; set; }
     }
 }

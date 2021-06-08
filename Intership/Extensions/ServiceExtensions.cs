@@ -13,7 +13,7 @@ namespace Intership.Extensions
     {
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<MyDbContext>(opts =>
-                opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+                opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("Intership")));
 
     }
 }

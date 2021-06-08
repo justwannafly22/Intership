@@ -29,6 +29,7 @@ namespace Entities.Models
         [MaxLength(60, ErrorMessage = "Max length for ContactNumber is 60 characters.")]
         public string ContactNumber { get; set; }
 
+        [Column("email")]
         [Required(ErrorMessage = "Email is a required field.")]
         [MaxLength(60, ErrorMessage = "Max length for Email is 60 characters.")]
         public string Email { get; set; }
