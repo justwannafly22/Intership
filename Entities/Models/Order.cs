@@ -1,0 +1,33 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entities.Models
+{
+    public class Order
+    {
+        [Column("id")]
+        public Guid Id { get; set; }
+
+        [Column("order_date")]
+        [Required(ErrorMessage = "Date is a required field.")]
+        public DateTime Date { get; set; }
+
+        [Column("count")]
+        [Range(0, 150, ErrorMessage = "Count is required. It can`t be lower than 0 and bigger than 150.")]
+        public int Count { get; set; }
+        
+        [Column("advanced_info")]
+        [Required(ErrorMessage = "Advanced info is a required field.")]
+        public string AdvancedInfo { get; set; }
+
+        [ForeignKey(nameof(Client))]
+        public Guid ClientId { get; set; }
+        public Client Client { get; set; }
+
+        [ForeignKey(nameof(Product))]
+        public Guid ProductId { get; set; }
+        public Product Product { get; set; }
+        
+    }
+}

@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Entities
+namespace Entities.Models
 {
     public class Client
     {
+        [Column("id")]
         public Guid Id { get; set; }
 
         [Column("client_name")]
@@ -18,12 +20,23 @@ namespace Entities
         [MaxLength(60, ErrorMessage = "Max length for Surname is 60 characters.")]
         public string Surname { get; set; }
 
+        [Column("age")]
         [Range(0, int.MaxValue, ErrorMessage = "Age is required and it can`t be lower than 0.")]
-        public int Age { get; set; }
+        public int? Age { get; set; }
 
         [Column("contact_number")]
-        [Required(ErrorMessage = "ContactNumber is a required field.")]
+        [Required(ErrorMessage = "Contact number is a required field.")]
         [MaxLength(60, ErrorMessage = "Max length for ContactNumber is 60 characters.")]
         public string ContactNumber { get; set; }
+
+        [Required(ErrorMessage = "Email is a required field.")]
+        [MaxLength(60, ErrorMessage = "Max length for Email is 60 characters.")]
+        public string Email { get; set; }
+        
+        [Column("allow_email_notifications")]
+        [Required(ErrorMessage = "ContactNumber is a required field.")]
+        public bool AllowEmailNotification { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }
