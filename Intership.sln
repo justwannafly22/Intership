@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Abstracts", "Inte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.LoggerService", "Intership\Intership.LoggerService.csproj", "{FD4F2AC4-E256-4527-A1B7-2C7B8AD83DE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Data", "Intership\Intership.Data.csproj", "{DC140EEC-E1CD-4A99-98C2-472F2DDB7CA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Data", "Intership\Intership.Data.csproj", "{DC140EEC-E1CD-4A99-98C2-472F2DDB7CA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
