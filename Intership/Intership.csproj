@@ -34,10 +34,12 @@
 
   <ItemGroup>
     <None Remove="Scripts\01_feed.sql" />
+    <None Remove="Scripts\02_feed.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\01_feed.sql" />
+    <EmbeddedResource Include="Scripts\02_feed.sql" />
   </ItemGroup>
 
   <ItemGroup>
