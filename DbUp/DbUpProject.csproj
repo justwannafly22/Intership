@@ -17,4 +17,8 @@
     <PackageReference Include="DbUp" Version="4.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Intership\Intership.csproj" />
+  </ItemGroup>
+
 </Project>

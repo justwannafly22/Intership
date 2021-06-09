@@ -1,22 +1,23 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Linq;
 using System.Reflection;
 
 namespace DbUp
 {
+
     class DpUp
     {
+
+        public static IConfiguration Configuration { get; }
+
         static int Main(string[] args)
         {
-            var connectionString =
-                args.FirstOrDefault()
-                ?? "server=localhost\\SQLEXPRESS;database=Intership;Integrated Security = true;";
-
             //EnsureDatabase.For.SqlDatabase(connectionString); //if i wanna create the database;
 
             var upgrader =
                 DeployChanges.To
-                    .SqlDatabase(connectionString)
+                    .SqlDatabase(Configuration.GetConnectionString("sqlConnection"))
                     .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
                     .LogToConsole()
                     .Build();
