@@ -1,13 +1,10 @@
-﻿using Contracts.Logger;
-using DbUp;
+﻿using DbUp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Intership.Filters
 {
@@ -15,9 +12,9 @@ namespace Intership.Filters
     {
 
         private readonly IConfiguration _configuration;
-        private readonly ILoggerManager _logger;
+        private readonly ILogger<DatabaseInitFilter> _logger;
 
-        public DatabaseInitFilter(IConfiguration configuration, ILoggerManager logger)
+        public DatabaseInitFilter(IConfiguration configuration, ILogger<DatabaseInitFilter> logger)
         {
             _configuration = configuration;
             _logger = logger;
@@ -38,9 +35,9 @@ namespace Intership.Filters
 
             if (!result.Successful)
             {
-                _logger.LogInfo($"Mistakes occured while upgrading database\nError: {result.Error}");
+                _logger.LogInformation($"Mistakes occured while upgrading database\nError: {result.Error}");
             }
-
+            
             return next;
         }
     }

@@ -1,7 +1,9 @@
 ﻿using Contracts.Logger;
 using DbUp;
 using Entities.Models;
+using Intership.Filters;
 using LoggerService;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +22,11 @@ namespace Intership.Extensions
 
         public static void ConfigureLoggerService(this IServiceCollection services) =>
             services.AddScoped<ILoggerManager, LoggerManager>();
+
+        public static void ConfigureFilters(this IServiceCollection services)
+        {
+            services.AddTransient<IStartupFilter, DatabaseInitFilter>();
+        }
 
     }
 }
