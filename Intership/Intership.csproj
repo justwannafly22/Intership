@@ -43,8 +43,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entities\Intership.Models.csproj" />
-    <ProjectReference Include="..\LoggerService\Intership.LoggerService.csproj" />
+    <ProjectReference Include="..\Intership.Models.csproj" />
+    <ProjectReference Include="..\Intership.LoggerService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
