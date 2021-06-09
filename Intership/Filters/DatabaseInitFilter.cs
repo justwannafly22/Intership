@@ -1,32 +1,35 @@
-﻿using Contracts.DbUp;
-using Contracts.Logger;
+﻿using Contracts.Logger;
 using DbUp;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
-namespace DbUp
+namespace Intership.Filters
 {
-
-    class DpUp : IDbUp
+    public class DatabaseInitFilter : IStartupFilter
     {
-        public static IConfiguration Configuration { get; }
 
+        private readonly IConfiguration _configuration;
         private readonly ILoggerManager _logger;
 
-        public DpUp(ILoggerManager logger)
+        public DatabaseInitFilter(IConfiguration configuration, ILoggerManager logger)
         {
+            _configuration = configuration;
             _logger = logger;
         }
 
-        public void Upgrade()
+        public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
             //EnsureDatabase.For.SqlDatabase(connectionString); //if i wanna create the database;
 
             var upgrader =
                 DeployChanges.To
-                    .SqlDatabase(Configuration.GetConnectionString("sqlConnection"))
+                    .SqlDatabase(_configuration.GetConnectionString("sqlConnection"))
                     .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
                     .LogToConsole()
                     .Build();
@@ -37,6 +40,8 @@ namespace DbUp
             {
                 _logger.LogInfo($"Mistakes occured while upgrading database\nError: {result.Error}");
             }
+
+            return next;
         }
     }
 }

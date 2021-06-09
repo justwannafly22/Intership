@@ -33,14 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="DpUpData\Scripts\OneMoreFeed.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="DpUpData\Scripts\OneMoreFeed.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Entities\Intership.Models.csproj" />
     <ProjectReference Include="..\LoggerService\Intership.LoggerService.csproj" />
   </ItemGroup>

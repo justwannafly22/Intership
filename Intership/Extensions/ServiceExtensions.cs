@@ -1,5 +1,4 @@
-﻿using Contracts.DbUp;
-using Contracts.Logger;
+﻿using Contracts.Logger;
 using DbUp;
 using Entities.Models;
 using LoggerService;
@@ -21,9 +20,6 @@ namespace Intership.Extensions
 
         public static void ConfigureLoggerService(this IServiceCollection services) =>
             services.AddScoped<ILoggerManager, LoggerManager>();
-
-        public static void ConfigureDpUp(this IServiceCollection services) =>
-            services.AddScoped<IDbUp, DpUp>();
 
     }
 }
