@@ -12,10 +12,6 @@ namespace DbUp
 
         static int Main(string[] args)
         {
-            var connectionString =
-                args.FirstOrDefault()
-                ?? "server=localhost\\SQLEXPRESS;database=Intership;Integrated Security = true;";
-
             //EnsureDatabase.For.SqlDatabase(connectionString); //if i wanna create the database;
 
             var upgrader =
