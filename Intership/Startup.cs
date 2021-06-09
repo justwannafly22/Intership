@@ -28,6 +28,7 @@ namespace Intership
 
             services.ConfigureSqlContext(Configuration);
             services.ConfigureLoggerService();
+            services.ConfigureFilters();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -49,7 +50,7 @@ namespace Intership
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
