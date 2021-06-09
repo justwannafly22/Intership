@@ -5,13 +5,15 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership", "Intership\Intership.csproj", "{EADF03C7-A945-4355-91C2-F22C5A900F7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Abstracts", "Intership.Abstracts1\Intership.Abstracts.csproj", "{3C64795B-FC12-4822-A4AD-3CA8C1C40138}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Abstracts", "Intership.Abstracts1\Intership.Abstracts.csproj", "{3C64795B-FC12-4822-A4AD-3CA8C1C40138}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Data", "Intership.Data1\Intership.Data.csproj", "{83CFC5EF-C7AB-43EC-B88C-3D7584CAE769}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Data", "Intership.Data1\Intership.Data.csproj", "{83CFC5EF-C7AB-43EC-B88C-3D7584CAE769}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.LoggerService", "Intership.LoggerService1\Intership.LoggerService.csproj", "{7A432842-FF61-425E-9149-C717DC2A5DAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.LoggerService", "Intership.LoggerService1\Intership.LoggerService.csproj", "{7A432842-FF61-425E-9149-C717DC2A5DAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Models", "Intership.Models1\Intership.Models.csproj", "{1DF70BB3-1BFA-4F4C-94CD-5276F072E23A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Models", "Intership.Models1\Intership.Models.csproj", "{1DF70BB3-1BFA-4F4C-94CD-5276F072E23A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Logic", "Intership.Logic\Intership.Logic.csproj", "{852A3E00-217C-41C1-9717-E132484D3016}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1DF70BB3-1BFA-4F4C-94CD-5276F072E23A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DF70BB3-1BFA-4F4C-94CD-5276F072E23A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DF70BB3-1BFA-4F4C-94CD-5276F072E23A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{852A3E00-217C-41C1-9717-E132484D3016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{852A3E00-217C-41C1-9717-E132484D3016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{852A3E00-217C-41C1-9717-E132484D3016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{852A3E00-217C-41C1-9717-E132484D3016}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,8 +8,10 @@ namespace Intership.Abstracts.Repositories
     public interface IClientRepository
     {
         Task<IEnumerable<Client>> GetClientsAsync(bool trackChanges);
-        Task<Client> GetClientAsync(Guid id, bool trachChanges);
+        Task<Client> GetClientAsync(Guid id, bool trackChanges);
         void DeleteClientAsync(Client client);
-        void CreateAsync(Client client);
+        void CreateClientAsync(Client client);
+        void UpdateClientAsync(Client client);
+        Task SaveChangesAsync();
     }
 }

@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="DbUp" Version="4.5.0" />
     <PackageReference Include="dbup-core" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.15" />
@@ -48,6 +49,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Intership.Abstracts1\Intership.Abstracts.csproj" />
+    <ProjectReference Include="..\Intership.Data1\Intership.Data.csproj" />
     <ProjectReference Include="..\Intership.LoggerService1\Intership.LoggerService.csproj" />
     <ProjectReference Include="..\Intership.Models1\Intership.Models.csproj" />
   </ItemGroup>
