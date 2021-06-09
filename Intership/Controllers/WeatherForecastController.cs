@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Contracts.DbUp;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,14 @@ namespace Intership.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IDbUp _dbUp;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IDbUp dbUp)
         {
             _logger = logger;
+            _dbUp = dbUp;
+
+            _dbUp.Upgrade(); //i think it`s so bad implementation cause when we get a new request we must upgrade database; any ideas for resolving this "mistake"?
         }
         
         [HttpGet]
