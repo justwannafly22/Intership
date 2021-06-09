@@ -16,7 +16,7 @@ namespace Repository
         {
             RepositoryContext = repositoryContext;
         }
-
+        
         public void Create(T entity) => RepositoryContext.Set<T>().Add(entity);
 
         public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
