@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -6,6 +7,9 @@ namespace DbUp
 {
     class DpUp
     {
+        
+        public static IConfiguration Configuration { get; }
+
         static int Main(string[] args)
         {
             var connectionString =
@@ -16,7 +20,7 @@ namespace DbUp
 
             var upgrader =
                 DeployChanges.To
-                    .SqlDatabase(connectionString)
+                    .SqlDatabase(Configuration.GetConnectionString("sqlConnection"))
                     .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
                     .LogToConsole()
                     .Build();
