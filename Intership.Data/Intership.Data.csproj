@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Intership.Abstracts.csproj" />
-    <ProjectReference Include="..\Entities\Intership.Models.csproj" />
+    <ProjectReference Include="..\Intership.Abstracts.csproj" />
+    <ProjectReference Include="..\Intership.Models.csproj" />
   </ItemGroup>
 
 </Project>
