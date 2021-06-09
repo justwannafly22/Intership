@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership", "Intership\Intership.csproj", "{EADF03C7-A945-4355-91C2-F22C5A900F7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership", "Intership.csproj", "{EADF03C7-A945-4355-91C2-F22C5A900F7B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Models", "Entities\Intership.Models.csproj", "{D128C9F3-9DF2-4CED-BFAA-5F1575DB3BD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Models", "Intership.Models.csproj", "{D128C9F3-9DF2-4CED-BFAA-5F1575DB3BD7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Abstracts", "Contracts\Intership.Abstracts.csproj", "{B09C4143-D359-4350-966A-A1F761817663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Abstracts", "Intership.Abstracts.csproj", "{B09C4143-D359-4350-966A-A1F761817663}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.LoggerService", "LoggerService\Intership.LoggerService.csproj", "{FD4F2AC4-E256-4527-A1B7-2C7B8AD83DE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.LoggerService", "Intership.LoggerService.csproj", "{FD4F2AC4-E256-4527-A1B7-2C7B8AD83DE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Data", "Repository\Intership.Data.csproj", "{DC140EEC-E1CD-4A99-98C2-472F2DDB7CA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Data", "Intership.Data.csproj", "{DC140EEC-E1CD-4A99-98C2-472F2DDB7CA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
