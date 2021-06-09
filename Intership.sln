@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Cont
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerService\LoggerService.csproj", "{FD4F2AC4-E256-4527-A1B7-2C7B8AD83DE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbUp", "DbUp\DbUp.csproj", "{5FCC05D5-7B5B-4ED3-8C49-C2003918A0FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbUpProject", "DbUp\DbUpProject.csproj", "{5FCC05D5-7B5B-4ED3-8C49-C2003918A0FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
