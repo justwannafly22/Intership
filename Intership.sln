@@ -5,15 +5,13 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership", "Intership\Intership.csproj", "{EADF03C7-A945-4355-91C2-F22C5A900F7B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{D128C9F3-9DF2-4CED-BFAA-5F1575DB3BD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Models", "Entities\Intership.Models.csproj", "{D128C9F3-9DF2-4CED-BFAA-5F1575DB3BD7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{B09C4143-D359-4350-966A-A1F761817663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Abstracts", "Contracts\Intership.Abstracts.csproj", "{B09C4143-D359-4350-966A-A1F761817663}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerService\LoggerService.csproj", "{FD4F2AC4-E256-4527-A1B7-2C7B8AD83DE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.LoggerService", "LoggerService\Intership.LoggerService.csproj", "{FD4F2AC4-E256-4527-A1B7-2C7B8AD83DE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbUpProject", "DbUp\DbUpProject.csproj", "{5FCC05D5-7B5B-4ED3-8C49-C2003918A0FF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{DC140EEC-E1CD-4A99-98C2-472F2DDB7CA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Data", "Repository\Intership.Data.csproj", "{DC140EEC-E1CD-4A99-98C2-472F2DDB7CA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		{FD4F2AC4-E256-4527-A1B7-2C7B8AD83DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD4F2AC4-E256-4527-A1B7-2C7B8AD83DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4F2AC4-E256-4527-A1B7-2C7B8AD83DE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FCC05D5-7B5B-4ED3-8C49-C2003918A0FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FCC05D5-7B5B-4ED3-8C49-C2003918A0FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FCC05D5-7B5B-4ED3-8C49-C2003918A0FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FCC05D5-7B5B-4ED3-8C49-C2003918A0FF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC140EEC-E1CD-4A99-98C2-472F2DDB7CA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC140EEC-E1CD-4A99-98C2-472F2DDB7CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC140EEC-E1CD-4A99-98C2-472F2DDB7CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
