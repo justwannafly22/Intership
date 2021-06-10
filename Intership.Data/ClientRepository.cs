@@ -30,5 +30,10 @@ namespace Intership.Data
         public async Task<IEnumerable<Client>> GetClientsAsync(bool trackChanges) =>
             await FindAll(trackChanges)
             .ToListAsync();
+
+        public async Task UpdateClientAsync(Client client)
+        {
+            await UpdateAsync(client);
+        }
     }
 }
