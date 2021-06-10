@@ -29,6 +29,7 @@ namespace Intership
             services.ConfigureSqlContext(Configuration);
             services.ConfigureLoggerService();
             services.ConfigureData();
+            services.ConfigureLogic();
             services.ConfigureFilters();
 
             // In production, the Angular files will be served from this directory
