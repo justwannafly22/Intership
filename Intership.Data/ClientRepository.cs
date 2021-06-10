@@ -31,9 +31,7 @@ namespace Intership.Data
             await FindAll(trackChanges)
             .ToListAsync();
 
-        public async Task UpdateClientAsync(Client client)
-        {
+        public async Task UpdateClientAsync(Client client) =>
             await UpdateAsync(client);
-        }
     }
 }
