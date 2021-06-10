@@ -73,5 +73,18 @@ namespace Intership.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidateClientExistAttribute))]
+        public async Task<IActionResult> UpdateClient(Guid id, [FromBody] ClientForUpdateDto clientDto)
+        {
+            var client = HttpContext.Items["client"] as Client;
+
+            _mapper.Map(clientDto, client);
+
+            await _clientLogic.UpdateClientAsync(client);
+
+            return NoContent();
+        }
     }
 }
