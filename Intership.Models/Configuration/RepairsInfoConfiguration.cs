@@ -1,9 +1,9 @@
 ﻿using System;
-using Entities.Models;
+using Intership.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Entities.Configuration
+namespace Intership.Models.Configuration
 {
     public class RepairsInfoConfiguration : IEntityTypeConfiguration<RepairInfo>
     {

@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Intership.Models.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Entities.Configuration;
 
-namespace Entities.Models
+namespace Intership.Models.Entities
 {
     public class MyDbContext : DbContext
     {
@@ -24,7 +24,7 @@ namespace Entities.Models
             
             modelBuilder.Entity<RepairInfo>()
                 .HasOne(r => r.Repair)
-                .WithMany(r => r.RepairsInfo)
+                .WithOne(r => r.RepairInfo)
                 .OnDelete(DeleteBehavior.Cascade);
             
             modelBuilder.Entity<ReplacedPart>()

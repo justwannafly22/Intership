@@ -43,12 +43,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entities\Intership.Models.csproj" />
-    <ProjectReference Include="..\LoggerService\Intership.LoggerService.csproj" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Intership.Abstracts\Intership.Abstracts.csproj" />
+    <ProjectReference Include="..\Intership.LoggerService\Intership.LoggerService.csproj" />
+    <ProjectReference Include="..\Intership.Models\Intership.Models.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

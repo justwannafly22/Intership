@@ -1,5 +1,5 @@
-﻿using Contracts.Logger;
-using Entities.ErrorModel;
+﻿using Intership.Abstracts;
+using Intership.Models.ErrorModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
