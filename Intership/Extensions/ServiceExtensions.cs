@@ -1,8 +1,10 @@
 ﻿using DbUp;
 using Intership.Abstracts;
+using Intership.Abstracts.Logic;
 using Intership.Abstracts.Repositories;
 using Intership.Data;
 using Intership.Filters;
+using Intership.Logic;
 using Intership.Models.Entities;
 using LoggerService;
 using Microsoft.AspNetCore.Hosting;
@@ -28,11 +30,18 @@ namespace Intership.Extensions
         public static void ConfigureFilters(this IServiceCollection services)
         {
             services.AddTransient<IStartupFilter, DatabaseInitFilter>();
+            services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ValidateClientExistAttribute>();
         }
 
         public static void ConfigureData(this IServiceCollection services)
         {
             services.AddScoped<IClientRepository, ClientRepository>();
+        }
+        
+        public static void ConfigureLogic(this IServiceCollection services)
+        {
+            services.AddScoped<IClientLogic, ClientLogic>();
         }
 
     }
