@@ -31,6 +31,7 @@ namespace Intership.Extensions
         {
             services.AddTransient<IStartupFilter, DatabaseInitFilter>();
             services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ValidateClientExistAttribute>();
         }
 
         public static void ConfigureData(this IServiceCollection services)

@@ -63,6 +63,15 @@ namespace Intership.Controllers
             return Ok();
         }
 
+        [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidateClientExistAttribute))]
+        public async Task<IActionResult> DeleteClient(Guid id)
+        {
+            var client = HttpContext.Items["client"] as Client;
 
+            await _clientLogic.DeleteClientAsync(client);
+
+            return NoContent();
+        }
     }
 }
