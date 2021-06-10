@@ -24,8 +24,8 @@ namespace Intership.Data
             await RepositoryContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(T entity) 
-        { 
+        public async Task DeleteAsync(T entity)
+        {
             RepositoryContext.Set<T>().Remove(entity);
 
             await RepositoryContext.SaveChangesAsync();
@@ -52,5 +52,5 @@ namespace Intership.Data
             await RepositoryContext.SaveChangesAsync();
         }
 
-        }
     }
+}
