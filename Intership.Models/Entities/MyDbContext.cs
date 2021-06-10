@@ -24,7 +24,7 @@ namespace Intership.Models.Entities
             
             modelBuilder.Entity<RepairInfo>()
                 .HasOne(r => r.Repair)
-                .WithMany(r => r.RepairsInfo)
+                .WithOne(r => r.RepairInfo)
                 .OnDelete(DeleteBehavior.Cascade);
             
             modelBuilder.Entity<ReplacedPart>()

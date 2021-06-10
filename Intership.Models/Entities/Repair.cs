@@ -20,7 +20,12 @@ namespace Intership.Models.Entities
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
 
+        [ForeignKey(nameof(RepairInfo))]
+        [Column("repairinfo_id")]
+        public Guid RepairInfoId { get; set; }
+        public RepairInfo RepairInfo { get; set; }
+
         public ICollection<ReplacedPart> ReplacedParts { get; set; }
-        public ICollection<RepairInfo> RepairsInfo { get; set; }
+        
     }
 }
