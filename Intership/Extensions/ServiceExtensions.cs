@@ -1,5 +1,7 @@
 ﻿using DbUp;
 using Intership.Abstracts;
+using Intership.Abstracts.Repositories;
+using Intership.Data;
 using Intership.Filters;
 using Intership.Models.Entities;
 using LoggerService;
@@ -26,6 +28,11 @@ namespace Intership.Extensions
         public static void ConfigureFilters(this IServiceCollection services)
         {
             services.AddTransient<IStartupFilter, DatabaseInitFilter>();
+        }
+
+        public static void ConfigureData(this IServiceCollection services)
+        {
+            services.AddScoped<IClientRepository, ClientRepository>();
         }
 
     }
