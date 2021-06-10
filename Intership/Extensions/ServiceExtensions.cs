@@ -30,6 +30,7 @@ namespace Intership.Extensions
         public static void ConfigureFilters(this IServiceCollection services)
         {
             services.AddTransient<IStartupFilter, DatabaseInitFilter>();
+            services.AddScoped<ValidationFilterAttribute>();
         }
 
         public static void ConfigureData(this IServiceCollection services)

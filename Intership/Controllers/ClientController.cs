@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Intership.Models.Entities;
 using Intership.DTO.Client;
 using Intership.Abstracts;
+using Intership.Filters;
 
 namespace Intership.Controllers
 {
@@ -49,6 +50,17 @@ namespace Intership.Controllers
             var clientDto = _mapper.Map<ClientDto>(clientEntity);
 
             return Ok(clientDto);
+        }
+
+        [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> CreateClient([FromBody] ClientForCreateDto clientDto)
+        {
+            var clientEntity = _mapper.Map<Client>(clientDto);
+
+            await _clientLogic.CreateClientAsync(clientEntity);
+
+            return Ok();
         }
 
 
