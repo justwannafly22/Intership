@@ -47,9 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Intership.Abstracts1\Intership.Abstracts.csproj" />
-    <ProjectReference Include="..\Intership.LoggerService1\Intership.LoggerService.csproj" />
-    <ProjectReference Include="..\Intership.Models1\Intership.Models.csproj" />
+    <ProjectReference Include="..\Intership.Abstracts\Intership.Abstracts.csproj" />
+    <ProjectReference Include="..\Intership.LoggerService\Intership.LoggerService.csproj" />
+    <ProjectReference Include="..\Intership.Models\Intership.Models.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

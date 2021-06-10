@@ -1,7 +1,7 @@
-﻿using Contracts.Logger;
-using DbUp;
-using Entities.Models;
+﻿using DbUp;
+using Intership.Abstracts;
 using Intership.Filters;
+using Intership.Models.Entities;
 using LoggerService;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

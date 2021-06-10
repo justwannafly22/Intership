@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Intership.Models.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Entities.Configuration;
 
-namespace Entities.Models
+namespace Intership.Models.Entities
 {
     public class MyDbContext : DbContext
     {

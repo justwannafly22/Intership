@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Intership.Abstracts.csproj" />
-    <ProjectReference Include="..\Intership.Models.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Intership.Abstracts\Intership.Abstracts.csproj" />
+    <ProjectReference Include="..\Intership.Models\Intership.Models.csproj" />
   </ItemGroup>
 
 </Project>
