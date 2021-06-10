@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Intership.Data
 {
@@ -16,16 +17,18 @@ namespace Intership.Data
             RepositoryContext = repositoryContext;
         }
 
-        public void Create(T entity)
+        public async Task CreateAsync(T entity)
         {
             RepositoryContext.Set<T>().Add(entity);
-            RepositoryContext.SaveChanges();
+
+            await RepositoryContext.SaveChangesAsync();
         }
 
-        public void Delete(T entity) 
+        public async Task DeleteAsync(T entity) 
         { 
             RepositoryContext.Set<T>().Remove(entity);
-            RepositoryContext.SaveChanges();
+
+            await RepositoryContext.SaveChangesAsync();
         }
 
         public IQueryable<T> FindAll(bool trackChanges) =>
@@ -42,10 +45,11 @@ namespace Intership.Data
             RepositoryContext.Set<T>()
                 .Where(expression);
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             RepositoryContext.Set<T>().Update(entity);
-            RepositoryContext.SaveChanges();
+
+            await RepositoryContext.SaveChangesAsync();
         }
 
         }

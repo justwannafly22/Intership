@@ -10,8 +10,7 @@ namespace Intership.Abstracts.Repositories
     {
         Task<IEnumerable<Client>> GetClientsAsync(bool trackChanges);
         Task<Client> GetClientAsync(Guid id, bool trackChanges);
-        void DeleteClientAsync(Client client);
-        void CreateClientAsync(Client client);
-        Task SaveChangesAsync();
+        Task DeleteClientAsync(Client client);
+        Task CreateClientAsync(Client client);
     }
 }
