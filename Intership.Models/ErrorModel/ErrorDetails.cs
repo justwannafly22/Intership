@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Entities.ErrorModel
+namespace Intership.Models.ErrorModel
 {
     public class ErrorDetails
     {

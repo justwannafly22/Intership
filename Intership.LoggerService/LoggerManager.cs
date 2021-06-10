@@ -1,6 +1,6 @@
 ﻿using System;
-using Contracts.Logger;
 using NLog;
+using Intership.Abstracts;
 
 namespace LoggerService
 {

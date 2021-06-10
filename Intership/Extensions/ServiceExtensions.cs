@@ -1,18 +1,8 @@
-﻿using Contracts.Logger;
-using DbUp;
-using Entities.Models;
-using Intership.Abstracts.Repositories;
-using Intership.Data;
 using Intership.Filters;
-using LoggerService;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Intership.Extensions
 {

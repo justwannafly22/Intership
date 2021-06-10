@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Contracts.Logger
+namespace Intership.Abstracts
 {
     public interface ILoggerManager
     {
