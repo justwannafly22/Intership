@@ -4,8 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
-namespace Repository
+namespace Intership.Data
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
@@ -15,10 +16,20 @@ namespace Repository
         {
             RepositoryContext = repositoryContext;
         }
-        
-        public void Create(T entity) => RepositoryContext.Set<T>().Add(entity);
 
-        public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
+        public async Task CreateAsync(T entity)
+        {
+            RepositoryContext.Set<T>().Add(entity);
+
+            await RepositoryContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(T entity)
+        {
+            RepositoryContext.Set<T>().Remove(entity);
+
+            await RepositoryContext.SaveChangesAsync();
+        }
 
         public IQueryable<T> FindAll(bool trackChanges) =>
             !trackChanges ?
@@ -34,6 +45,12 @@ namespace Repository
             RepositoryContext.Set<T>()
                 .Where(expression);
 
-        public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
+        public async Task UpdateAsync(T entity)
+        {
+            RepositoryContext.Set<T>().Update(entity);
+
+            await RepositoryContext.SaveChangesAsync();
+        }
+
     }
 }
