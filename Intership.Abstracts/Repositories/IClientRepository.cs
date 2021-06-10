@@ -12,5 +12,6 @@ namespace Intership.Abstracts.Repositories
         Task<Client> GetClientAsync(Guid id, bool trackChanges);
         Task DeleteClientAsync(Client client);
         Task CreateClientAsync(Client client);
+        Task UpdateClientAsync(Client client);
     }
 }
