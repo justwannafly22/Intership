@@ -31,6 +31,7 @@ namespace Intership
             services.ConfigureData();
             services.ConfigureLogic();
             services.ConfigureFilters();
+            services.AddAutoMapper(typeof(Startup));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
