@@ -9,7 +9,6 @@ namespace Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-
         protected MyDbContext RepositoryContext;
 
         public RepositoryBase(MyDbContext repositoryContext)
@@ -36,6 +35,5 @@ namespace Repository
                 .Where(expression);
 
         public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
-
     }
 }
