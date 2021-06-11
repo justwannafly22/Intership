@@ -14,7 +14,7 @@ using Unity;
 namespace Intership.Controllers
 {
     [ApiController]
-    [Route("api/clients")]
+    [Route("api/v1/clients")]
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;

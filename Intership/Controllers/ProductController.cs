@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Intership.Controllers
 {
     [ApiController]
-    [Route("api/products")]
+    [Route("api/v1/products")]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
