@@ -11,8 +11,8 @@ namespace Intership.Abstracts.Repositories
     /// </summary>
     public interface IRepairRepository
     {
-        Task<IEnumerable<Repair>> GetRepairsAsync(bool trackChanges);
-        Task<Repair> GetRepairAsync(Guid id, bool trackChanges);
+        Task<IEnumerable<Repair>> GetRepairsAsync(Guid productId, bool trackChanges);
+        Task<Repair> GetRepairAsync(Guid id, Guid productId, bool trackChanges);
         Task CreateRepairAsync(Repair repair);
         Task UpdateRepairAsync(Repair repair);
         Task DeleteRepairAsync(Repair repair);
