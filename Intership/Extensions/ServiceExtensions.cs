@@ -24,12 +24,5 @@ namespace Intership.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<MyDbContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("Intership")));
-
-        public static void ConfigureFilters(this IServiceCollection services)
-        {
-            services.AddTransient<IStartupFilter, DatabaseInitFilter>();
-            services.AddScoped<ValidationFilterAttribute>();
-            services.AddScoped<ValidateClientExistAttribute>();
-        }
     }
 }

@@ -24,7 +24,6 @@ namespace Intership
 
         public IConfiguration Configuration { get; }
 
-
         public void ConfigureContainer(IUnityContainer container)
         {
             container.ConfirureFilters();
@@ -39,7 +38,6 @@ namespace Intership
             services.AddControllersWithViews();
 
             services.ConfigureSqlContext(Configuration);
-            //services.ConfigureFilters();
             services.AddAutoMapper(typeof(Startup));
 
             // In production, the Angular files will be served from this directory
