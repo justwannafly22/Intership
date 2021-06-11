@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Intership.DTO.Client;
+using Intership.DTO.Product;
 using Intership.Models.Entities;
 
 namespace Intership
@@ -22,6 +23,13 @@ namespace Intership
             CreateMap<ClientForUpdateDto, Client>().ReverseMap();
             #endregion
 
+            #region Product
+            CreateMap<Product, ProductDto>();
+
+            CreateMap<ProductForCreateDto, Product>();
+
+            CreateMap<ProductForUpdateDto, Product>().ReverseMap();
+            #endregion
         }
     }
 }
