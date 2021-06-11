@@ -1,4 +1,6 @@
+using Intership.Abstracts.Logic;
 using Intership.Extensions;
+using Intership.Logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
 using System.IO;
+using Unity;
 
 namespace Intership
 {
@@ -18,8 +21,17 @@ namespace Intership
             LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
-        
+
         public IConfiguration Configuration { get; }
+
+
+        public void ConfigureContainer(IUnityContainer container)
+        {
+            container.ConfirureFilters();
+            container.ConfigureLoggerManager();
+            container.ConfigureData();
+            container.ConfigureLogic();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -27,10 +39,7 @@ namespace Intership
             services.AddControllersWithViews();
 
             services.ConfigureSqlContext(Configuration);
-            services.ConfigureLoggerService();
-            services.ConfigureData();
-            services.ConfigureLogic();
-            services.ConfigureFilters();
+            //services.ConfigureFilters();
             services.AddAutoMapper(typeof(Startup));
 
             // In production, the Angular files will be served from this directory

@@ -16,7 +16,7 @@ namespace Intership
             CreateMap<Client, ClientDto>()
                 .ForMember(c => c.FullName,
                     opt => opt.MapFrom(x => string.Join(' ', x.Name, x.Surname)));
-
+            
             CreateMap<ClientForCreateDto, Client>();
 
             CreateMap<ClientForUpdateDto, Client>().ReverseMap();
