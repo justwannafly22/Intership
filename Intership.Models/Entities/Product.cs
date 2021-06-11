@@ -25,5 +25,6 @@ namespace Intership.Models.Entities
         
         public ICollection<Order> Orders { get; set; }
         public ICollection<ReplacedPart> ReplacedParts { get; set; }
+        public ICollection<Repair> Repairs { get; set; } 
     }
 }
