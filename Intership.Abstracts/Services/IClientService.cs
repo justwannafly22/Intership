@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Intership.Abstracts.Logic
+namespace Intership.Abstracts.Services
 {
-    public interface IClientLogic
+    public interface IClientService
     {
         Task<IEnumerable<Client>> GetClientsAsync();
         Task<Client> GetClientAsync(Guid id);

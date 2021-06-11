@@ -11,10 +11,10 @@ namespace Intership.Filters
 {
     public class ValidateClientExistAttribute : IAsyncActionFilter
     {
-        private readonly IClientLogic _clientLogic;
+        private readonly IClientService _clientLogic;
         private readonly ILoggerManager _logger;
 
-        public ValidateClientExistAttribute(IClientLogic clientLogic, ILoggerManager logger)
+        public ValidateClientExistAttribute(IClientService clientLogic, ILoggerManager logger)
         {
             _clientLogic = clientLogic;
             _logger = logger;

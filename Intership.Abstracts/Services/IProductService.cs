@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Intership.Abstracts.Logic
+namespace Intership.Abstracts.Services
 {
-    public interface IProductLogic
+    public interface IProductService
     {
         Task<IEnumerable<Product>> GetProductsAsync();
         Task<Product> GetProductAsync(Guid id);

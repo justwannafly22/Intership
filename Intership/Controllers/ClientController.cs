@@ -1,4 +1,4 @@
-﻿using Intership.Abstracts.Logic;
+﻿using Intership.Abstracts.Services;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using System;
@@ -17,13 +17,13 @@ namespace Intership.Controllers
     [Route("api/clients")]
     public class ClientController : Controller
     {
-        private readonly IClientLogic _clientLogic;
+        private readonly IClientService _clientService;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public ClientController(IClientLogic clientLogic, ILoggerManager logger, IMapper mapper)
+        public ClientController(IClientService clientService, ILoggerManager logger, IMapper mapper)
         {
-            _clientLogic = clientLogic;
+            _clientService = clientService;
             _logger = logger;
             _mapper = mapper;
         }
@@ -31,7 +31,7 @@ namespace Intership.Controllers
         [HttpGet]
         public async Task<IActionResult> GetClients()
         {
-            var clientsEntity = await _clientLogic.GetClientsAsync();
+            var clientsEntity = await _clientService.GetClientsAsync();
 
             var clientsDto = _mapper.Map<IEnumerable<ClientDto>>(clientsEntity);
 
@@ -41,7 +41,7 @@ namespace Intership.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClient(Guid id)
         {
-            var clientEntity = await _clientLogic.GetClientAsync(id);
+            var clientEntity = await _clientService.GetClientAsync(id);
             if (clientEntity == null) 
             {
                 _logger.LogInfo($"Client with id: {id} doesn`t exist in the database.");
@@ -59,7 +59,7 @@ namespace Intership.Controllers
         {
             var clientEntity = _mapper.Map<Client>(clientDto);
 
-            await _clientLogic.CreateClientAsync(clientEntity);
+            await _clientService.CreateClientAsync(clientEntity);
 
             return StatusCode(201);
         }
@@ -70,7 +70,7 @@ namespace Intership.Controllers
         {
             var client = HttpContext.Items["client"] as Client;
 
-            await _clientLogic.DeleteClientAsync(client);
+            await _clientService.DeleteClientAsync(client);
 
             return NoContent();
         }
@@ -83,7 +83,7 @@ namespace Intership.Controllers
 
             _mapper.Map(clientDto, client);
 
-            await _clientLogic.UpdateClientAsync(client);
+            await _clientService.UpdateClientAsync(client);
 
             return NoContent();
         }

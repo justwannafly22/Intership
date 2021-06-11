@@ -37,8 +37,8 @@ namespace Intership.Extensions
 
         public static void ConfigureLogic(this IUnityContainer container)
         {
-            container.RegisterType<IClientLogic, ClientLogic>();
-            container.RegisterType<IProductLogic, ProductLogic>();
+            container.RegisterType<IClientService, ClientService>();
+            container.RegisterType<IProductService, ProductService>();
         }
     }
 }

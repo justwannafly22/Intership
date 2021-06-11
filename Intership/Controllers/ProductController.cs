@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Intership.Abstracts;
-using Intership.Abstracts.Logic;
+using Intership.Abstracts.Services;
 using Intership.DTO.Product;
 using Intership.Filters;
 using Intership.Models.Entities;
@@ -16,13 +16,13 @@ namespace Intership.Controllers
     [Route("api/products")]
     public class ProductController : Controller
     {
-        private readonly IProductLogic _productLogic;
+        private readonly IProductService _productService;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
-        public ProductController(IProductLogic productLogic, ILoggerManager logger, IMapper mapper)
+        public ProductController(IProductService productService, ILoggerManager logger, IMapper mapper)
         {
-            _productLogic = productLogic;
+            _productService = productService;
             _logger = logger;
             _mapper = mapper;
         }
@@ -30,7 +30,7 @@ namespace Intership.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
-            var productsEntity = await _productLogic.GetProductsAsync();
+            var productsEntity = await _productService.GetProductsAsync();
 
             var productsDto = _mapper.Map<IEnumerable<ProductDto>>(productsEntity);
 
@@ -40,7 +40,7 @@ namespace Intership.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(Guid id)
         {
-            var productEntity = await _productLogic.GetProductAsync(id);
+            var productEntity = await _productService.GetProductAsync(id);
             if (productEntity == null)
             {
                 _logger.LogInfo($"Product with id: {id} doesn`t exist in the database.");
@@ -58,7 +58,7 @@ namespace Intership.Controllers
         {
             var productEntity = _mapper.Map<Product>(productDto);
 
-            await _productLogic.CreateProductAsync(productEntity);
+            await _productService.CreateProductAsync(productEntity);
 
             return StatusCode(201);
         }
@@ -69,7 +69,7 @@ namespace Intership.Controllers
         {
             var productEntity = HttpContext.Items["product"] as Product;
 
-            await _productLogic.DeleteProductAsync(productEntity);
+            await _productService.DeleteProductAsync(productEntity);
 
             return NoContent();
         }
@@ -82,7 +82,7 @@ namespace Intership.Controllers
 
             _mapper.Map(productDto, productEntity);
 
-            await _productLogic.UpdateProductAsync(productEntity);
+            await _productService.UpdateProductAsync(productEntity);
 
             return NoContent();
         }

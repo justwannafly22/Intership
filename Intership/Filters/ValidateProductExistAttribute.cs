@@ -11,10 +11,10 @@ namespace Intership.Filters
 {
     public class ValidateProductExistAttribute : IAsyncActionFilter
     {
-        private readonly IProductLogic _productLogic;
+        private readonly IProductService _productLogic;
         private readonly ILoggerManager _logger;
 
-        public ValidateProductExistAttribute(IProductLogic productLogic, ILoggerManager logger)
+        public ValidateProductExistAttribute(IProductService productLogic, ILoggerManager logger)
         {
             _productLogic = productLogic;
             _logger = logger;

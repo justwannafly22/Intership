@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Intership.Logic
 {
-    public class ProductLogic : IProductLogic
+    public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
 
-        public ProductLogic(IProductRepository productRepository)
+        public ProductService(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
