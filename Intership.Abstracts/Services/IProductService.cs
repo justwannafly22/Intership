@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Intership.Abstracts.Services
 {
+    /// <summary>
+    /// Product logic 
+    /// </summary>
     public interface IProductService
     {
         Task<IEnumerable<Product>> GetProductsAsync();

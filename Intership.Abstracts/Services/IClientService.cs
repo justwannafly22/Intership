@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Intership.Abstracts.Services
 {
+    /// <summary>
+    /// Clieng logic 
+    /// </summary>
     public interface IClientService
     {
         Task<IEnumerable<Client>> GetClientsAsync();
