@@ -8,6 +8,10 @@ namespace Intership.Data
 {
     public class RepairInfoRepository : RepositoryBase<RepairInfo>, IRepairInfoRepository
     {
+        /// <summary>
+        /// RepairInfo repository implementation
+        /// </summary>
+        /// <param name="context"></param>
         public RepairInfoRepository(MyDbContext context)
             : base(context)
         {
