@@ -9,6 +9,7 @@ using Intership.Models.Entities;
 using Intership.DTO.Client;
 using Intership.Abstracts;
 using Intership.Filters;
+using Unity;
 
 namespace Intership.Controllers
 {
