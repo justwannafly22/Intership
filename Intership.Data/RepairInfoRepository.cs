@@ -17,8 +17,12 @@ namespace Intership.Data
         {
         }
 
-        public async Task CreateRepairInfo(RepairInfo repairInfo) =>
+        public async Task CreateRepairInfo(Guid repairId, RepairInfo repairInfo)
+        {
+            repairInfo.RepairId = repairId;
+
             await CreateAsync(repairInfo);
+        }
 
         public async Task DeleteRepairInfo(RepairInfo repairInfo) =>
             await DeleteAsync(repairInfo);
