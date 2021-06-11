@@ -33,6 +33,8 @@ namespace Intership.Extensions
         {
             container.RegisterType<IClientRepository, ClientRepository>();
             container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<IRepairRepository, RepairRepository>();
+            container.RegisterType<IRepairInfoRepository, RepairInfoRepository>();
         }
 
         public static void ConfigureLogic(this IUnityContainer container)
