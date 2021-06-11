@@ -31,11 +31,13 @@ namespace Intership.Extensions
         public static void ConfigureData(this IUnityContainer container)
         {
             container.RegisterType<IClientRepository, ClientRepository>();
+            container.RegisterType<IProductRepository, ProductRepository>();
         }
 
         public static void ConfigureLogic(this IUnityContainer container)
         {
             container.RegisterType<IClientLogic, ClientLogic>();
+            container.RegisterType<IProductLogic, ProductLogic>();
         }
     }
 }
