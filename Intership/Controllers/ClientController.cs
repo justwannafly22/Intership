@@ -61,7 +61,7 @@ namespace Intership.Controllers
 
             await _clientLogic.CreateClientAsync(clientEntity);
 
-            return Ok();
+            return StatusCode(201);
         }
 
         [HttpDelete("{id}")]
