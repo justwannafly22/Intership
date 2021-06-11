@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity;
 
 namespace Intership.Extensions
 {
@@ -23,26 +24,5 @@ namespace Intership.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<MyDbContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("Intership")));
-
-        public static void ConfigureLoggerService(this IServiceCollection services) =>
-            services.AddScoped<ILoggerManager, LoggerManager>();
-
-        public static void ConfigureFilters(this IServiceCollection services)
-        {
-            services.AddTransient<IStartupFilter, DatabaseInitFilter>();
-            services.AddScoped<ValidationFilterAttribute>();
-            services.AddScoped<ValidateClientExistAttribute>();
-        }
-
-        public static void ConfigureData(this IServiceCollection services)
-        {
-            services.AddScoped<IClientRepository, ClientRepository>();
-        }
-        
-        public static void ConfigureLogic(this IServiceCollection services)
-        {
-            services.AddScoped<IClientLogic, ClientLogic>();
-        }
-
     }
 }

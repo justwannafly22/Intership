@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="DbUp" Version="4.5.0" />
     <PackageReference Include="dbup-core" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.15" />
@@ -24,6 +25,7 @@
     </PackageReference>
     <PackageReference Include="NLog" Version="4.7.10" />
     <PackageReference Include="Unity" Version="5.11.10" />
+    <PackageReference Include="Unity.Microsoft.DependencyInjection" Version="5.11.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +48,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Intership.Abstracts\Intership.Abstracts.csproj" />
     <ProjectReference Include="..\Intership.Data\Intership.Data.csproj" />
+    <ProjectReference Include="..\Intership.DTO\Intership.DTO.csproj" />
     <ProjectReference Include="..\Intership.LoggerService\Intership.LoggerService.csproj" />
     <ProjectReference Include="..\Intership.Logic\Intership.Logic.csproj" />
     <ProjectReference Include="..\Intership.Models\Intership.Models.csproj" />

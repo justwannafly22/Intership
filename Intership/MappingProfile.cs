@@ -13,11 +13,13 @@ namespace Intership
         public MappingProfile()
         {
             #region Client
-            CreateMap<Client, ClientDto>().ReverseMap();
-
+            CreateMap<Client, ClientDto>()
+                .ForMember(c => c.FullName,
+                    opt => opt.MapFrom(x => string.Join(' ', x.Name, x.Surname)));
+            
             CreateMap<ClientForCreateDto, Client>();
 
-            CreateMap<ClientForManipulationDto, Client>().ReverseMap();
+            CreateMap<ClientForUpdateDto, Client>().ReverseMap();
             #endregion
 
         }
