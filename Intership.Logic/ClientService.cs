@@ -1,4 +1,4 @@
-﻿using Intership.Abstracts.Logic;
+﻿using Intership.Abstracts.Services;
 using Intership.Abstracts.Repositories;
 using Intership.Models.Entities;
 using System;
@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Intership.Logic
 {
-    public class ClientLogic : IClientLogic
+    public class ClientService : IClientService
     {
         private readonly IClientRepository _clientRepository;
 
-        public ClientLogic(IClientRepository clientRepository)
+        public ClientService(IClientRepository clientRepository)
         {
             _clientRepository = clientRepository;
         }

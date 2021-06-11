@@ -1,5 +1,5 @@
 ﻿using Intership.Abstracts;
-using Intership.Abstracts.Logic;
+using Intership.Abstracts.Services;
 using Intership.Abstracts.Repositories;
 using Intership.Data;
 using Intership.Filters;
@@ -21,6 +21,7 @@ namespace Intership.Extensions
             container.RegisterType<IStartupFilter, DatabaseInitFilter>();
             container.RegisterType<ValidationFilterAttribute>();
             container.RegisterType<ValidateClientExistAttribute>();
+            container.RegisterType<ValidateProductExistAttribute>();
         }
 
         public static void ConfigureLoggerManager(this IUnityContainer container)
@@ -31,11 +32,13 @@ namespace Intership.Extensions
         public static void ConfigureData(this IUnityContainer container)
         {
             container.RegisterType<IClientRepository, ClientRepository>();
+            container.RegisterType<IProductRepository, ProductRepository>();
         }
 
         public static void ConfigureLogic(this IUnityContainer container)
         {
-            container.RegisterType<IClientLogic, ClientLogic>();
+            container.RegisterType<IClientService, ClientService>();
+            container.RegisterType<IProductService, ProductService>();
         }
     }
 }

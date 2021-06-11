@@ -1,5 +1,5 @@
 ﻿using Intership.Abstracts;
-using Intership.Abstracts.Logic;
+using Intership.Abstracts.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
@@ -11,19 +11,19 @@ namespace Intership.Filters
 {
     public class ValidateClientExistAttribute : IAsyncActionFilter
     {
-        private readonly IClientLogic _clientLogic;
+        private readonly IClientService _clientService;
         private readonly ILoggerManager _logger;
 
-        public ValidateClientExistAttribute(IClientLogic clientLogic, ILoggerManager logger)
+        public ValidateClientExistAttribute(IClientService clientService, ILoggerManager logger)
         {
-            _clientLogic = clientLogic;
+            _clientService = clientService;
             _logger = logger;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var clientId = (Guid)context.ActionArguments["id"];
-            var client = await _clientLogic.GetClientAsync(clientId);
+            var clientId = (Guid)context.ActionArguments["clientId"];
+            var client = await _clientService.GetClientAsync(clientId);
 
             if(client == null)
             {
