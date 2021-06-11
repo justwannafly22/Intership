@@ -1,4 +1,4 @@
-﻿using Intership.Abstracts.Logic;
+﻿using Intership.Abstracts.Services;
 using Intership.Abstracts.Repositories;
 using Intership.Models.Entities;
 using System;

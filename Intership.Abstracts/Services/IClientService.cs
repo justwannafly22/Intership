@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Intership.Abstracts.Services
 {
     /// <summary>
-    /// Clieng logic 
+    /// Clieng logic behavior
     /// </summary>
     public interface IClientService
     {

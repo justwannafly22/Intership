@@ -1,5 +1,5 @@
 ﻿using Intership.Abstracts;
-using Intership.Abstracts.Logic;
+using Intership.Abstracts.Services;
 using Intership.Abstracts.Repositories;
 using Intership.Data;
 using Intership.Filters;

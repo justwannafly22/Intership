@@ -37,18 +37,18 @@ namespace Intership.Controllers
             return Ok(productsDto);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProduct(Guid id)
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetProduct(Guid productId)
         {
-            var productEntity = await _productService.GetProductAsync(id);
+            var productEntity = await _productService.GetProductAsync(productId);
             if (productEntity == null)
             {
-                _logger.LogInfo($"Product with id: {id} doesn`t exist in the database.");
+                _logger.LogInfo($"Product with id: {productId} doesn`t exist in the database.");
                 return NotFound();
             }
 
             var productDto = _mapper.Map<ProductDto>(productEntity);
-
+            
             return Ok(productDto);
         }
 
@@ -60,23 +60,23 @@ namespace Intership.Controllers
 
             await _productService.CreateProductAsync(productEntity);
 
-            return StatusCode(201);
+            return Created($"api/v1/{productEntity.Id}", new { productId = productEntity.Id });
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{productId}")]
         [ServiceFilter(typeof(ValidateProductExistAttribute))]
-        public async Task<IActionResult> DeleteProduct(Guid id)
+        public async Task<IActionResult> DeleteProduct(Guid productId)
         {
             var productEntity = HttpContext.Items["product"] as Product;
 
             await _productService.DeleteProductAsync(productEntity);
-
+            
             return NoContent();
         }
-
-        [HttpPut("{id}")]
+        
+        [HttpPut("{productId}")]
         [ServiceFilter(typeof(ValidateProductExistAttribute))]
-        public async Task<IActionResult> UpdateProduct(Guid id, [FromBody] ProductForUpdateDto productDto)
+        public async Task<IActionResult> UpdateProduct(Guid productId, [FromBody] ProductForUpdateDto productDto)
         {
             var productEntity = HttpContext.Items["product"] as Product;
 

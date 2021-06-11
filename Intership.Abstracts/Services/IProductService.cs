@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Intership.Abstracts.Services
 {
     /// <summary>
-    /// Product logic 
+    /// Product logic behavior
     /// </summary>
     public interface IProductService
     {

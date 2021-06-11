@@ -38,13 +38,13 @@ namespace Intership.Controllers
             return Ok(clientsDto);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetClient(Guid id)
+        [HttpGet("{clientId}")]
+        public async Task<IActionResult> GetClient(Guid clientId)
         {
-            var clientEntity = await _clientService.GetClientAsync(id);
+            var clientEntity = await _clientService.GetClientAsync(clientId);
             if (clientEntity == null) 
             {
-                _logger.LogInfo($"Client with id: {id} doesn`t exist in the database.");
+                _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
                 return NotFound();
             }
 
@@ -61,12 +61,12 @@ namespace Intership.Controllers
 
             await _clientService.CreateClientAsync(clientEntity);
 
-            return StatusCode(201);
+            return Created($"api/v1/{clientEntity.Id}", new { clientId = clientEntity.Id });
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{clientId}")]
         [ServiceFilter(typeof(ValidateClientExistAttribute))]
-        public async Task<IActionResult> DeleteClient(Guid id)
+        public async Task<IActionResult> DeleteClient(Guid clientId)
         {
             var client = HttpContext.Items["client"] as Client;
 
@@ -75,9 +75,9 @@ namespace Intership.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{clientId}")]
         [ServiceFilter(typeof(ValidateClientExistAttribute))]
-        public async Task<IActionResult> UpdateClient(Guid id, [FromBody] ClientForUpdateDto clientDto)
+        public async Task<IActionResult> UpdateClient(Guid clientId, [FromBody] ClientForUpdateDto clientDto)
         {
             var client = HttpContext.Items["client"] as Client;
 

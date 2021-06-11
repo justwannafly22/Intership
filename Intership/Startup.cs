@@ -1,4 +1,4 @@
-using Intership.Abstracts.Logic;
+using Intership.Abstracts.Services;
 using Intership.Extensions;
 using Intership.Logic;
 using Microsoft.AspNetCore.Builder;

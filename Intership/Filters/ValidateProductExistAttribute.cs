@@ -1,6 +1,6 @@
 ﻿using System;
 using Intership.Abstracts;
-using Intership.Abstracts.Logic;
+using Intership.Abstracts.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,19 +11,19 @@ namespace Intership.Filters
 {
     public class ValidateProductExistAttribute : IAsyncActionFilter
     {
-        private readonly IProductService _productLogic;
+        private readonly IProductService _productService;
         private readonly ILoggerManager _logger;
 
-        public ValidateProductExistAttribute(IProductService productLogic, ILoggerManager logger)
+        public ValidateProductExistAttribute(IProductService productService, ILoggerManager logger)
         {
-            _productLogic = productLogic;
+            _productService = productService;
             _logger = logger;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var productId = (Guid)context.ActionArguments["id"];
-            var product = await _productLogic.GetProductAsync(productId);
+            var productId = (Guid)context.ActionArguments["productId"];
+            var product = await _productService.GetProductAsync(productId);
 
             if (product == null)
             {
