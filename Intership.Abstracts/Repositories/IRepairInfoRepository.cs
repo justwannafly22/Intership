@@ -12,8 +12,8 @@ namespace Intership.Abstracts.Repositories
     public interface IRepairInfoRepository
     {
         Task<RepairInfo> GetRepairInfoAsync(Guid id, bool trackChanges);
-        Task CreateRepairInfo(Guid repairId, RepairInfo repairInfo);
-        Task UpdateRepairInfo(RepairInfo repairInfo);
-        Task DeleteRepairInfo(RepairInfo repairInfo);
+        Task CreateRepairInfoAsync(RepairInfo repairInfo);
+        Task UpdateRepairInfoAsync(RepairInfo repairInfo);
+        Task DeleteRepairInfoAsync(RepairInfo repairInfo);
     }
 }

@@ -17,21 +17,19 @@ namespace Intership.Data
         {
         }
 
-        public async Task CreateRepairInfo(Guid repairId, RepairInfo repairInfo)
+        public async Task CreateRepairInfoAsync(RepairInfo repairInfo)
         {
-            repairInfo.RepairId = repairId;
-
             await CreateAsync(repairInfo);
         }
 
-        public async Task DeleteRepairInfo(RepairInfo repairInfo) =>
+        public async Task DeleteRepairInfoAsync(RepairInfo repairInfo) =>
             await DeleteAsync(repairInfo);
 
         public async Task<RepairInfo> GetRepairInfoAsync(Guid id, bool trackChanges) =>
             await FindByCondition(r => r.Id.Equals(id), trackChanges)
             .SingleOrDefaultAsync();
-
-        public async Task UpdateRepairInfo(RepairInfo repairInfo) =>
+        
+        public async Task UpdateRepairInfoAsync(RepairInfo repairInfo) =>
             await UpdateAsync(repairInfo);
     }
 }
