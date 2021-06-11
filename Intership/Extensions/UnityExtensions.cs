@@ -21,6 +21,7 @@ namespace Intership.Extensions
             container.RegisterType<IStartupFilter, DatabaseInitFilter>();
             container.RegisterType<ValidationFilterAttribute>();
             container.RegisterType<ValidateClientExistAttribute>();
+            container.RegisterType<ValidateProductExistAttribute>();
         }
 
         public static void ConfigureLoggerManager(this IUnityContainer container)
