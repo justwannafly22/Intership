@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Intership.Abstracts.Services
 {
+    /// <summary>
+    /// RepairInfo logic behavior
+    /// </summary>
     public interface IRepairInfoService
     {
         Task<RepairInfo> GetRepairInfoAsync(Guid repairId);

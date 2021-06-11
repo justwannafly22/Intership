@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Intership.Logic
 {
+    /// <summary>
+    /// Repair logic implementation
+    /// </summary>
     public class RepairService : IRepairService
     {
         private readonly IRepairRepository _repairRepository;
