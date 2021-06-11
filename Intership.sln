@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Logic", "Intershi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Models", "Intership.Models\Intership.Models.csproj", "{3A6A2DB0-D613-4D09-A390-EBE451D11F5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.DTO", "Intership.DTO\Intership.DTO.csproj", "{6FB98C92-D108-431B-A113-DC23E646350F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.DTO", "Intership.DTO\Intership.DTO.csproj", "{6FB98C92-D108-431B-A113-DC23E646350F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
