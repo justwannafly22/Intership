@@ -1,2 +1,3 @@
 UPDATE Repairs
-SET repairinfo_id = (SELECT id FROM RepairsInfo);
+SET repairinfo_id = RepairsInfo.id
+FROM RepairsInfo
