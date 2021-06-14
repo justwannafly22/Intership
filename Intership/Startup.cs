@@ -1,3 +1,4 @@
+using Intership.Abstracts;
 using Intership.Abstracts.Services;
 using Intership.Extensions;
 using Intership.Logic;
@@ -44,7 +45,7 @@ namespace Intership
                 config.ReturnHttpNotAcceptable = true;
             })
                 //.AddXmlDataContractSerializerFormatters()
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -54,7 +55,7 @@ namespace Intership
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
@@ -66,9 +67,11 @@ namespace Intership
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
+            app.ConfigureExceptionHandler(logger);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
