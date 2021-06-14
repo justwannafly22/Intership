@@ -6,6 +6,7 @@ using AutoMapper;
 using Intership.DTO.Client;
 using Intership.DTO.Product;
 using Intership.DTO.Repair;
+using Intership.DTO.RepairInfo;
 using Intership.Models.Entities;
 
 namespace Intership
@@ -46,6 +47,19 @@ namespace Intership
                 .ForMember(r => r.StatusInfo,
                     opt => opt.MapFrom(x => x.StatusInfo));
 
+            CreateMap<RepairForCreateDto, Repair>();
+
+            CreateMap<RepairForUpdateDto, Repair>();
+            #endregion
+
+            #region RepairInfo
+            CreateMap<RepairInfo, RepairInfoDto>();
+
+            CreateMap<RepairInfo, RepairDto>();
+
+            CreateMap<RepairForCreateDto, RepairInfo>();
+
+            CreateMap<RepairInfoForUpdateDto, RepairInfo>();
             #endregion
         }
     }
