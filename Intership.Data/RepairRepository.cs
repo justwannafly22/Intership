@@ -27,10 +27,14 @@ namespace Intership.Data
 
         public async Task<Repair> GetRepairAsync(Guid id, Guid productId, bool trackChanges) =>
             await FindByCondition(r => r.Id.Equals(id) && r.ProductId.Equals(productId), trackChanges)
+            .Include(r => r.RepairInfo)
+            .ThenInclude(r => r.Status)
             .SingleOrDefaultAsync();
 
         public async Task<IEnumerable<Repair>> GetRepairsAsync(Guid productId, bool trackChanges) =>
-            await FindByCondition(r => r.Product.Equals(productId), trackChanges)
+            await FindByCondition(r => r.ProductId.Equals(productId), trackChanges)
+            .Include(r => r.RepairInfo)
+            .ThenInclude(r => r.Status)
             .ToListAsync();
 
         public async Task UpdateRepairAsync(Repair repair) =>
