@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Intership.DTO.RepairInfo
 {
-    public class RepairDto
+    public class RepairInfoDto
     {
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
