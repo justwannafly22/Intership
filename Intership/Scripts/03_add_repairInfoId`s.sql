@@ -1,4 +1,4 @@
 UPDATE Repairs
-SET repairinfo_id = RepairsInfo.id
-FROM RepairsInfo
-WHERE Repairs.id = RepairsInfo.repair_id
+SET repairinfo_id = (SELECT id
+					 FROM RepairsInfo t1
+					 WHERE t1.repair_id=Repairs.id)
