@@ -18,7 +18,7 @@ namespace Intership.DTO.Repair
         #endregion
 
         #region Taked from Status
-        public string Status { get; set; }
+        public string StatusInfo { get; set; }
         #endregion
 
         public Guid RepairInfoId { get; set; }
