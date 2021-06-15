@@ -229,3 +229,8 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# Fody - auto-generated XML schema
+FodyWeavers.xsd
+Intership/InternalLogs/internallog.txt
+*.txt
