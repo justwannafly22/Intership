@@ -40,12 +40,14 @@
     <None Remove="Scripts\01_feed.sql" />
     <None Remove="Scripts\02_feed.sql" />
     <None Remove="Scripts\03_add_repairInfoId`s.sql" />
+    <None Remove="Scripts\04_add_field_repairinfo_id.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\01_feed.sql" />
     <EmbeddedResource Include="Scripts\02_feed.sql" />
     <EmbeddedResource Include="Scripts\03_add_repairInfoId`s.sql" />
+    <EmbeddedResource Include="Scripts\04_add_field_repairinfo_id.sql" />
   </ItemGroup>
 
   <ItemGroup>
