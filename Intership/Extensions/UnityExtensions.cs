@@ -22,6 +22,7 @@ namespace Intership.Extensions
             container.RegisterType<ValidationFilterAttribute>();
             container.RegisterType<ValidateClientExistAttribute>();
             container.RegisterType<ValidateProductExistAttribute>();
+            container.RegisterType<ValidateRepairForProductExistAttribute>();
         }
 
         public static void ConfigureLoggerManager(this IUnityContainer container)
