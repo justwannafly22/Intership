@@ -15,16 +15,12 @@ namespace Intership.Models.Entities
         [MaxLength(60, ErrorMessage = "Max length for Name is 60 characters.")]
         public string Name { get; set; }
 
-        [ForeignKey(nameof(Product))]
-        [Column("product_id")]
-        public Guid ProductId { get; set; }
-        public Product Product { get; set; }
-
         [ForeignKey(nameof(RepairInfo))]
         [Column("repairinfo_id")]
         public Guid RepairInfoId { get; set; }
         public RepairInfo RepairInfo { get; set; }
 
+        public ICollection<Product> Products { get; set; }
         public ICollection<ReplacedPart> ReplacedParts { get; set; }
         
     }
