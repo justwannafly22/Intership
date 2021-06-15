@@ -27,7 +27,7 @@ namespace Intership.Filters
 
             if (product == null)
             {
-                _logger.LogInfo($"Client with id: {productId} doesn`t exist in the database.");
+                _logger.LogInfo($"Product with id: {productId} doesn`t exist in the database.");
                 context.Result = new NotFoundResult();
             }
             else
