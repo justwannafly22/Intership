@@ -11,8 +11,8 @@ namespace Intership.Services.Abstracts
     /// </summary>
     public interface IStatusService
     {
-        Task<IEnumerable<StatusResponseModel>> GetStatusesAsync(bool trackChanges);
-        Task<StatusResponseModel> GetStatusAsync(Guid id, bool trackChanges);
+        Task<IEnumerable<StatusResponseModel>> GetStatusesAsync();
+        Task<StatusResponseModel> GetStatusAsync(Guid id);
         Task<Guid> UpdateStatusAsync(UpdateStatusModel model);
         Task<Guid> CreateStatusAsync(AddStatusModel model);
         Task DeleteStatusAsync(AddStatusModel model);
