@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Intership.DTO.Client;
-using Intership.DTO.Product;
-using Intership.DTO.Repair;
-using Intership.DTO.RepairInfo;
-using Intership.Models.Entities;
+﻿using AutoMapper;
+using Intership.Data.Entities;
+using Intership.Data.Parameters;
+using Intership.Models.RequestModels.Client;
+using Intership.Models.RequestModels.Product;
+using Intership.Models.RequestModels.Repair;
+using Intership.Models.RequestModels.RepairInfo;
+using Intership.Models.RequestModels.Status;
+using Intership.Models.ResponseModels;
 
 namespace Intership
 {
@@ -16,50 +15,73 @@ namespace Intership
         public MappingProfile()
         {
             #region Client
-            CreateMap<Client, ClientDto>()
+            CreateMap<Client, ClientResponseModel>()
                 .ForMember(c => c.FullName,
                     opt => opt.MapFrom(x => string.Join(' ', x.Name, x.Surname)));
-            
-            CreateMap<ClientForCreateDto, Client>();
 
-            CreateMap<ClientForUpdateDto, Client>().ReverseMap();
+            CreateMap<AddClientModel, ClientParameter>();
+
+            CreateMap<UpdateClientModel, ClientParameter>();
+
+            CreateMap<ClientResponseModel, AddClientModel>();
             #endregion
 
             #region Product
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductResponseModel>();
 
-            CreateMap<ProductForCreateDto, Product>();
+            CreateMap<AddProductModel, ProductParameter>();
 
-            CreateMap<ProductForUpdateDto, Product>().ReverseMap();
+            CreateMap<UpdateProductModel, ProductParameter>();
+
+            CreateMap<ProductResponseModel, AddProductModel>();
             #endregion
 
             #region Repair
-            CreateMap<Repair, RepairDto>()
+            CreateMap<Repair, RepairResponseModel>()
                 .IncludeMembers(source => source.RepairInfo, source => source.RepairInfo.Status);
 
-            CreateMap<RepairInfo, RepairDto>()
+            CreateMap<RepairInfo, RepairResponseModel>()
                 .ForMember(r => r.Date,
                     opt => opt.MapFrom(x => x.Date))
                 .ForMember(r => r.AdvancedInfo,
                     opt => opt.MapFrom(x => x.AdvancedInfo));
 
-            CreateMap<Status, RepairDto>()
+            CreateMap<Status, RepairResponseModel>()
                 .ForMember(r => r.StatusInfo,
                     opt => opt.MapFrom(x => x.StatusInfo));
 
-            CreateMap<RepairForCreateDto, Repair>();
+            CreateMap<AddRepairModel, RepairParameter>();
 
-            CreateMap<RepairForUpdateDto, Repair>();
+            CreateMap<UpdateRepairModel, RepairParameter>();
+
+            CreateMap<RepairResponseModel, AddRepairModel>();
             #endregion
 
             #region RepairInfo
-            CreateMap<RepairInfo, RepairInfoDto>();
+            CreateMap<RepairInfo, RepairInfoResponseModel>()
+                .IncludeMembers(source => source.Status);
 
-            CreateMap<RepairInfo, RepairDto>();
+            CreateMap<RepairInfo, RepairInfoResponseModel>()
+                .ForMember(r => r.StatusInfo,
+                    opt => opt.MapFrom(x => x.Status));
 
-            CreateMap<RepairForCreateDto, RepairInfo>();
+            CreateMap<AddRepairInfoModel, RepairInfoParameter>();
+            CreateMap<AddRepairModel, RepairInfoParameter>();
 
-            CreateMap<RepairInfoForUpdateDto, RepairInfo>();
+            CreateMap<UpdateRepairInfoModel, RepairInfoParameter>();
+            CreateMap<UpdateRepairModel, RepairInfoParameter>();
+
+            CreateMap<RepairInfoResponseModel, AddRepairInfoModel>();
+            #endregion
+
+            #region Status
+            CreateMap<Status, StatusResponseModel>();
+
+            CreateMap<AddStatusModel, StatusParameter>();
+
+            CreateMap<UpdateStatusModel, StatusParameter>();
+
+            CreateMap<StatusResponseModel, AddStatusModel>();
             #endregion
         }
     }
