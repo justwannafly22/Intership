@@ -1,10 +1,7 @@
-﻿using Intership.Abstracts;
+﻿using Intership.LoggerService.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Intership.Filters
 {
