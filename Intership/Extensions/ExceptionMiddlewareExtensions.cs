@@ -1,9 +1,8 @@
-﻿using Intership.Abstracts;
-using Intership.Models.ErrorModel;
+﻿using Intership.LoggerService.Abstracts;
+using Intership.LoggerService.ErrorModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Net;
 
 namespace Intership.Extensions

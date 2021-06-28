@@ -1,16 +1,12 @@
-﻿using Intership.Abstracts;
-using Intership.Abstracts.Services;
-using Intership.Abstracts.Repositories;
-using Intership.Data;
-using Intership.Filters;
-using Intership.Logic;
+﻿using Intership.Filters;
 using LoggerService;
 using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Unity;
+using Intership.Data.Abstracts;
+using Intership.Data.Repositories;
+using Intership.Services;
+using Intership.Services.Abstracts;
+using Intership.LoggerService.Abstracts;
 
 namespace Intership.Extensions
 {
@@ -20,9 +16,6 @@ namespace Intership.Extensions
         {
             container.RegisterType<IStartupFilter, DatabaseInitFilter>();
             container.RegisterType<ValidationFilterAttribute>();
-            container.RegisterType<ValidateClientExistAttribute>();
-            container.RegisterType<ValidateProductExistAttribute>();
-            container.RegisterType<ValidateRepairForProductExistAttribute>();
         }
 
         public static void ConfigureLoggerManager(this IUnityContainer container)
