@@ -1,6 +1,5 @@
-﻿using System;
-using NLog;
-using Intership.Abstracts;
+﻿using NLog;
+using Intership.LoggerService.Abstracts;
 
 namespace LoggerService
 {
