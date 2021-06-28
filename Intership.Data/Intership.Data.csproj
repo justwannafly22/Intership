@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Intership.Abstracts\Intership.Abstracts.csproj" />
     <ProjectReference Include="..\Intership.Models\Intership.Models.csproj" />
   </ItemGroup>
 
