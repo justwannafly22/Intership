@@ -16,7 +16,7 @@ namespace Intership.Logic
             _clientRepository = clientRepository;
         }
 
-        public async Task CreateClientAsync(Client client)
+        public async Task CreateClientAsync(Client client) //AddClientParamater;
         {
             await _clientRepository.CreateClientAsync(client);
         }
@@ -28,7 +28,7 @@ namespace Intership.Logic
 
         public async Task<Client> GetClientAsync(Guid id)
         {
-            var client = await _clientRepository.GetClientAsync(id, trackChanges: true);
+            var client = await _clientRepository.GetClientAsync(id, trackChanges: true); //ResponseCLientModel;
 
             return client;
         }

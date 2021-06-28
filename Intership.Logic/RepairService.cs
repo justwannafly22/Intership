@@ -22,8 +22,6 @@ namespace Intership.Logic
         
         public async Task CreateRepairAsync(Guid productId, Repair repair)
         {
-            repair.ProductId = productId;
-
             await _repairRepository.CreateRepairAsync(repair);
         }
 
@@ -34,14 +32,14 @@ namespace Intership.Logic
 
         public async Task<Repair> GetRepairAsync(Guid repairId, Guid productId)
         {
-            var repair = await _repairRepository.GetRepairAsync(repairId, productId, trackChanges: true);
+            var repair = await _repairRepository.GetRepairAsync(repairId, trackChanges: true);
 
             return repair;
         }
 
         public async Task<IEnumerable<Repair>> GetRepairsAsync(Guid productId)
         {
-            var repairs = await _repairRepository.GetRepairsAsync(productId, trackChanges: false);
+            var repairs = await _repairRepository.GetRepairsAsync(trackChanges: false);
 
             return repairs;
         }
