@@ -8,6 +8,7 @@ namespace Intership.Filters
     public class ValidationFilterAttribute : IActionFilter
     {
         private readonly ILoggerManager _logger;
+
         public ValidationFilterAttribute(ILoggerManager logger)
         {
             _logger = logger;
@@ -23,7 +24,7 @@ namespace Intership.Filters
             var action = context.RouteData.Values["action"];
             var controller = context.RouteData.Values["controller"];
 
-            var param = context.ActionArguments.SingleOrDefault(t => t.Value.ToString().Contains("Dto")).Value;
+            var param = context.ActionArguments.SingleOrDefault(t => t.Value.ToString().Contains("Model")).Value;
             if (param == null)
             {
                 _logger.LogError($"Object sent from client is null. Controller: {controller}, action: {action}");
@@ -36,7 +37,6 @@ namespace Intership.Filters
                 _logger.LogError($"Invalid model state for the object. Controller: {controller}, action: {action}");
                 context.Result = new UnprocessableEntityObjectResult(context.ModelState);
             }
-
         }
     }
 }
