@@ -1,15 +1,11 @@
-﻿using Intership.Abstracts.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Intership.Models.Entities;
-using Intership.DTO.Client;
-using Intership.Abstracts;
 using Intership.Filters;
-using Unity;
+using Intership.LoggerService.Abstracts;
+using Intership.Services.Abstracts;
+using Intership.Models.RequestModels.Client;
 
 namespace Intership.Controllers
 {
@@ -28,62 +24,84 @@ namespace Intership.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Returns all clients
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetClients()
         {
-            var clientsEntity = await _clientService.GetClientsAsync();
+            var clients = await _clientService.GetClientsAsync();
 
-            var clientsDto = _mapper.Map<IEnumerable<ClientDto>>(clientsEntity);
-
-            return Ok(clientsDto);
+            return Ok(clients);
         }
 
+        /// <summary>
+        /// Returns a single client
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
         [HttpGet("{clientId}")]
         public async Task<IActionResult> GetClient(Guid clientId)
         {
-            var clientEntity = await _clientService.GetClientAsync(clientId);
-            if (clientEntity == null) 
+            if (!await _clientService.IsExist(clientId)) 
             {
                 _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
                 return NotFound();
             }
 
-            var clientDto = _mapper.Map<ClientDto>(clientEntity);
-
-            return Ok(clientDto);
+            return Ok(await _clientService.GetClientAsync(clientId));
         }
 
+        /// <summary>
+        /// Create a new client
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateClient([FromBody] ClientForCreateDto clientDto)
+        public async Task<IActionResult> CreateClient([FromBody] AddClientModel model)
         {
-            var clientEntity = _mapper.Map<Client>(clientDto);
+            var addedClientId = await _clientService.CreateClientAsync(model);
 
-            await _clientService.CreateClientAsync(clientEntity);
-
-            return Created($"api/v1/{clientEntity.Id}", new { clientId = clientEntity.Id });
+            return Created($"api/v1/{addedClientId}", new { clientId = addedClientId });
         }
 
+        /// <summary>
+        /// Delete a client
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
         [HttpDelete("{clientId}")]
-        [ServiceFilter(typeof(ValidateClientExistAttribute))]
         public async Task<IActionResult> DeleteClient(Guid clientId)
         {
-            var client = HttpContext.Items["client"] as Client;
+            if (!await _clientService.IsExist(clientId))
+            {
+                _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
+                return NotFound();
+            }
 
-            await _clientService.DeleteClientAsync(client);
+            await _clientService.DeleteClientAsync(_mapper.Map<AddClientModel>(_clientService.GetClientAsync(clientId)));
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Update a client
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{clientId}")]
-        [ServiceFilter(typeof(ValidateClientExistAttribute))]
-        public async Task<IActionResult> UpdateClient(Guid clientId, [FromBody] ClientForUpdateDto clientDto)
+        public async Task<IActionResult> UpdateClient(Guid clientId, [FromBody] UpdateClientModel model)
         {
-            var client = HttpContext.Items["client"] as Client;
-
-            _mapper.Map(clientDto, client);
-
-            await _clientService.UpdateClientAsync(client);
+            if (!await _clientService.IsExist(clientId))
+            {
+                _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
+                return NotFound();
+            }
+            
+            _ = await _clientService.UpdateClientAsync(model);
 
             return NoContent();
         }

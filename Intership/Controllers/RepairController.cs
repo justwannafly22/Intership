@@ -1,19 +1,17 @@
 ﻿using AutoMapper;
-using Intership.Abstracts;
-using Intership.Abstracts.Services;
-using Intership.DTO.Repair;
 using Intership.Filters;
-using Intership.Models.Entities;
+using Intership.LoggerService.Abstracts;
+using Intership.Models.RequestModels.Repair;
+using Intership.Models.RequestModels.RepairInfo;
+using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
 {
     [ApiController]
-    [Route("api/v1/products/{productId}/repairs")]
+    [Route("api/v1/repairs")]
     public class RepairController : Controller
     {
         private readonly IRepairService _repairService;
@@ -29,72 +27,102 @@ namespace Intership.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Returns a repairs
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        [ServiceFilter(typeof(ValidateProductExistAttribute))]
-        public async Task<IActionResult> GetRepairs(Guid productId)
+        public async Task<IActionResult> GetRepairs()
         {
-            var repairsEntity = await _repairService.GetRepairsAsync(productId);
+            var repairs = await _repairService.GetRepairsAsync();
 
-            var repairsDto = _mapper.Map<IEnumerable<RepairDto>>(repairsEntity);
-
-            return Ok(repairsDto);
+            return Ok(repairs);
         }
 
+        /// <summary>
+        /// Returns a single repair
+        /// </summary>
+        /// <param name="repairId"></param>
+        /// <returns></returns>
         [HttpGet("{repairId}")]
-        [ServiceFilter(typeof(ValidateProductExistAttribute))]
-        public async Task<IActionResult> GetRepair(Guid productId, Guid repairId)
+        public async Task<IActionResult> GetRepair(Guid repairId)
         {
-            var repairEntity = await _repairService.GetRepairAsync(repairId, productId);
-            if (repairEntity == null) 
+            if (!await _repairService.IsExist(repairId))
             {
                 _logger.LogInfo($"Repair with id: {repairId} doesn`t exist in the database.");
                 return NotFound();
             }
 
-            var repairDto = _mapper.Map<RepairDto>(repairEntity);
-
-            return Ok(repairDto);
+            return Ok(await _repairService.GetRepairAsync(repairId));
         }
 
+        /// <summary>
+        /// Create a repair
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        [ServiceFilter(typeof(ValidateProductExistAttribute))]
-        public async Task<IActionResult> CreateRepair(Guid productId, [FromBody] RepairForCreateDto repairDto)
+        public async Task<IActionResult> CreateRepair([FromBody] AddRepairModel model)
         {
-            var repairEntity = _mapper.Map<Repair>(repairDto);
+            var addedRepairId = await _repairService.CreateRepairAsync(model);
 
-            await _repairService.CreateRepairAsync(productId, repairEntity);
-
-            var repairInfoEntity = _mapper.Map<RepairInfo>(repairDto);
-            
-            await _repairInfoService.CreateRepairInfoAsync(repairEntity.Id, repairInfoEntity);//mistake occured;
-            
-            return Created($"api/v1/products/{productId}/repairs/{repairEntity.Id}", new { repair = repairEntity });
+            return Created($"api/v1/repairs/{addedRepairId}", new { RepairId = addedRepairId });
         }
 
+        /// <summary>
+        /// Update a repair
+        /// </summary>
+        /// <param name="repairId"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("{repairId}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        [ServiceFilter(typeof(ValidateRepairForProductExistAttribute))]
-        public async Task<IActionResult> UpdateRepair(Guid productId, Guid repairId, [FromBody] RepairForUpdateDto repairDto)
+        public async Task<IActionResult> UpdateRepair(Guid repairId, [FromBody] UpdateRepairModel model)
         {
-            var repairEntity = HttpContext.Items["repair"] as Repair;
+            if (!await _repairService.IsExist(repairId))
+            {
+                _logger.LogInfo($"Repair with id: {repairId} doesn`t exist in the database.");
+                return NotFound();
+            }
 
-            _mapper.Map(repairDto, repairEntity);
-
-            await _repairService.UpdateRepairAsync(repairEntity);
+            _ = await _repairService.UpdateRepairAsync(model);
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Delete a repair and repair info
+        /// </summary>
+        /// <param name="repairId"></param>
+        /// <returns></returns>
         [HttpDelete("{repairId}")]
-        [ServiceFilter(typeof(ValidateRepairForProductExistAttribute))]
-        public async Task<IActionResult> DeleteRepair(Guid productId, Guid repairId)
+        public async Task<IActionResult> DeleteRepair(Guid repairId)
         {
-            var repairEntity = HttpContext.Items["repair"] as Repair;
+            if (!await _repairService.IsExist(repairId))
+            {
+                _logger.LogInfo($"Repair with id: {repairId} doesn`t exist in the database.");
+                return NotFound();
+            }
 
-            await _repairService.DeleteRepairAsync(repairEntity);
+            await _repairService.DeleteRepairAsync(_mapper.Map<AddRepairModel>(await _repairService.GetRepairAsync(repairId)));
 
             return NoContent();
+        }
+        
+        /// <summary>
+        /// Create a repair info for the repair
+        /// </summary>
+        /// <param name="repairId"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("{repairId}/repairsInfo")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> CreateRepairInfo(Guid repairId, [FromBody] AddRepairInfoModel model)
+        {
+            var addedRepairInfoId = await _repairInfoService.CreateRepairInfoAsync(model, repairId);
+
+            return Created($"api/v1/repairs/{repairId}/repairsInfo/{addedRepairInfoId}", new { RepairId = repairId, RepairInfoId = addedRepairInfoId });
         }
     }
 }
