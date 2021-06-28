@@ -60,7 +60,7 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<StatusResponseModel> GetStatusAsync(Guid id, bool trackChanges) =>
+        public async Task<StatusResponseModel> GetStatusAsync(Guid id) =>
             _mapper.Map<StatusResponseModel>(await _statusRepository.GetStatusAsync(id, trackChanges: true));
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Intership.Services
         /// </summary>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<StatusResponseModel>> GetStatusesAsync(bool trackChanges) =>
+        public async Task<IEnumerable<StatusResponseModel>> GetStatusesAsync() =>
             _mapper.Map<IEnumerable<StatusResponseModel>>(await _statusRepository.GetStatusesAsync(trackChanges: false));
 
         /// <summary>
