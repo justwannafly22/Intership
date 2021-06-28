@@ -37,6 +37,7 @@ namespace Intership.Extensions
             container.RegisterType<IProductService, ProductService>();
             container.RegisterType<IRepairService, RepairService>();
             container.RegisterType<IRepairInfoService, RepairInfoService>();
+            container.RegisterType<IStatusService, StatusService>();
         }
     }
 }
