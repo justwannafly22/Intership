@@ -1,10 +1,7 @@
-using Intership.Abstracts;
-using Intership.Abstracts.Services;
 using Intership.Extensions;
-using Intership.Logic;
+using Intership.LoggerService.Abstracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
