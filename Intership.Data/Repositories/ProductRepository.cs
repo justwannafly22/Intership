@@ -29,14 +29,10 @@ namespace Intership.Data.Repositories
             return product.Id;
         }
 
-        public async Task DeleteProductAsync(ProductParameter model)
+        public async Task DeleteProductAsync(Guid id)
         {
-            var product = new Product()
-            {
-                Name = model.Name,
-                Description = model.Description,
-                Price = model.Price
-            };
+            var product = await FindByCondition(p => p.Id.Equals(id), trackChanges: false)
+                .SingleOrDefaultAsync();
 
             await DeleteAsync(product);
         }
@@ -49,14 +45,14 @@ namespace Intership.Data.Repositories
             await FindAll(trackChanges)
             .ToListAsync();
 
-        public async Task<Guid> UpdateProductAsync(ProductParameter model)
+        public async Task<Guid> UpdateProductAsync(Guid id, ProductParameter model)
         {
-            var product = new Product()
-            {
-                Name = model.Name,
-                Description = model.Description,
-                Price = model.Price
-            };
+            var product = await FindByCondition(p => p.Id.Equals(id), trackChanges: true).
+                SingleOrDefaultAsync();
+
+            product.Name = model.Name;
+            product.Price = model.Price;
+            product.Description = model.Description;
 
             await UpdateAsync(product);
 

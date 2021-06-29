@@ -82,7 +82,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
             
-            await _productService.DeleteProductAsync(_mapper.Map<AddProductModel>(await _productService.GetProductAsync(productId)));
+            await _productService.DeleteProductAsync(productId);
             
             return NoContent();
         }
@@ -102,7 +102,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            _ = await _productService.UpdateProductAsync(model);
+            _ = await _productService.UpdateProductAsync(productId, model);
 
             return NoContent();
         }

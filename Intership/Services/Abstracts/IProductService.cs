@@ -17,8 +17,8 @@ namespace Intership.Services.Abstracts
         Task<IEnumerable<ProductResponseModel>> GetProductsAsync();
         Task<ProductResponseModel> GetProductAsync(Guid id);
         Task<Guid> CreateProductAsync(AddProductModel model);
-        Task<Guid> UpdateProductAsync(UpdateProductModel model);
-        Task DeleteProductAsync(AddProductModel model);
+        Task<Guid> UpdateProductAsync(Guid id, UpdateProductModel model);
+        Task DeleteProductAsync(Guid id);
         Task<Guid> CreateRepairForProductAsync(AddRepairModel model, Guid productId);
         Task<Guid> UpdateRepairForProductAsync(UpdateRepairModel model, Guid productId, Guid repairId);
         Task DeleteRepairForProductAsync(Guid productId, Guid repairId);
