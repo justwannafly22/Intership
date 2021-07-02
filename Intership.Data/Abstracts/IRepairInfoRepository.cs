@@ -16,7 +16,7 @@ namespace Intership.Data.Abstracts
         Task<RepairInfo> GetRepairInfoAsync(Guid id, Guid repairId, bool trackChanges);
         Task<RepairInfo> GetRepairInfoByRepairIdAsync(Guid id, bool trackChanges);
         Task<Guid> CreateRepairInfoAsync(RepairInfoParameter model, Guid repairId);
-        Task<Guid> UpdateRepairInfoAsync(Guid id, RepairInfoParameter model);
-        Task DeleteRepairInfoAsync(Guid id);
+        Task<Guid> UpdateRepairInfoAsync(RepairInfoParameter model);
+        Task DeleteRepairInfoAsync(RepairInfoParameter model);
     }
 }
