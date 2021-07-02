@@ -4,8 +4,6 @@ using Intership.Models.RequestModels.Status;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
@@ -16,13 +14,11 @@ namespace Intership.Controllers
     {
         private readonly IStatusService _statusService;
         private readonly ILoggerManager _logger;
-        private readonly IMapper _mapper;
 
-        public StatusController (IStatusService statusService, ILoggerManager logger, IMapper mapper)
+        public StatusController (IStatusService statusService, ILoggerManager logger)
         {
             _statusService = statusService;
             _logger = logger;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -81,7 +77,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            await _statusService.DeleteStatusAsync(_mapper.Map<AddStatusModel>(await _statusService.GetStatusAsync(statusId)));
+            await _statusService.DeleteStatusAsync(statusId);
 
             return NoContent();
         }
@@ -101,7 +97,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            _ = await _statusService.UpdateStatusAsync(model);
+            _ = await _statusService.UpdateStatusAsync(statusId, model);
 
             return NoContent();
         }

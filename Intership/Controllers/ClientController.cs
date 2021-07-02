@@ -15,13 +15,11 @@ namespace Intership.Controllers
     {
         private readonly IClientService _clientService;
         private readonly ILoggerManager _logger;
-        private readonly IMapper _mapper;
 
-        public ClientController(IClientService clientService, ILoggerManager logger, IMapper mapper)
+        public ClientController(IClientService clientService, ILoggerManager logger)
         {
             _clientService = clientService;
             _logger = logger;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -81,7 +79,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            await _clientService.DeleteClientAsync(_mapper.Map<AddClientModel>(_clientService.GetClientAsync(clientId)));
+            await _clientService.DeleteClientAsync(clientId);
 
             return NoContent();
         }
@@ -100,10 +98,29 @@ namespace Intership.Controllers
                 _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
                 return NotFound();
             }
-            
-            _ = await _clientService.UpdateClientAsync(model);
+
+            _ = await _clientService.UpdateClientAsync(clientId, model);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Returns a repairs for the client
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <returns></returns>
+        [HttpGet("{clientId}/repairs")]
+        public async Task<IActionResult> GetRepairs(Guid clientId)
+        {
+            if (!await _clientService.IsExist(clientId))
+            {
+                _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
+                return NotFound();
+            }
+
+            var repairs = _clientService.GetRepairs(clientId);
+
+            return Ok(repairs);
         }
     }
 }

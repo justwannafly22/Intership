@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Intership.Filters;
+﻿using Intership.Filters;
 using Intership.LoggerService.Abstracts;
 using Intership.Models.RequestModels.Repair;
 using Intership.Models.RequestModels.RepairInfo;
@@ -17,14 +16,12 @@ namespace Intership.Controllers
         private readonly IRepairService _repairService;
         private readonly IRepairInfoService _repairInfoService;
         private readonly ILoggerManager _logger;
-        private readonly IMapper _mapper;
 
-        public RepairController(IRepairService repairService, IRepairInfoService repairInfoService, ILoggerManager logger, IMapper mapper)
+        public RepairController(IRepairService repairService, IRepairInfoService repairInfoService, ILoggerManager logger)
         {
             _repairService = repairService;
             _repairInfoService = repairInfoService;
             _logger = logger;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -40,7 +37,7 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns a single repair
+        /// Returns a repair
         /// </summary>
         /// <param name="repairId"></param>
         /// <returns></returns>
@@ -86,7 +83,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            _ = await _repairService.UpdateRepairAsync(model);
+            _ = await _repairService.UpdateRepairAsync(repairId, model);
 
             return NoContent();
         }
@@ -105,7 +102,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            await _repairService.DeleteRepairAsync(_mapper.Map<AddRepairModel>(await _repairService.GetRepairAsync(repairId)));
+            await _repairService.DeleteRepairAsync(repairId);
 
             return NoContent();
         }
@@ -123,6 +120,25 @@ namespace Intership.Controllers
             var addedRepairInfoId = await _repairInfoService.CreateRepairInfoAsync(model, repairId);
 
             return Created($"api/v1/repairs/{repairId}/repairsInfo/{addedRepairInfoId}", new { RepairId = repairId, RepairInfoId = addedRepairInfoId });
+        }
+
+        /// <summary>
+        /// Returns a replaced parts for the repair
+        /// </summary>
+        /// <param name="repairId"></param>
+        /// <returns></returns>
+        [HttpGet("{repairId}/replacedParts")]
+        public async Task<IActionResult> GetReplacedParts(Guid repairId)
+        {
+            if (!await _repairService.IsExist(repairId))
+            {
+                _logger.LogInfo($"Repair with id: {repairId} doesn`t exist in the database.");
+                return NotFound();
+            }
+
+            var replacedParts = await _repairService.GetReplacePartsForRepair(repairId);
+
+            return Ok(replacedParts);
         }
     }
 }

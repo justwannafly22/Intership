@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Intership.LoggerService.Abstracts;
+﻿using Intership.LoggerService.Abstracts;
 using Intership.Models.RequestModels.RepairInfo;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
@@ -14,13 +13,11 @@ namespace Intership.Controllers
     {
         private readonly IRepairInfoService _repairInfoService;
         private readonly ILoggerManager _logger;
-        private readonly IMapper _mapper;
 
-        public RepairInfoController (IRepairInfoService repairInfoService, ILoggerManager logger, IMapper mapper)
+        public RepairInfoController (IRepairInfoService repairInfoService, ILoggerManager logger)
         {
             _repairInfoService = repairInfoService;
             _logger = logger;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -54,7 +51,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            await _repairInfoService.DeleteRepairInfoAsync(_mapper.Map<AddRepairInfoModel>(await _repairInfoService.GetRepairInfoAsync(repairInfoId)));
+            await _repairInfoService.DeleteRepairInfoAsync(repairInfoId);
 
             return NoContent();
         }
@@ -74,8 +71,8 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            _ = await _repairInfoService.UpdateRepairInfoAsync(model);
-
+            _ = await _repairInfoService.UpdateRepairInfoAsync(repairInfoId, model);
+            
             return NoContent();
         }
     }
