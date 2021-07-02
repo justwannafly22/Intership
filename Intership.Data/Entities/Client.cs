@@ -35,6 +35,6 @@ namespace Intership.Data.Entities
         [Required]
         public bool AllowEmailNotification { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<Repair> Repairs { get; set; }
     }
 }
