@@ -14,9 +14,10 @@ namespace Intership.Services.Abstracts
     {
         Task<IEnumerable<ClientResponseModel>> GetClientsAsync();
         Task<ClientResponseModel> GetClientAsync(Guid id);
-        Task<Guid> UpdateClientAsync(UpdateClientModel model);
-        Task DeleteClientAsync(AddClientModel model);
+        Task<Guid> UpdateClientAsync(Guid id, UpdateClientModel model);
+        Task DeleteClientAsync(Guid id);
         Task<Guid> CreateClientAsync(AddClientModel climodelent);
         Task<bool> IsExist(Guid id);
+        Task<IEnumerable<RepairResponseModel>> GetRepairs(Guid id);
     }
 }

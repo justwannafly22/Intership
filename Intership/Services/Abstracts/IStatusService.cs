@@ -13,9 +13,9 @@ namespace Intership.Services.Abstracts
     {
         Task<IEnumerable<StatusResponseModel>> GetStatusesAsync();
         Task<StatusResponseModel> GetStatusAsync(Guid id);
-        Task<Guid> UpdateStatusAsync(UpdateStatusModel model);
+        Task<Guid> UpdateStatusAsync(Guid id, UpdateStatusModel model);
         Task<Guid> CreateStatusAsync(AddStatusModel model);
-        Task DeleteStatusAsync(AddStatusModel model);
+        Task DeleteStatusAsync(Guid id);
         Task<bool> IsExist(Guid id);
     }
 }

@@ -11,12 +11,12 @@ namespace Intership.Services.Abstracts
     /// </summary>
     public interface IRepairService
     {
-        Task<IEnumerable<ProductResponseModel>> GetProductsByRepair(Guid repairId);
         Task<IEnumerable<RepairResponseModel>> GetRepairsAsync();
         Task<RepairResponseModel> GetRepairAsync(Guid repairId);
-        Task<Guid> UpdateRepairAsync(UpdateRepairModel model);
+        Task<Guid> UpdateRepairAsync(Guid id, UpdateRepairModel model);
         Task<Guid> CreateRepairAsync(AddRepairModel model);
-        Task DeleteRepairAsync(AddRepairModel model);
+        Task DeleteRepairAsync(Guid id);
+        Task<IEnumerable<ReplacedPartResponseModel>> GetReplacePartsForRepair(Guid repairId);
         Task<bool> IsExist(Guid id);
     }
 }
