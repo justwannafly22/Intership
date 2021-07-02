@@ -27,12 +27,10 @@ namespace Intership.Data.Repositories
             return status.Id;
         }
 
-        public async Task DeleteStatusAsync(StatusParameter model)
+        public async Task DeleteStatusAsync(Guid id)
         {
-            var status = new Status()
-            {
-                StatusInfo = model.StatusInfo
-            };
+            var status = await FindByCondition(s => s.Id.Equals(id), trackChanges: false)
+                .SingleOrDefaultAsync();
 
             await DeleteAsync(status);
         }
@@ -45,12 +43,12 @@ namespace Intership.Data.Repositories
             await FindAll(trackChanges)
             .ToListAsync();
 
-        public async Task<Guid> UpdateStatusAsync(StatusParameter model)
+        public async Task<Guid> UpdateStatusAsync(Guid id, StatusParameter model)
         {
-            var status = new Status()
-            {
-                StatusInfo = model.StatusInfo
-            };
+            var status = await FindByCondition(s => s.Id.Equals(id), trackChanges: false)
+                .SingleOrDefaultAsync();
+
+            status.StatusInfo = model.StatusInfo;
 
             await UpdateAsync(status);
 

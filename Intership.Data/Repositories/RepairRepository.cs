@@ -27,12 +27,10 @@ namespace Intership.Data.Repositories
             return repair.Id;
         }
 
-        public async Task DeleteRepairAsync(RepairParameter model)
+        public async Task DeleteRepairAsync(Guid id)
         {
-            var repair = new Repair()
-            {
-                Name = model.Name
-            };
+            var repair = await FindByCondition(r => r.Id.Equals(id), trackChanges: false)
+                .SingleOrDefaultAsync();
 
             await DeleteAsync(repair);
         }
@@ -40,23 +38,26 @@ namespace Intership.Data.Repositories
         public async Task<Repair> GetRepairAsync(Guid id, bool trackChanges) =>
             await FindByCondition(r => r.Id.Equals(id), trackChanges)
             .Include(r => r.RepairInfo)
-            .ThenInclude(r => r.Status)
-            .Include(r => r.ReplacedParts)
+                .ThenInclude(r => r.Status)
             .SingleOrDefaultAsync();
-
+        
         public async Task<IEnumerable<Repair>> GetRepairsAsync(bool trackChanges) =>
             await FindAll(trackChanges)
             .Include(r => r.RepairInfo)
-            .ThenInclude(r => r.Status)
-            .Include(r => r.ReplacedParts)
+                .ThenInclude(r => r.Status)
             .ToListAsync();
+        
+        public async Task<Repair> GetRepairWithReplacedParts(Guid repairId, bool trackChanges) =>
+            await FindByCondition(r => r.Id.Equals(repairId), trackChanges)
+            .Include(r => r.ReplacedParts)
+            .SingleOrDefaultAsync();
 
-        public async Task<Guid> UpdateRepairAsync(RepairParameter model)
+        public async Task<Guid> UpdateRepairAsync(Guid id, RepairParameter model)
         {
-            var repair = new Repair()
-            {
-                Name = model.Name
-            };
+            var repair = await FindByCondition(r => r.Id.Equals(id), trackChanges: true)
+                .SingleOrDefaultAsync();
+
+            repair.Name = model.Name;
 
             await UpdateAsync(repair);
 

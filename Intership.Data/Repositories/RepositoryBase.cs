@@ -51,5 +51,8 @@ namespace Intership.Data.Repositories
 
             await RepositoryContext.SaveChangesAsync();
         }
+        
+        public async Task Save() =>
+            await RepositoryContext.SaveChangesAsync();
     }
 }

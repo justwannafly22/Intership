@@ -21,7 +21,8 @@ namespace Intership.Data.Repositories
             {
                 Date = model.Date,
                 AdvancedInfo = model.AdvancedInfo,
-                RepairId = repairId
+                RepairId = repairId,
+                StatusId = (Guid)model.StatusId
             };
 
             await CreateAsync(repairInfo);
@@ -29,40 +30,43 @@ namespace Intership.Data.Repositories
             return repairInfo.Id;
         }
 
-        public async Task DeleteRepairInfoAsync(RepairInfoParameter model)
+        public async Task DeleteRepairInfoAsync(Guid id)
         {
-            var repairInfo = new RepairInfo()
-            {
-                Date = model.Date,
-                AdvancedInfo = model.AdvancedInfo
-            };
+            var repairInfo = await FindByCondition(r => r.Id.Equals(id), trackChanges: false)
+                .SingleOrDefaultAsync();
 
             await DeleteAsync(repairInfo);
         }
 
         public async Task<RepairInfo> GetRepairInfoAsync(Guid id, bool trackChanges) =>
             await FindByCondition(r => r.Id.Equals(id), trackChanges)
+            .Include(r => r.Status)
             .SingleOrDefaultAsync();
 
         public async Task<RepairInfo> GetRepairInfoAsync(Guid id, Guid repairId, bool trackChanges) =>
             await FindByCondition(r => r.Id.Equals(id) && r.RepairId.Equals(repairId), trackChanges)
+            .Include(r => r.Status)
             .SingleOrDefaultAsync();
+            
 
         public async Task<RepairInfo> GetRepairInfoByRepairIdAsync(Guid repairId, bool trackChanges) =>
             await FindByCondition(r => r.RepairId.Equals(repairId), trackChanges)
+            .Include(r => r.Status)
             .SingleOrDefaultAsync();
 
         public async Task<IEnumerable<RepairInfo>> GetRepairsInfoAsync(bool trackChanges) =>
             await FindAll(trackChanges)
+            .Include(r => r.Status)
             .ToListAsync();
         
-        public async Task<Guid> UpdateRepairInfoAsync(RepairInfoParameter model)
+        public async Task<Guid> UpdateRepairInfoAsync(Guid id, RepairInfoParameter model)
         {
-            var repairInfo = new RepairInfo()
-            {
-                Date = model.Date,
-                AdvancedInfo = model.AdvancedInfo
-            };
+            var repairInfo = await FindByCondition(r => r.Id.Equals(id), trackChanges: false)
+                .SingleOrDefaultAsync();
+
+            repairInfo.Date = model.Date;
+            repairInfo.AdvancedInfo = model.AdvancedInfo;
+            repairInfo.StatusId = model.StatusId;
 
             await UpdateAsync(repairInfo);
 

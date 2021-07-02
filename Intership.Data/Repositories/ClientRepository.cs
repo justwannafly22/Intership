@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Intership.Data.Abstracts;
 using Intership.Data.Parameters;
+using Intership.Models.ResponseModels;
 
 namespace Intership.Data.Repositories
 {
@@ -32,17 +33,10 @@ namespace Intership.Data.Repositories
             return client.Id;
         }
 
-        public async Task DeleteClientAsync(ClientParameter model)
+        public async Task DeleteClientAsync(Guid id)
         {
-            var client = new Client()
-            {
-                Name = model.Name,
-                Surname = model.Surname,
-                Age = model.Age,
-                ContactNumber = model.ContactNumber,
-                Email = model.Email,
-                AllowEmailNotification = model.AllowEmailNotification
-            };
+            var client = await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
+                .SingleOrDefaultAsync();
 
             await DeleteAsync(client);
         }
@@ -55,17 +49,22 @@ namespace Intership.Data.Repositories
             await FindAll(trackChanges)
             .ToListAsync();
 
-        public async Task<Guid> UpdateClientAsync(ClientParameter model)
+        public async Task<Client> GetRepairWithRepairsAsync(Guid id) =>
+            await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
+            .Include(c => c.Repairs)
+            .SingleOrDefaultAsync();
+
+        public async Task<Guid> UpdateClientAsync(Guid id, ClientParameter model)
         {
-            var client = new Client()
-            {
-                Name = model.Name,
-                Surname = model.Surname,
-                Age = model.Age,
-                ContactNumber = model.ContactNumber,
-                Email = model.Email,
-                AllowEmailNotification = model.AllowEmailNotification
-            };
+            var client = await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
+                .SingleOrDefaultAsync();
+
+            client.Name = model.Name;
+            client.Surname = model.Surname;
+            client.Age = model.Age;
+            client.ContactNumber = model.ContactNumber;
+            client.Email = model.Email;
+            client.AllowEmailNotification = model.AllowEmailNotification;
 
             await UpdateAsync(client);
 

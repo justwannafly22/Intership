@@ -58,5 +58,16 @@ namespace Intership.Data.Repositories
 
             return product.Id;
         }
+
+        public async Task<Product> GetProductWithRepairsAsync(Guid id, bool trackChanges) =>
+            await FindByCondition(p => p.Id.Equals(id), trackChanges)
+            .Include(p => p.ReplacedParts)
+                .ThenInclude(r => r.Repair)
+                    .ThenInclude(r => r.RepairInfo)
+                        .ThenInclude(r => r.Status)
+            .SingleOrDefaultAsync();
+
+        public async Task SaveChangesAsync() =>
+            await Save();
     }
 }
