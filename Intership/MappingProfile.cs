@@ -5,6 +5,7 @@ using Intership.Models.RequestModels.Client;
 using Intership.Models.RequestModels.Product;
 using Intership.Models.RequestModels.Repair;
 using Intership.Models.RequestModels.RepairInfo;
+using Intership.Models.RequestModels.ReplacedPart;
 using Intership.Models.RequestModels.Status;
 using Intership.Models.ResponseModels;
 
@@ -23,7 +24,6 @@ namespace Intership
 
             CreateMap<UpdateClientModel, ClientParameter>();
 
-            CreateMap<ClientResponseModel, AddClientModel>();
             #endregion
 
             #region Product
@@ -33,7 +33,6 @@ namespace Intership
 
             CreateMap<UpdateProductModel, ProductParameter>();
 
-            CreateMap<ProductResponseModel, AddProductModel>();
             #endregion
 
             #region Repair
@@ -54,24 +53,20 @@ namespace Intership
 
             CreateMap<UpdateRepairModel, RepairParameter>();
 
-            CreateMap<RepairResponseModel, AddRepairModel>();
             #endregion
 
             #region RepairInfo
             CreateMap<RepairInfo, RepairInfoResponseModel>()
                 .IncludeMembers(source => source.Status);
 
-            CreateMap<RepairInfo, RepairInfoResponseModel>()
+            CreateMap<Status, RepairInfoResponseModel>()
                 .ForMember(r => r.StatusInfo,
-                    opt => opt.MapFrom(x => x.Status));
+                    opt => opt.MapFrom(x => x.StatusInfo));
 
             CreateMap<AddRepairInfoModel, RepairInfoParameter>();
-            CreateMap<AddRepairModel, RepairInfoParameter>();
 
             CreateMap<UpdateRepairInfoModel, RepairInfoParameter>();
-            CreateMap<UpdateRepairModel, RepairInfoParameter>();
 
-            CreateMap<RepairInfoResponseModel, AddRepairInfoModel>();
             #endregion
 
             #region Status
@@ -80,8 +75,16 @@ namespace Intership
             CreateMap<AddStatusModel, StatusParameter>();
 
             CreateMap<UpdateStatusModel, StatusParameter>();
+            #endregion
 
-            CreateMap<StatusResponseModel, AddStatusModel>();
+            #region ReplacedPart
+            CreateMap<ReplacedPart, ReplacedPartResponseModel>()
+                .ForMember(r => r.TotalPrice,
+                    opt => opt.MapFrom(x => x.Count * x.Price));
+
+            CreateMap<AddReplacedPartModel, ReplacedPartParameter>();
+
+            CreateMap<UpdateReplacedPartModel, ReplacedPartParameter>();
             #endregion
         }
     }
