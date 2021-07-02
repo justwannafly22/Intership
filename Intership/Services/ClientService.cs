@@ -44,14 +44,9 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task DeleteClientAsync(AddClientModel model)
+        public async Task DeleteClientAsync(Guid id)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
-            await _clientRepository.DeleteClientAsync(_mapper.Map<ClientParameter>(model));
+            await _clientRepository.DeleteClientAsync(id);
         }
 
         /// <summary>
@@ -82,14 +77,26 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> UpdateClientAsync(UpdateClientModel model)
+        public async Task<Guid> UpdateClientAsync(Guid id, UpdateClientModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _clientRepository.UpdateClientAsync(_mapper.Map<ClientParameter>(model));
+            return await _clientRepository.UpdateClientAsync(id, _mapper.Map<ClientParameter>(model));
+        }
+
+        /// <summary>
+        /// Returns a repairs
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<RepairResponseModel>> GetRepairs(Guid id)
+        {
+            var client = await _clientRepository.GetRepairWithRepairsAsync(id);
+
+            return _mapper.Map<IEnumerable<RepairResponseModel>>(client.Repairs);
         }
     }
 }

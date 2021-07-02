@@ -2,7 +2,6 @@
 using Intership.Data.Abstracts;
 using Intership.Data.Parameters;
 using Intership.Models.RequestModels.Product;
-using Intership.Models.RequestModels.Repair;
 using Intership.Models.ResponseModels;
 using Intership.Services.Abstracts;
 using System;
@@ -15,13 +14,11 @@ namespace Intership.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        private readonly IRepairRepository _repairRepository;
         private readonly IMapper _mapper;
 
-        public ProductService(IProductRepository productRepository, IRepairRepository repairRepository, IMapper mapper)
+        public ProductService(IProductRepository productRepository, IMapper mapper)
         {
             _productRepository = productRepository;
-            _repairRepository = repairRepository;
             _mapper = mapper;
         }
 
@@ -80,9 +77,9 @@ namespace Intership.Services
         /// <returns></returns>
         public async Task<IEnumerable<RepairResponseModel>> GetRepairsByProduct(Guid productId)
         {
-            var product = await _productRepository.GetProductAsync(productId, trackChanges: true);
+            var product = await _productRepository.GetProductWithRepairsAsync(productId, trackChanges: false);
 
-            return _mapper.Map<IEnumerable<RepairResponseModel>>(product.Repairs); //need to check this;
+            return _mapper.Map<IEnumerable<RepairResponseModel>>(product.ReplacedParts.Select(r => r.Repair));
         }
 
         /// <summary>
@@ -93,9 +90,9 @@ namespace Intership.Services
         /// <returns></returns>
         public async Task<RepairResponseModel> GetRepairByProduct(Guid productId, Guid repairId)
         {
-            var product = await _productRepository.GetProductAsync(productId, trackChanges: true);
+            var product = await _productRepository.GetProductWithRepairsAsync(productId, trackChanges: true);
 
-            return _mapper.Map<RepairResponseModel>(product.Repairs.Where(r => r.Id.Equals(repairId)).SingleOrDefault());
+            return _mapper.Map<RepairResponseModel>(product.ReplacedParts.Where(r => r.RepairId.Equals(repairId)).SingleOrDefault());
         }
 
         /// <summary>
@@ -114,79 +111,16 @@ namespace Intership.Services
         }
 
         /// <summary>
-        /// Create repair for the product
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="productId"></param>
-        /// <returns></returns>
-        public async Task<Guid> CreateRepairForProductAsync(AddRepairModel model, Guid productId)
-        {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
-            var product = await _productRepository.GetProductAsync(productId, trackChanges: true);
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
-
-            var addedRepairId = await _repairRepository.CreateRepairAsync(_mapper.Map<RepairParameter>(model));
-
-            product.Repairs.Add(_repairRepository.GetRepairAsync(addedRepairId, trackChanges: false).Result);
-
-            return addedRepairId;
-        }
-
-        /// <summary>
-        /// Update a repair for the product
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="productId"></param>
-        /// <param name="repairId"></param>
-        /// <returns></returns>
-        public async Task<Guid> UpdateRepairForProductAsync(UpdateRepairModel model, Guid productId, Guid repairId)
-        {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
-            var product = await _productRepository.GetProductAsync(productId, trackChanges: true);
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
-
-            var repair = product.Repairs.Where(r => r.Id.Equals(repairId)).SingleOrDefault();
-
-            repair.Name = model.Name;
-
-            return await _repairRepository.UpdateRepairAsync(_mapper.Map<RepairParameter>(model));
-        }
-
-        /// <summary>
-        /// Delete a repair for the product
+        /// Check for existing repair for the product
         /// </summary>
         /// <param name="productId"></param>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        public async Task DeleteRepairForProductAsync(Guid productId, Guid repairId)
+        public async Task<bool> IsExistRepair(Guid productId, Guid repairId)
         {
-            var product = await _productRepository.GetProductAsync(productId, trackChanges: true);
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            var product = await _productRepository.GetProductAsync(productId, trackChanges: false);
 
-            var repair = product.Repairs.Where(r => r.Id.Equals(repairId)).SingleOrDefault();
-            if (repair == null)
-            {
-                throw new ArgumentNullException(nameof(repair));
-            }
-
-            product.Repairs.Remove(repair);
+            return product.ReplacedParts.Where(r => r.RepairId.Equals(repairId)).SingleOrDefault() != null;
         }
     }
 }

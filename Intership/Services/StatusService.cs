@@ -44,14 +44,9 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task DeleteStatusAsync(AddStatusModel model)
+        public async Task DeleteStatusAsync(Guid id)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
-            await _statusRepository.DeleteStatusAsync(_mapper.Map<StatusParameter>(model));
+            await _statusRepository.DeleteStatusAsync(id);
         }
 
         /// <summary>
@@ -84,14 +79,14 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> UpdateStatusAsync(UpdateStatusModel model)
+        public async Task<Guid> UpdateStatusAsync(Guid id, UpdateStatusModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _statusRepository.UpdateStatusAsync(_mapper.Map<StatusParameter>(model));
+            return await _statusRepository.UpdateStatusAsync(id, _mapper.Map<StatusParameter>(model));
         }
     }
 }

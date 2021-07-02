@@ -44,14 +44,9 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task DeleteRepairInfoAsync(AddRepairInfoModel model)
+        public async Task DeleteRepairInfoAsync(Guid id)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
-            await _repairInfoRepository.DeleteRepairInfoAsync(_mapper.Map<RepairInfoParameter>(model));
+            await _repairInfoRepository.DeleteRepairInfoAsync(id);
         }
 
         /// <summary>
@@ -92,14 +87,14 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> UpdateRepairInfoAsync(UpdateRepairInfoModel model)
+        public async Task<Guid> UpdateRepairInfoAsync(Guid id, UpdateRepairInfoModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _repairInfoRepository.UpdateRepairInfoAsync(_mapper.Map<RepairInfoParameter>(model));
+            return await _repairInfoRepository.UpdateRepairInfoAsync(id, _mapper.Map<RepairInfoParameter>(model));
         }
     }
 }
