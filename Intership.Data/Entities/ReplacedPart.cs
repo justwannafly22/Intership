@@ -7,6 +7,7 @@ namespace Intership.Data.Entities
     public class ReplacedPart
     {
         [Column("id")]
+        [Key]
         public Guid Id { get; set; }
 
         [Column("replaced_part_name")]
