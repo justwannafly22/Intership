@@ -11,5 +11,6 @@ namespace Intership.Models.RequestModels.RepairInfo
         [Required(ErrorMessage = "Advanced info is a required field.")]
         [MaxLength(500, ErrorMessage = "Max length for AdvancedInfo is 500 characters.")]
         public string AdvancedInfo { get; set; }
+        public Guid StatusId { get; set; }
     }
 }
