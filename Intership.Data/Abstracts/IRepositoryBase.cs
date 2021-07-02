@@ -13,5 +13,6 @@ namespace Intership.Data.Abstracts
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
+        Task Save();
     }
 }

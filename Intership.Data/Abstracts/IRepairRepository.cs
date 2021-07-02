@@ -14,7 +14,8 @@ namespace Intership.Data.Abstracts
         Task<IEnumerable<Repair>> GetRepairsAsync(bool trackChanges);
         Task<Repair> GetRepairAsync(Guid id, bool trackChanges);
         Task<Guid> CreateRepairAsync(RepairParameter model);
-        Task<Guid> UpdateRepairAsync(RepairParameter model);
-        Task DeleteRepairAsync(RepairParameter model);
+        Task<Guid> UpdateRepairAsync(Guid id, RepairParameter model);
+        Task DeleteRepairAsync(Guid id);
+        Task<Repair> GetRepairWithReplacedParts(Guid repairId, bool trackChanges);
     }
 }

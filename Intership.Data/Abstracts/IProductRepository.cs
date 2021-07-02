@@ -13,5 +13,7 @@ namespace Intership.Data.Abstracts
         Task<Guid> CreateProductAsync(ProductParameter model);
         Task<Guid> UpdateProductAsync(Guid id, ProductParameter model);
         Task DeleteProductAsync(Guid id);
+        Task<Product> GetProductWithRepairsAsync(Guid id, bool trackChanges);
+        Task SaveChangesAsync();
     }
 }
