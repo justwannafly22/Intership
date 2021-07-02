@@ -29,6 +29,8 @@ namespace Intership.Extensions
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IRepairRepository, RepairRepository>();
             container.RegisterType<IRepairInfoRepository, RepairInfoRepository>();
+            container.RegisterType<IStatusRepository, StatusRepository>();
+            container.RegisterType<IReplacedPartRepository, ReplacedPartRepository>();
         }
 
         public static void ConfigureLogic(this IUnityContainer container)
@@ -38,6 +40,7 @@ namespace Intership.Extensions
             container.RegisterType<IRepairService, RepairService>();
             container.RegisterType<IRepairInfoService, RepairInfoService>();
             container.RegisterType<IStatusService, StatusService>();
+            container.RegisterType<IReplacedPartService, ReplacedPartService>();
         }
     }
 }
