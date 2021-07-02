@@ -14,7 +14,6 @@ namespace Intership.Data.Entities
         {
             modelBuilder.ApplyConfiguration(new ProductsConfiguration());
             modelBuilder.ApplyConfiguration(new ClientsConfiguration());
-            modelBuilder.ApplyConfiguration(new OrdersConfiguration());
             modelBuilder.ApplyConfiguration(new RepairsConfiguration());
             modelBuilder.ApplyConfiguration(new StatusesConfiguration());
             modelBuilder.ApplyConfiguration(new RepairsInfoConfiguration());
@@ -33,7 +32,6 @@ namespace Intership.Data.Entities
         
         public DbSet<Client> Clients { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<Repair> Repairs { get; set; }
         public DbSet<ReplacedPart> ReplacedParts { get; set; }
         public DbSet<RepairInfo> RepairsInfo { get; set; }
