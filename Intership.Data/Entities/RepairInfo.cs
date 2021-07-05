@@ -7,15 +7,16 @@ namespace Intership.Data.Entities
     public class RepairInfo
     {
         [Column("id")]
+        [Key]
         public Guid Id { get; set; }
         
         [Column("repair_date")]
-        [Required(ErrorMessage = "Date is a required field.")]
+        [Required]
         public DateTime Date { get; set; }
         
         [Column("advanced_info")]
-        [Required(ErrorMessage = "Advanced info is a required field.")]
-        [MaxLength(500, ErrorMessage = "Max length for AdvancedInfo is 500 characters.")]
+        [Required]
+        [MaxLength(500)]
         public string AdvancedInfo { get; set; }
         
         [ForeignKey(nameof(Status))]

@@ -8,11 +8,12 @@ namespace Intership.Data.Entities
     public class Repair
     {
         [Column("id")]
+        [Key]
         public Guid Id { get; set; }
 
         [Column("name")]
-        [Required(ErrorMessage = "Name is a required field.")]
-        [MaxLength(60, ErrorMessage = "Max length for Name is 60 characters.")]
+        [Required]
+        [MaxLength(60)]
         public string Name { get; set; }
 
         [ForeignKey(nameof(RepairInfo))]

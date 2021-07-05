@@ -11,21 +11,21 @@ namespace Intership.Data.Entities
         public Guid Id { get; set; }
 
         [Column("replaced_part_name")]
-        [Required(ErrorMessage = "Name is a required field.")]
-        [MaxLength(60, ErrorMessage = "Max length for Name is 60 characters.")]
+        [Required]
+        [MaxLength]
         public string Name { get; set; }
 
         [Column("price")]
-        [Range(0, double.MaxValue, ErrorMessage = "Price is required and it can`t be lower than 0.")]
+        [Range(0, double.MaxValue)]
         public double Price { get; set; }
 
         [Column("replaced_part_count")]
-        [Range(0, int.MaxValue, ErrorMessage = "Count is required and it can`t be lower than 0.")]
+        [Range(0, int.MaxValue)]
         public int Count { get; set; }
 
         [Column("advanced_info")]
-        [Required(ErrorMessage = "Advanced info is a required field.")]
-        [MaxLength(500, ErrorMessage = "Max length for AdvancedInfo is 500 characters.")]
+        [Required]
+        [MaxLength(500)]
         public string AdvancedInfo { get; set; }
 
         [ForeignKey(nameof(Repair))]

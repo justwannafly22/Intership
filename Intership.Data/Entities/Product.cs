@@ -12,16 +12,16 @@ namespace Intership.Data.Entities
         public Guid Id { get; set; }
 
         [Column("product_name")]
-        [Required(ErrorMessage = "Name is a required field.")]
-        [MaxLength(60, ErrorMessage = "Max length for Name is 60 characters.")]
+        [Required]
+        [MaxLength(60)]
         public string Name { get; set; }
 
         [Column("price")]
-        [Range(0, double.MaxValue, ErrorMessage = "Price is required and it can`t be lower than 0.")]
+        [Range(0, double.MaxValue)]
         public double Price { get; set; }
         
         [Column("product_description")]
-        [Required(ErrorMessage = "Product description is a required field.")]
+        [Required]
         public string Description { get; set; }
         
         public ICollection<ReplacedPart> ReplacedParts { get; set; }

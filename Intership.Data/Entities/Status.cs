@@ -8,11 +8,12 @@ namespace Intership.Data.Entities
     public class Status
     {
         [Column("id")]
+        [Key]
         public Guid Id { get; set; }
         
         [Column("status_info")]
-        [Required(ErrorMessage = "Status info is a required field.")]
-        [MaxLength(60, ErrorMessage = "Max length for StatusInfo is 500 characters.")]
+        [Required]
+        [MaxLength(60)]
         public string StatusInfo { get; set; }
 
         public ICollection<RepairInfo> RepairsInfo { get; set; }
