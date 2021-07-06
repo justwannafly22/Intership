@@ -20,7 +20,7 @@ namespace Intership.Data.Entities
         public string Surname { get; set; }
 
         [Column("age")]
-        [Required]
+        [Range(0, 150)]
         public int Age { get; set; }
 
         [Column("contact_number")]
