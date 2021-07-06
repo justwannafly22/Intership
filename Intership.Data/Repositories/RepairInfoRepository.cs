@@ -3,7 +3,6 @@ using Intership.Data.Entities;
 using Intership.Data.Parameters;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Intership.Data.Repositories
@@ -58,34 +57,11 @@ namespace Intership.Data.Repositories
         /// <param name="id"></param>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<RepairInfo> GetAsync(Guid id, bool trackChanges) =>
-            await FindByCondition(r => r.Id.Equals(id), trackChanges)
+        public async Task<RepairInfo> GetAsync(Guid id) =>
+            await FindByCondition(r => r.Id.Equals(id), trackChanges : true)
             .Include(r => r.Status)
             .SingleOrDefaultAsync();
         
-        /// <summary>
-        /// Returns a repair info by repair id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="repairId"></param>
-        /// <param name="trackChanges"></param>
-        /// <returns></returns>
-        public async Task<RepairInfo> GetAsync(Guid id, Guid repairId, bool trackChanges) =>
-            await FindByCondition(r => r.Id.Equals(id) && r.RepairId.Equals(repairId), trackChanges)
-            .Include(r => r.Status)
-            .SingleOrDefaultAsync();
-
-        /// <summary>
-        /// Returns a repair info by repair id
-        /// </summary>
-        /// <param name="repairId"></param>
-        /// <param name="trackChanges"></param>
-        /// <returns></returns>
-        public async Task<RepairInfo> GetByRepairIdAsync(Guid repairId, bool trackChanges) =>
-            await FindByCondition(r => r.RepairId.Equals(repairId), trackChanges)
-            .Include(r => r.Status)
-            .SingleOrDefaultAsync();
-
         /// <summary>
         /// Update a repair info
         /// </summary>

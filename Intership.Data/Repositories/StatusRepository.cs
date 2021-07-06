@@ -54,8 +54,8 @@ namespace Intership.Data.Repositories
         /// <param name="id"></param>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<Status> GetAsync(Guid id, bool trackChanges) =>
-            await FindByCondition(s => s.Id.Equals(id), trackChanges)
+        public async Task<Status> GetAsync(Guid id) =>
+            await FindByCondition(s => s.Id.Equals(id), trackChanges : true)
             .SingleOrDefaultAsync();
 
         /// <summary>
@@ -63,8 +63,8 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Status>> GetAllAsync(bool trackChanges) =>
-            await FindAll(trackChanges)
+        public async Task<IEnumerable<Status>> GetAllAsync() =>
+            await FindAll(trackChanges : false)
             .ToListAsync();
         
         /// <summary>

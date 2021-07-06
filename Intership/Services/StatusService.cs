@@ -56,7 +56,7 @@ namespace Intership.Services
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<StatusResponseModel> GetAsync(Guid id) =>
-            _mapper.Map<StatusResponseModel>(await _statusRepository.GetAsync(id, trackChanges: true));
+            _mapper.Map<StatusResponseModel>(await _statusRepository.GetAsync(id));
 
         /// <summary>
         /// Returns all statuses
@@ -64,7 +64,7 @@ namespace Intership.Services
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<IEnumerable<StatusResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<StatusResponseModel>>(await _statusRepository.GetAllAsync(trackChanges: false));
+            _mapper.Map<IEnumerable<StatusResponseModel>>(await _statusRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing status in the database
@@ -72,7 +72,7 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<bool> IsExist(Guid id) =>
-            await _statusRepository.GetAsync(id, trackChanges: false) != null;
+            await _statusRepository.GetAsync(id) != null;
 
         /// <summary>
         /// Update a status and returns id

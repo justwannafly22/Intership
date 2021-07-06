@@ -56,14 +56,14 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<ProductResponseModel> GetAsync(Guid id) =>
-            _mapper.Map<ProductResponseModel>(await _productRepository.GetAsync(id, trackChanges: true));
+            _mapper.Map<ProductResponseModel>(await _productRepository.GetAsync(id));
 
         /// <summary>
         /// Returns all products
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<ProductResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<ProductResponseModel>>(await _productRepository.GetAllAsync(trackChanges: false));
+            _mapper.Map<IEnumerable<ProductResponseModel>>(await _productRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing product
@@ -71,7 +71,7 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<bool> IsExist(Guid id) =>
-            await _productRepository.GetAsync(id, trackChanges: false) != null;
+            await _productRepository.GetAsync(id) != null;
 
         /// <summary>
         /// Returns a repairs for the product
@@ -80,7 +80,7 @@ namespace Intership.Services
         /// <returns></returns>
         public async Task<IEnumerable<RepairResponseModel>> GetRepairsByProduct(Guid productId)
         {
-            var product = await _productRepository.GetWithRepairsAsync(productId, trackChanges: false);
+            var product = await _productRepository.GetWithRepairsAsync(productId);
 
             return _mapper.Map<IEnumerable<RepairResponseModel>>(product.ReplacedParts.Select(r => r.Repair));
         }
@@ -93,7 +93,7 @@ namespace Intership.Services
         /// <returns></returns>
         public async Task<RepairResponseModel> GetRepairByProduct(Guid productId, Guid repairId)
         {
-            var product = await _productRepository.GetWithRepairsAsync(productId, trackChanges: true);
+            var product = await _productRepository.GetWithRepairsAsync(productId);
 
             return _mapper.Map<RepairResponseModel>(product.ReplacedParts.Where(r => r.RepairId.Equals(repairId)).SingleOrDefault());
         }
@@ -121,7 +121,7 @@ namespace Intership.Services
         /// <returns></returns>
         public async Task<bool> IsRepairExist(Guid productId, Guid repairId)
         {
-            var product = await _productRepository.GetAsync(productId, trackChanges: false);
+            var product = await _productRepository.GetAsync(productId);
 
             return product.ReplacedParts.Where(r => r.RepairId.Equals(repairId)).SingleOrDefault() != null;
         }

@@ -55,7 +55,7 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<RepairInfoResponseModel> GetAsync(Guid id) =>
-            _mapper.Map<RepairInfoResponseModel>(await _repairInfoRepository.GetAsync(id, trackChanges: true));
+            _mapper.Map<RepairInfoResponseModel>(await _repairInfoRepository.GetAsync(id));
 
         /// <summary>
         /// Returns a repair info by repair id

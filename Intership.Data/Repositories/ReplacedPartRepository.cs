@@ -87,8 +87,8 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<ReplacedPart>> GetAllAsync(bool trackChanges) =>
-            await FindAll(trackChanges)
+        public async Task<IEnumerable<ReplacedPart>> GetAllAsync() =>
+            await FindAll(trackChanges : false)
             .ToListAsync();
         
         /// <summary>
@@ -97,8 +97,8 @@ namespace Intership.Data.Repositories
         /// <param name="id"></param>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<ReplacedPart> GetAsync(Guid id, bool trackChanges) =>
-            await FindByCondition(r => r.Id.Equals(id), trackChanges)
+        public async Task<ReplacedPart> GetAsync(Guid id) =>
+            await FindByCondition(r => r.Id.Equals(id), trackChanges : true)
             .SingleOrDefaultAsync();
         
         /// <summary>

@@ -55,14 +55,14 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<ClientResponseModel> GetAsync(Guid id) =>
-            _mapper.Map<ClientResponseModel>(await _clientRepository.GetAsync(id, trackChanges: true));
+            _mapper.Map<ClientResponseModel>(await _clientRepository.GetAsync(id));
 
         /// <summary>
         /// Returns a list of clients
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<ClientResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<ClientResponseModel>>(await _clientRepository.GetAllAsync(trackChanges: false));
+            _mapper.Map<IEnumerable<ClientResponseModel>>(await _clientRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing client
@@ -70,7 +70,7 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<bool> IsExist(Guid id) =>
-            await _clientRepository.GetAsync(id, trackChanges: false) != null;
+            await _clientRepository.GetAsync(id) != null;
 
         /// <summary>
         /// Client update

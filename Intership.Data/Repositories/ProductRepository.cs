@@ -56,8 +56,8 @@ namespace Intership.Data.Repositories
         /// <param name="id"></param>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<Product> GetAsync(Guid id, bool trackChanges) =>
-            await FindByCondition(p => p.Id.Equals(id), trackChanges)
+        public async Task<Product> GetAsync(Guid id) =>
+            await FindByCondition(p => p.Id.Equals(id), trackChanges : true)
             .SingleOrDefaultAsync();
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Product>> GetAllAsync(bool trackChanges) =>
-            await FindAll(trackChanges)
+        public async Task<IEnumerable<Product>> GetAllAsync() =>
+            await FindAll(trackChanges : false)
             .ToListAsync();
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace Intership.Data.Repositories
         /// <param name="id"></param>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<Product> GetWithRepairsAsync(Guid id, bool trackChanges) =>
-            await FindByCondition(p => p.Id.Equals(id), trackChanges)
+        public async Task<Product> GetWithRepairsAsync(Guid id) =>
+            await FindByCondition(p => p.Id.Equals(id), trackChanges : false)
             .Include(p => p.ReplacedParts)
                 .ThenInclude(r => r.Repair)
                     .ThenInclude(r => r.RepairInfo)

@@ -64,7 +64,7 @@ namespace Intership.Services
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<ReplacedPartResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<ReplacedPartResponseModel>>(await _replacedPartRepository.GetAllAsync(trackChanges: false));
+            _mapper.Map<IEnumerable<ReplacedPartResponseModel>>(await _replacedPartRepository.GetAllAsync());
 
         /// <summary>
         /// Returns a replaced part
@@ -72,7 +72,7 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<ReplacedPartResponseModel> GetAsync(Guid id) =>
-            _mapper.Map<ReplacedPartResponseModel>(await _replacedPartRepository.GetAsync(id, trackChanges: true));
+            _mapper.Map<ReplacedPartResponseModel>(await _replacedPartRepository.GetAsync(id));
 
         /// <summary>
         /// Delete a replaced part
@@ -88,6 +88,6 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<bool> IsExist(Guid id) =>
-            await _replacedPartRepository.GetAsync(id, trackChanges: false) != null;
+            await _replacedPartRepository.GetAsync(id) != null;
     }
 }
