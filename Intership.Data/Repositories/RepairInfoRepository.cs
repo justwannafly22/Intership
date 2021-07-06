@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Intership.Data.Repositories
 {
+    /// <summary>
+    /// RepairInfo repository implementation
+    /// </summary>
     public class RepairInfoRepository : RepositoryBase<RepairInfo>, IRepairInfoRepository
     {
         public RepairInfoRepository(MyDbContext context)
@@ -15,7 +18,13 @@ namespace Intership.Data.Repositories
         {
         }
 
-        public async Task<Guid> CreateRepairInfoAsync(RepairInfoParameter model, Guid repairId)
+        /// <summary>
+        /// Create a repair info
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="repairId"></param>
+        /// <returns></returns>
+        public async Task<Guid> CreateAsync(RepairInfoParameter model, Guid repairId)
         {
             var repairInfo = new RepairInfo()
             {
@@ -30,7 +39,12 @@ namespace Intership.Data.Repositories
             return repairInfo.Id;
         }
 
-        public async Task DeleteRepairInfoAsync(Guid id)
+        /// <summary>
+        /// Delete a repair info
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(Guid id)
         {
             var repairInfo = await FindByCondition(r => r.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();
@@ -38,28 +52,47 @@ namespace Intership.Data.Repositories
             await DeleteAsync(repairInfo);
         }
 
-        public async Task<RepairInfo> GetRepairInfoAsync(Guid id, bool trackChanges) =>
+        /// <summary>
+        /// Returns a repair info
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<RepairInfo> GetAsync(Guid id, bool trackChanges) =>
             await FindByCondition(r => r.Id.Equals(id), trackChanges)
             .Include(r => r.Status)
             .SingleOrDefaultAsync();
-
-        public async Task<RepairInfo> GetRepairInfoAsync(Guid id, Guid repairId, bool trackChanges) =>
+        
+        /// <summary>
+        /// Returns a repair info by repair id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="repairId"></param>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<RepairInfo> GetAsync(Guid id, Guid repairId, bool trackChanges) =>
             await FindByCondition(r => r.Id.Equals(id) && r.RepairId.Equals(repairId), trackChanges)
             .Include(r => r.Status)
             .SingleOrDefaultAsync();
-            
 
-        public async Task<RepairInfo> GetRepairInfoByRepairIdAsync(Guid repairId, bool trackChanges) =>
+        /// <summary>
+        /// Returns a repair info by repair id
+        /// </summary>
+        /// <param name="repairId"></param>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<RepairInfo> GetByRepairIdAsync(Guid repairId, bool trackChanges) =>
             await FindByCondition(r => r.RepairId.Equals(repairId), trackChanges)
             .Include(r => r.Status)
             .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<RepairInfo>> GetRepairsInfoAsync(bool trackChanges) =>
-            await FindAll(trackChanges)
-            .Include(r => r.Status)
-            .ToListAsync();
-        
-        public async Task<Guid> UpdateRepairInfoAsync(Guid id, RepairInfoParameter model)
+        /// <summary>
+        /// Update a repair info
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<Guid> UpdateAsync(Guid id, RepairInfoParameter model)
         {
             var repairInfo = await FindByCondition(r => r.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();

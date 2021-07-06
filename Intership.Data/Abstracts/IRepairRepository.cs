@@ -11,10 +11,11 @@ namespace Intership.Data.Abstracts
     /// </summary>
     public interface IRepairRepository
     {
-        Task<IEnumerable<Repair>> GetRepairsAsync(bool trackChanges);
-        Task<Repair> GetRepairAsync(Guid id, bool trackChanges);
-        Task<Guid> CreateRepairAsync(RepairParameter model);
-        Task<Guid> UpdateRepairAsync(RepairParameter model);
-        Task DeleteRepairAsync(RepairParameter model);
+        Task<IEnumerable<Repair>> GetAllAsync(bool trackChanges);
+        Task<Repair> GetAsync(Guid id, bool trackChanges);
+        Task<Guid> CreateAsync(RepairParameter model);
+        Task<Guid> UpdateAsync(Guid id, RepairParameter model);
+        Task DeleteAsync(Guid id);
+        Task<Repair> GetWithReplacedParts(Guid repairId, bool trackChanges);
     }
 }

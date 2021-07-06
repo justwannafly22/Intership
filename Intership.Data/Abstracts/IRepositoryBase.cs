@@ -11,6 +11,7 @@ namespace Intership.Data.Abstracts
         IQueryable<T> FindAll(bool trackChanges);
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges);
         Task CreateAsync(T entity);
+        Task CreateRangeAsync(IEnumerable<T> entities);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
     }

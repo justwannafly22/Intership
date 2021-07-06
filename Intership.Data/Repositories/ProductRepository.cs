@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Intership.Data.Repositories
 {
+    /// <summary>
+    /// Product repository implementation
+    /// </summary>
     public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
         public ProductRepository(MyDbContext context)
@@ -15,7 +18,12 @@ namespace Intership.Data.Repositories
         {
         }
 
-        public async Task<Guid> CreateProductAsync(ProductParameter model)
+        /// <summary>
+        /// Create a product
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<Guid> CreateAsync(ProductParameter model)
         {
             var product = new Product()
             {
@@ -28,8 +36,13 @@ namespace Intership.Data.Repositories
 
             return product.Id;
         }
-
-        public async Task DeleteProductAsync(Guid id)
+        
+        /// <summary>
+        /// Delete a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(Guid id)
         {
             var product = await FindByCondition(p => p.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();
@@ -37,15 +50,32 @@ namespace Intership.Data.Repositories
             await DeleteAsync(product);
         }
 
-        public async Task<Product> GetProductAsync(Guid id, bool trackChanges) =>
+        /// <summary>
+        /// Returns a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<Product> GetAsync(Guid id, bool trackChanges) =>
             await FindByCondition(p => p.Id.Equals(id), trackChanges)
             .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Product>> GetProductsAsync(bool trackChanges) =>
+        /// <summary>
+        /// Returns a products
+        /// </summary>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Product>> GetAllAsync(bool trackChanges) =>
             await FindAll(trackChanges)
             .ToListAsync();
 
-        public async Task<Guid> UpdateProductAsync(Guid id, ProductParameter model)
+        /// <summary>
+        /// Update a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<Guid> UpdateAsync(Guid id, ProductParameter model)
         {
             var product = await FindByCondition(p => p.Id.Equals(id), trackChanges: true).
                 SingleOrDefaultAsync();
@@ -59,15 +89,18 @@ namespace Intership.Data.Repositories
             return product.Id;
         }
 
-        public async Task<Product> GetProductWithRepairsAsync(Guid id, bool trackChanges) =>
+        /// <summary>
+        /// Returns a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<Product> GetWithRepairsAsync(Guid id, bool trackChanges) =>
             await FindByCondition(p => p.Id.Equals(id), trackChanges)
             .Include(p => p.ReplacedParts)
                 .ThenInclude(r => r.Repair)
                     .ThenInclude(r => r.RepairInfo)
                         .ThenInclude(r => r.Status)
             .SingleOrDefaultAsync();
-
-        public async Task SaveChangesAsync() =>
-            await Save();
     }
 }

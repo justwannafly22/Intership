@@ -4,10 +4,14 @@ using Intership.Data.Parameters;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Intership.Data.Repositories
 {
+    /// <summary>
+    /// ReplacedPart repository implementation
+    /// </summary>
     public class ReplacedPartRepository : RepositoryBase<ReplacedPart>, IReplacedPartRepository
     {
         public ReplacedPartRepository(MyDbContext context)
@@ -15,7 +19,12 @@ namespace Intership.Data.Repositories
         {
         }
 
-        public async Task<Guid> CreateReplacedPartAsync(ReplacedPartParameter model)
+        /// <summary>
+        /// Create a replaced part
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<Guid> CreateAsync(ReplacedPartParameter model)
         {
             var replacedPart = new ReplacedPart()
             {
@@ -26,13 +35,39 @@ namespace Intership.Data.Repositories
                 RepairId = model.RepairId,
                 ProductId = model.ProductId
             };
-
+            
             await CreateAsync(replacedPart);
 
             return replacedPart.Id;
         }
         
-        public async Task<Guid> UpdateReplacedPartAsync(Guid id, ReplacedPartParameter model)
+        /// <summary>
+        /// Create many replaced parts
+        /// </summary>
+        /// <param name="models"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Guid>> CreateRangeAsync(IEnumerable<ReplacedPartParameter> models)
+        {
+            var replacedParts = models.Select(r => new ReplacedPart()
+            {
+                Name = r.Name,
+                Price = r.Price,
+                Count = r.Count,
+                AdvancedInfo = r.AdvancedInfo
+            });
+
+            await CreateRangeAsync(replacedParts);
+
+            return replacedParts.Select(r => r.Id);
+        }
+
+        /// <summary>
+        /// Update a replaced part
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<Guid> UpdateAsync(Guid id, ReplacedPartParameter model)
         {
             var replacedPart = await FindByCondition(r => r.Id.Equals(id), trackChanges: true)
                 .SingleOrDefaultAsync();
@@ -47,15 +82,31 @@ namespace Intership.Data.Repositories
             return replacedPart.Id;
         }
 
-        public async Task<IEnumerable<ReplacedPart>> GetReplacedPartsAsync(bool trackChanges) =>
+        /// <summary>
+        /// Returns all replaced parts
+        /// </summary>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<ReplacedPart>> GetAllAsync(bool trackChanges) =>
             await FindAll(trackChanges)
             .ToListAsync();
         
-        public async Task<ReplacedPart> GetReplacedPartAsync(Guid id, bool trackChanges) =>
+        /// <summary>
+        /// Returns a replaced part
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<ReplacedPart> GetAsync(Guid id, bool trackChanges) =>
             await FindByCondition(r => r.Id.Equals(id), trackChanges)
             .SingleOrDefaultAsync();
-
-        public async Task DeleteReplacedPartAsync(Guid id) =>
+        
+        /// <summary>
+        /// Delete a replaced part
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(Guid id) =>
             await DeleteAsync(await FindByCondition(r => r.Id.Equals(id), trackChanges: false).SingleOrDefaultAsync());
     }
 }

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Intership.Data.Repositories
 {
+    /// <summary>
+    /// Status repository implementation
+    /// </summary>
     public class StatusRepository : RepositoryBase<Status>, IStatusRepository
     {
         public StatusRepository (MyDbContext context)
@@ -15,7 +18,12 @@ namespace Intership.Data.Repositories
         {
         }
 
-        public async Task<Guid> CreateStatusAsync(StatusParameter model)
+        /// <summary>
+        /// Create a status
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<Guid> CreateAsync(StatusParameter model)
         {
             var status = new Status()
             {
@@ -27,23 +35,45 @@ namespace Intership.Data.Repositories
             return status.Id;
         }
 
-        public async Task DeleteStatusAsync(Guid id)
+        /// <summary>
+        /// Delete a status
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(Guid id)
         {
             var status = await FindByCondition(s => s.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();
 
             await DeleteAsync(status);
         }
-
-        public async Task<Status> GetStatusAsync(Guid id, bool trackChanges) =>
+        
+        /// <summary>
+        /// Returns a status
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<Status> GetAsync(Guid id, bool trackChanges) =>
             await FindByCondition(s => s.Id.Equals(id), trackChanges)
             .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Status>> GetStatusesAsync(bool trackChanges) =>
+        /// <summary>
+        /// Returns all statuses
+        /// </summary>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Status>> GetAllAsync(bool trackChanges) =>
             await FindAll(trackChanges)
             .ToListAsync();
-
-        public async Task<Guid> UpdateStatusAsync(Guid id, StatusParameter model)
+        
+        /// <summary>
+        /// Update a status
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<Guid> UpdateAsync(Guid id, StatusParameter model)
         {
             var status = await FindByCondition(s => s.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();

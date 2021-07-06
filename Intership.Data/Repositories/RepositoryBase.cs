@@ -2,6 +2,7 @@
 using Intership.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -20,6 +21,13 @@ namespace Intership.Data.Repositories
         public async Task CreateAsync(T entity)
         {
             RepositoryContext.Set<T>().Add(entity);
+
+            await RepositoryContext.SaveChangesAsync();
+        }
+
+        public async Task CreateRangeAsync(IEnumerable<T> entities)
+        {
+            RepositoryContext.Set<T>().AddRange(entities);
 
             await RepositoryContext.SaveChangesAsync();
         }

@@ -8,10 +8,11 @@ namespace Intership.Data.Abstracts
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetProductsAsync(bool trackChanges);
-        Task<Product> GetProductAsync(Guid id, bool trackChanges);
-        Task<Guid> CreateProductAsync(ProductParameter model);
-        Task<Guid> UpdateProductAsync(Guid id, ProductParameter model);
-        Task DeleteProductAsync(Guid id);
+        Task<IEnumerable<Product>> GetAllAsync(bool trackChanges);
+        Task<Product> GetAsync(Guid id, bool trackChanges);
+        Task<Guid> CreateAsync(ProductParameter model);
+        Task<Guid> UpdateAsync(Guid id, ProductParameter model);
+        Task DeleteAsync(Guid id);
+        Task<Product> GetWithRepairsAsync(Guid id, bool trackChanges);
     }
 }

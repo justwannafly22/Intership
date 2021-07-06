@@ -8,10 +8,10 @@ namespace Intership.Data.Abstracts
 {
     public interface IStatusRepository
     {
-        Task<IEnumerable<Status>> GetStatusesAsync(bool trackChanges);
-        Task<Status> GetStatusAsync(Guid id, bool trackChanges);
-        Task<Guid> UpdateStatusAsync(Guid id, StatusParameter model);
-        Task<Guid> CreateStatusAsync(StatusParameter model);
-        Task DeleteStatusAsync(Guid id);
+        Task<IEnumerable<Status>> GetAllAsync(bool trackChanges);
+        Task<Status> GetAsync(Guid id, bool trackChanges);
+        Task<Guid> UpdateAsync(Guid id, StatusParameter model);
+        Task<Guid> CreateAsync(StatusParameter model);
+        Task DeleteAsync(Guid id);
     }
 }

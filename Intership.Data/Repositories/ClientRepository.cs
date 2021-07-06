@@ -5,18 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Intership.Data.Abstracts;
 using Intership.Data.Parameters;
-using Intership.Models.ResponseModels;
 
 namespace Intership.Data.Repositories
 {
+    /// <summary>
+    /// Client repository implementation
+    /// </summary>
     public class ClientRepository : RepositoryBase<Client>, IClientRepository
     {
         public ClientRepository(MyDbContext context)
             :base(context)
         {
         }
-
-        public async Task<Guid> CreateClientAsync(ClientParameter model)
+        
+        /// <summary>
+        /// Create a client
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<Guid> CreateAsync(ClientParameter model)
         {
             var client = new Client()
             {
@@ -33,7 +40,12 @@ namespace Intership.Data.Repositories
             return client.Id;
         }
 
-        public async Task DeleteClientAsync(Guid id)
+        /// <summary>
+        /// Delete a client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task DeleteAsync(Guid id)
         {
             var client = await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();
@@ -41,20 +53,42 @@ namespace Intership.Data.Repositories
             await DeleteAsync(client);
         }
 
-        public async Task<Client> GetClientAsync(Guid id, bool trackChanges) =>
+        /// <summary>
+        /// Returns a client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<Client> GetAsync(Guid id, bool trackChanges) =>
             await FindByCondition(c => c.Id.Equals(id), trackChanges)
             .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Client>> GetClientsAsync(bool trackChanges) =>
+        /// <summary>
+        /// Returns all clients
+        /// </summary>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Client>> GetAllAsync(bool trackChanges) =>
             await FindAll(trackChanges)
             .ToListAsync();
 
+        /// <summary>
+        /// Returns a client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Client> GetRepairWithRepairsAsync(Guid id) =>
             await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
             .Include(c => c.Repairs)
             .SingleOrDefaultAsync();
-
-        public async Task<Guid> UpdateClientAsync(Guid id, ClientParameter model)
+        
+        /// <summary>
+        /// Update a client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<Guid> UpdateAsync(Guid id, ClientParameter model)
         {
             var client = await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();
