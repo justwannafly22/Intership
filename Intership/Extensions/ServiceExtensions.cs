@@ -1,4 +1,4 @@
-﻿using Intership.Data.Entities;
+﻿using Intership.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
