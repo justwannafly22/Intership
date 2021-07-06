@@ -4,13 +4,13 @@ using Intership.Models.RequestModels.Product;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
 {
     [ApiController]
     [Route("api/v1/products")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;

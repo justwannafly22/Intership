@@ -11,6 +11,7 @@ namespace Intership.Controllers
 {
     [ApiController]
     [Route("api/v1/repairs")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class RepairController : Controller
     {
         private readonly IRepairService _repairService;

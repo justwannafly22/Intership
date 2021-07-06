@@ -1,17 +1,16 @@
-﻿using AutoMapper;
-using Intership.LoggerService.Abstracts;
+﻿using Intership.LoggerService.Abstracts;
 using Intership.Models.RequestModels.ReplacedPart;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
 {
     [ApiController]
     [Route("api/v1/replacedParts")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class ReplacedPartController : Controller
     {
         private readonly IReplacedPartService _replacedPartService;

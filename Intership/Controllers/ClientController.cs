@@ -10,6 +10,7 @@ namespace Intership.Controllers
 {
     [ApiController]
     [Route("api/v1/clients")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;

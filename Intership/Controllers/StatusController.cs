@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Intership.LoggerService.Abstracts;
+﻿using Intership.LoggerService.Abstracts;
 using Intership.Models.RequestModels.Status;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ namespace Intership.Controllers
 {
     [ApiController]
     [Route("api/v1/statuses")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class StatusController : Controller
     {
         private readonly IStatusService _statusService;

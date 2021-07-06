@@ -9,6 +9,7 @@ namespace Intership.Controllers
 {
     [ApiController]
     [Route("api/v1/repairsInfo")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class RepairInfoController : Controller
     {
         private readonly IRepairInfoService _repairInfoService;
