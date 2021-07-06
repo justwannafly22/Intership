@@ -22,24 +22,24 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns all statuses
+        /// Returns all statuses or empty array if statuses doesn`t exist in the database
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetStatuses()
+        public async Task<IActionResult> GetAll()
         {
-            var statuses = await _statusService.GetStatusesAsync();
+            var statuses = await _statusService.GetAllAsync();
 
             return Ok(statuses);
         }
 
         /// <summary>
-        /// Returns a status
+        /// Returns a status or 404 status code
         /// </summary>
         /// <param name="statusId"></param>
         /// <returns></returns>
         [HttpGet("{statusId}")]
-        public async Task<IActionResult> GetStatus(Guid statusId)
+        public async Task<IActionResult> Get(Guid statusId)
         {
             if (!await _statusService.IsExist(statusId))
             {
@@ -47,7 +47,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            return Ok(await _statusService.GetStatusAsync(statusId));
+            return Ok(await _statusService.GetAsync(statusId));
         }
 
         /// <summary>
@@ -56,20 +56,20 @@ namespace Intership.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateStatus([FromBody] AddStatusModel model)
+        public async Task<IActionResult> Create([FromBody] AddStatusModel model)
         {
-            var addedStatusId = await _statusService.CreateStatusAsync(model);
+            var addedStatusId = await _statusService.CreateAsync(model);
 
             return Created($"api/v1/{addedStatusId}", new { AddedStatusId = addedStatusId });
         }
 
         /// <summary>
-        /// Delete a status
+        /// Delete a status and returns 200 or 404 status code
         /// </summary>
         /// <param name="statusId"></param>
         /// <returns></returns>
         [HttpDelete("{statusId}")]
-        public async Task<IActionResult> DeleteStatus(Guid statusId)
+        public async Task<IActionResult> Delete(Guid statusId)
         {
             if (!await _statusService.IsExist(statusId))
             {
@@ -77,19 +77,19 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            await _statusService.DeleteStatusAsync(statusId);
+            await _statusService.DeleteAsync(statusId);
 
             return NoContent();
         }
 
         /// <summary>
-        /// Update a status
+        /// Update a status and returns 200 or 404 status code
         /// </summary>
         /// <param name="statusId"></param>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{statusId}")]
-        public async Task<IActionResult> UpdateStatus(Guid statusId, [FromBody] UpdateStatusModel model)
+        public async Task<IActionResult> Update(Guid statusId, [FromBody] UpdateStatusModel model)
         {
             if (!await _statusService.IsExist(statusId))
             {
@@ -97,7 +97,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            _ = await _statusService.UpdateStatusAsync(statusId, model);
+            _ = await _statusService.UpdateAsync(statusId, model);
 
             return NoContent();
         }

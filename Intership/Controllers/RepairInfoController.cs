@@ -21,12 +21,12 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns a repair info
+        /// Returns a repair info or 404 status code if repair info doesn`t exist in the database
         /// </summary>
         /// <param name="repairInfoId"></param>
         /// <returns></returns>
         [HttpGet("{repairInfoId}")]
-        public async Task<IActionResult> GetRepairInfo(Guid repairInfoId)
+        public async Task<IActionResult> Get(Guid repairInfoId)
         {
             if (!await _repairInfoService.IsExist(repairInfoId))
             {
@@ -34,16 +34,16 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            return Ok(await _repairInfoService.GetRepairInfoAsync(repairInfoId));
+            return Ok(await _repairInfoService.GetAsync(repairInfoId));
         }
 
         /// <summary>
-        /// Delete a repair info
+        /// Delete a repair info and returns 200 status code or 404 one if repair info doesn`t exist in the database
         /// </summary>
         /// <param name="repairInfoId"></param>
         /// <returns></returns>
         [HttpDelete("{repairInfoId}")]
-        public async Task<IActionResult> DeleteRepairInfo(Guid repairInfoId)
+        public async Task<IActionResult> Delete(Guid repairInfoId)
         {
             if (!await _repairInfoService.IsExist(repairInfoId))
             {
@@ -51,19 +51,19 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            await _repairInfoService.DeleteRepairInfoAsync(repairInfoId);
+            await _repairInfoService.DeleteAsync(repairInfoId);
 
             return NoContent();
         }
 
         /// <summary>
-        /// Update a repair info
+        /// Update a repair info and returns 200 status code or 404 one if repair info doesn`t exist in the database
         /// </summary>
         /// <param name="repairInfoId"></param>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{repairInfoId}")]
-        public async Task<IActionResult> UpdateRepairInfo(Guid repairInfoId, [FromBody] UpdateRepairInfoModel model)
+        public async Task<IActionResult> Update(Guid repairInfoId, [FromBody] UpdateRepairInfoModel model)
         {
             if (!await _repairInfoService.IsExist(repairInfoId))
             {
@@ -71,7 +71,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            _ = await _repairInfoService.UpdateRepairInfoAsync(repairInfoId, model);
+            _ = await _repairInfoService.UpdateAsync(repairInfoId, model);
             
             return NoContent();
         }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
 using System;
 using System.Threading.Tasks;
 using Intership.Filters;
@@ -23,19 +22,19 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns all clients
+        /// Returns all clients or empty array if clients don`t exist in the database
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetClients()
         {
-            var clients = await _clientService.GetClientsAsync();
+            var clients = await _clientService.GetAllAsync();
 
             return Ok(clients);
         }
 
         /// <summary>
-        /// Returns a single client
+        /// Returns a client or 404 status code if client doesn`t exist in the database
         /// </summary>
         /// <param name="clientId"></param>
         /// <returns></returns>
@@ -48,11 +47,11 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            return Ok(await _clientService.GetClientAsync(clientId));
+            return Ok(await _clientService.GetAsync(clientId));
         }
 
         /// <summary>
-        /// Create a new client
+        /// Create a new client and returns added client id
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -60,13 +59,13 @@ namespace Intership.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateClient([FromBody] AddClientModel model)
         {
-            var addedClientId = await _clientService.CreateClientAsync(model);
+            var addedClientId = await _clientService.CreateAsync(model);
 
             return Created($"api/v1/{addedClientId}", new { clientId = addedClientId });
         }
 
         /// <summary>
-        /// Delete a client
+        /// Delete a client and returns 200 status code or 404 status code if client doesn`t exist in the database
         /// </summary>
         /// <param name="clientId"></param>
         /// <returns></returns>
@@ -79,13 +78,13 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            await _clientService.DeleteClientAsync(clientId);
+            await _clientService.DeleteAsync(clientId);
 
             return NoContent();
         }
 
         /// <summary>
-        /// Update a client
+        /// Update a client and returns 200 status code or 404 status code if client doesn`t exist in the database
         /// </summary>
         /// <param name="clientId"></param>
         /// <param name="model"></param>
@@ -99,13 +98,13 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            _ = await _clientService.UpdateClientAsync(clientId, model);
+            _ = await _clientService.UpdateAsync(clientId, model);
 
             return NoContent();
         }
 
         /// <summary>
-        /// Returns a repairs for the client
+        /// Returns a repairs for the client or 404 status code if client doesn`t exist in the database
         /// </summary>
         /// <param name="clientId"></param>
         /// <returns></returns>
@@ -118,7 +117,7 @@ namespace Intership.Controllers
                 return NotFound();
             }
 
-            var repairs = _clientService.GetRepairs(clientId);
+            var repairs = await _clientService.GetRepairs(clientId);
 
             return Ok(repairs);
         }
