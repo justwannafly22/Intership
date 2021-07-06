@@ -12,11 +12,11 @@ namespace Intership.Services.Abstracts
     /// </summary>
     public interface IClientService
     {
-        Task<IEnumerable<ClientResponseModel>> GetClientsAsync();
-        Task<ClientResponseModel> GetClientAsync(Guid id);
-        Task<Guid> UpdateClientAsync(Guid id, UpdateClientModel model);
-        Task DeleteClientAsync(Guid id);
-        Task<Guid> CreateClientAsync(AddClientModel climodelent);
+        Task<IEnumerable<ClientResponseModel>> GetAllAsync();
+        Task<ClientResponseModel> GetAsync(Guid id);
+        Task<Guid> UpdateAsync(Guid id, UpdateClientModel model);
+        Task DeleteAsync(Guid id);
+        Task<Guid> CreateAsync(AddClientModel climodelent);
         Task<bool> IsExist(Guid id);
         Task<IEnumerable<RepairResponseModel>> GetRepairs(Guid id);
     }

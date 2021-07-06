@@ -24,29 +24,29 @@ namespace Intership.Services
         }
 
         /// <summary>
-        /// Create a RepairInfo for the repair
+        /// Create a repair info for the repair
         /// </summary>
         /// <param name="model"></param>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateRepairInfoAsync(AddRepairInfoModel model, Guid repairId)
+        public async Task<Guid> CreateAsync(AddRepairInfoModel model, Guid repairId)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _repairInfoRepository.CreateRepairInfoAsync(_mapper.Map<RepairInfoParameter>(model), repairId);
+            return await _repairInfoRepository.CreateAsync(_mapper.Map<RepairInfoParameter>(model), repairId);
         }
 
         /// <summary>
-        /// Delete a RepairInfo
+        /// Delete a repair info
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task DeleteRepairInfoAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            await _repairInfoRepository.DeleteRepairInfoAsync(id);
+            await _repairInfoRepository.DeleteAsync(id);
         }
 
         /// <summary>
@@ -54,25 +54,25 @@ namespace Intership.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<RepairInfoResponseModel> GetRepairInfoAsync(Guid id) =>
-            _mapper.Map<RepairInfoResponseModel>(await _repairInfoRepository.GetRepairInfoAsync(id, trackChanges: true));
+        public async Task<RepairInfoResponseModel> GetAsync(Guid id) =>
+            _mapper.Map<RepairInfoResponseModel>(await _repairInfoRepository.GetAsync(id, trackChanges: true));
 
         /// <summary>
-        /// Returns a repair info
+        /// Returns a repair info by repair id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        public async Task<RepairInfoResponseModel> GetRepairInfoAsync(Guid id, Guid repairId) =>
-            _mapper.Map<RepairInfoResponseModel>(await _repairInfoRepository.GetRepairInfoAsync(id, repairId, trackChanges: true));
+        public async Task<RepairInfoResponseModel> GetAsync(Guid id, Guid repairId) =>
+            _mapper.Map<RepairInfoResponseModel>(await _repairInfoRepository.GetAsync(id, repairId, trackChanges: true));
 
         /// <summary>
         /// Returns a repair info by repair id
         /// </summary>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        public async Task<RepairInfoResponseModel> GetRepairInfoByRepairIdAsync(Guid repairId) =>
-            _mapper.Map<RepairInfoResponseModel>(await _repairInfoRepository.GetRepairInfoByRepairIdAsync(repairId, trackChanges: true));
+        public async Task<RepairInfoResponseModel> GetByRepairIdAsync(Guid repairId) =>
+            _mapper.Map<RepairInfoResponseModel>(await _repairInfoRepository.GetByRepairIdAsync(repairId, trackChanges: true));
 
         /// <summary>
         /// Check for existing repair info
@@ -80,21 +80,21 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<bool> IsExist(Guid id) =>
-            await _repairInfoRepository.GetRepairInfoAsync(id, trackChanges: false) != null;
+            await _repairInfoRepository.GetAsync(id, trackChanges: false) != null;
 
         /// <summary>
         /// Update a RepairInfo
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> UpdateRepairInfoAsync(Guid id, UpdateRepairInfoModel model)
+        public async Task<Guid> UpdateAsync(Guid id, UpdateRepairInfoModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _repairInfoRepository.UpdateRepairInfoAsync(id, _mapper.Map<RepairInfoParameter>(model));
+            return await _repairInfoRepository.UpdateAsync(id, _mapper.Map<RepairInfoParameter>(model));
         }
     }
 }

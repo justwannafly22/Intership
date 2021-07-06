@@ -14,12 +14,12 @@ namespace Intership.Services.Abstracts
     {
         Task<IEnumerable<RepairResponseModel>> GetRepairsByProduct(Guid productId);
         Task<RepairResponseModel> GetRepairByProduct(Guid productId, Guid repairId);
-        Task<IEnumerable<ProductResponseModel>> GetProductsAsync();
-        Task<ProductResponseModel> GetProductAsync(Guid id);
-        Task<Guid> CreateProductAsync(AddProductModel model);
-        Task<Guid> UpdateProductAsync(Guid id, UpdateProductModel model);
-        Task DeleteProductAsync(Guid id);
-        Task<bool> IsExistRepair(Guid productId, Guid repairsIds);
+        Task<IEnumerable<ProductResponseModel>> GetAllAsync();
+        Task<ProductResponseModel> GetAsync(Guid id);
+        Task<Guid> CreateAsync(AddProductModel model);
+        Task<Guid> UpdateAsync(Guid id, UpdateProductModel model);
+        Task DeleteAsync(Guid id);
+        Task<bool> IsRepairExist(Guid productId, Guid repairsIds);
         Task<bool> IsExist(Guid id);
     }
 }

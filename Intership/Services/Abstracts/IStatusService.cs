@@ -11,11 +11,11 @@ namespace Intership.Services.Abstracts
     /// </summary>
     public interface IStatusService
     {
-        Task<IEnumerable<StatusResponseModel>> GetStatusesAsync();
-        Task<StatusResponseModel> GetStatusAsync(Guid id);
-        Task<Guid> UpdateStatusAsync(Guid id, UpdateStatusModel model);
-        Task<Guid> CreateStatusAsync(AddStatusModel model);
-        Task DeleteStatusAsync(Guid id);
+        Task<IEnumerable<StatusResponseModel>> GetAllAsync();
+        Task<StatusResponseModel> GetAsync(Guid id);
+        Task<Guid> UpdateAsync(Guid id, UpdateStatusModel model);
+        Task<Guid> CreateAsync(AddStatusModel model);
+        Task DeleteAsync(Guid id);
         Task<bool> IsExist(Guid id);
     }
 }

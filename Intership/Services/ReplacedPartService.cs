@@ -6,7 +6,6 @@ using Intership.Models.ResponseModels;
 using Intership.Services.Abstracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Intership.Services
@@ -30,19 +29,14 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Guid>> CreateReplacedPartsAsync(IEnumerable<AddReplacedPartModel> models)
+        public async Task<IEnumerable<Guid>> CreateManyAsync(IEnumerable<AddReplacedPartModel> models)
         {
             if (models == null)
             {
                 throw new ArgumentNullException(nameof(models));
             }
 
-            var addedReplacedPartsId = new List<Guid>();
-
-            foreach (var part in models)
-            {
-                addedReplacedPartsId.Add(await _replacedPartRepository.CreateReplacedPartAsync(_mapper.Map<ReplacedPartParameter>(part)));
-            }
+            var addedReplacedPartsId = await _replacedPartRepository.CreateRangeAsync(_mapper.Map<IEnumerable<ReplacedPartParameter>>(models));
 
             return addedReplacedPartsId;
         }
@@ -53,14 +47,14 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> UpdateReplacedPartAsync(Guid id, UpdateReplacedPartModel model)
+        public async Task<Guid> UpdateAsync(Guid id, UpdateReplacedPartModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var updatedReplacedPartId = await _replacedPartRepository.UpdateReplacedPartAsync(id, _mapper.Map<ReplacedPartParameter>(model));
+            var updatedReplacedPartId = await _replacedPartRepository.UpdateAsync(id, _mapper.Map<ReplacedPartParameter>(model));
 
             return updatedReplacedPartId;
         }
@@ -69,24 +63,24 @@ namespace Intership.Services
         /// Returns a replaced parts
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<ReplacedPartResponseModel>> GetReplacedPartsAsync() =>
-            _mapper.Map<IEnumerable<ReplacedPartResponseModel>>(await _replacedPartRepository.GetReplacedPartsAsync(trackChanges: false));
+        public async Task<IEnumerable<ReplacedPartResponseModel>> GetAllAsync() =>
+            _mapper.Map<IEnumerable<ReplacedPartResponseModel>>(await _replacedPartRepository.GetAllAsync(trackChanges: false));
 
         /// <summary>
         /// Returns a replaced part
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ReplacedPartResponseModel> GetReplacedPartAsync(Guid id) =>
-            _mapper.Map<ReplacedPartResponseModel>(await _replacedPartRepository.GetReplacedPartAsync(id, trackChanges: true));
+        public async Task<ReplacedPartResponseModel> GetAsync(Guid id) =>
+            _mapper.Map<ReplacedPartResponseModel>(await _replacedPartRepository.GetAsync(id, trackChanges: true));
 
         /// <summary>
         /// Delete a replaced part
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task DeleteReplacedPartAsync(Guid id) =>
-            await _replacedPartRepository.DeleteReplacedPartAsync(id);
+        public async Task DeleteAsync(Guid id) =>
+            await _replacedPartRepository.DeleteAsync(id);
 
         /// <summary>
         /// Check for existing a replaced part
@@ -94,6 +88,6 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<bool> IsExist(Guid id) =>
-            await _replacedPartRepository.GetReplacedPartAsync(id, trackChanges: false) != null;
+            await _replacedPartRepository.GetAsync(id, trackChanges: false) != null;
     }
 }

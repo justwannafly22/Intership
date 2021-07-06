@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Intership.Services
 {
     /// <summary>
-    /// Service to manage clients
+    /// Client logic implementation
     /// </summary>
     public class ClientService : IClientService
     {
@@ -29,14 +29,14 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateClientAsync(AddClientModel model) //AddClientParamater;
+        public async Task<Guid> CreateAsync(AddClientModel model) //AddClientParamater;
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _clientRepository.CreateClientAsync(_mapper.Map<ClientParameter>(model));
+            return await _clientRepository.CreateAsync(_mapper.Map<ClientParameter>(model));
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task DeleteClientAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            await _clientRepository.DeleteClientAsync(id);
+            await _clientRepository.DeleteAsync(id);
         }
 
         /// <summary>
@@ -54,15 +54,15 @@ namespace Intership.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<ClientResponseModel> GetClientAsync(Guid id) =>
-            _mapper.Map<ClientResponseModel>(await _clientRepository.GetClientAsync(id, trackChanges: true));
+        public async Task<ClientResponseModel> GetAsync(Guid id) =>
+            _mapper.Map<ClientResponseModel>(await _clientRepository.GetAsync(id, trackChanges: true));
 
         /// <summary>
         /// Returns a list of clients
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<ClientResponseModel>> GetClientsAsync() =>
-            _mapper.Map<IEnumerable<ClientResponseModel>>(await _clientRepository.GetClientsAsync(trackChanges: false));
+        public async Task<IEnumerable<ClientResponseModel>> GetAllAsync() =>
+            _mapper.Map<IEnumerable<ClientResponseModel>>(await _clientRepository.GetAllAsync(trackChanges: false));
 
         /// <summary>
         /// Check for existing client
@@ -70,21 +70,21 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<bool> IsExist(Guid id) =>
-            await _clientRepository.GetClientAsync(id, trackChanges: false) != null;
+            await _clientRepository.GetAsync(id, trackChanges: false) != null;
 
         /// <summary>
         /// Client update
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> UpdateClientAsync(Guid id, UpdateClientModel model)
+        public async Task<Guid> UpdateAsync(Guid id, UpdateClientModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _clientRepository.UpdateClientAsync(id, _mapper.Map<ClientParameter>(model));
+            return await _clientRepository.UpdateAsync(id, _mapper.Map<ClientParameter>(model));
         }
 
         /// <summary>

@@ -25,18 +25,18 @@ namespace Intership.Services
         }
 
         /// <summary>
-        /// Create a status and returns id
+        /// Create a status
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateStatusAsync(AddStatusModel model)
+        public async Task<Guid> CreateAsync(AddStatusModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _statusRepository.CreateStatusAsync(_mapper.Map<StatusParameter>(model));
+            return await _statusRepository.CreateAsync(_mapper.Map<StatusParameter>(model));
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task DeleteStatusAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            await _statusRepository.DeleteStatusAsync(id);
+            await _statusRepository.DeleteAsync(id);
         }
 
         /// <summary>
@@ -55,16 +55,16 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<StatusResponseModel> GetStatusAsync(Guid id) =>
-            _mapper.Map<StatusResponseModel>(await _statusRepository.GetStatusAsync(id, trackChanges: true));
+        public async Task<StatusResponseModel> GetAsync(Guid id) =>
+            _mapper.Map<StatusResponseModel>(await _statusRepository.GetAsync(id, trackChanges: true));
 
         /// <summary>
         /// Returns all statuses
         /// </summary>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<StatusResponseModel>> GetStatusesAsync() =>
-            _mapper.Map<IEnumerable<StatusResponseModel>>(await _statusRepository.GetStatusesAsync(trackChanges: false));
+        public async Task<IEnumerable<StatusResponseModel>> GetAllAsync() =>
+            _mapper.Map<IEnumerable<StatusResponseModel>>(await _statusRepository.GetAllAsync(trackChanges: false));
 
         /// <summary>
         /// Check for existing status in the database
@@ -72,21 +72,21 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<bool> IsExist(Guid id) =>
-            await _statusRepository.GetStatusAsync(id, trackChanges: false) != null;
+            await _statusRepository.GetAsync(id, trackChanges: false) != null;
 
         /// <summary>
         /// Update a status and returns id
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> UpdateStatusAsync(Guid id, UpdateStatusModel model)
+        public async Task<Guid> UpdateAsync(Guid id, UpdateStatusModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _statusRepository.UpdateStatusAsync(id, _mapper.Map<StatusParameter>(model));
+            return await _statusRepository.UpdateAsync(id, _mapper.Map<StatusParameter>(model));
         }
     }
 }
