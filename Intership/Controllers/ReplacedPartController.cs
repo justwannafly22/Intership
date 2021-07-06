@@ -1,5 +1,4 @@
-﻿using Intership.LoggerService.Abstracts;
-using Intership.Models.RequestModels.ReplacedPart;
+﻿using Intership.Models.RequestModels.ReplacedPart;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,12 +13,10 @@ namespace Intership.Controllers
     public class ReplacedPartController : Controller
     {
         private readonly IReplacedPartService _replacedPartService;
-        private readonly ILoggerManager _logger;
 
-        public ReplacedPartController(IReplacedPartService replacedPartService, ILoggerManager logger)
+        public ReplacedPartController(IReplacedPartService replacedPartService)
         {
             _replacedPartService = replacedPartService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -44,8 +41,7 @@ namespace Intership.Controllers
         {
             if (!await _replacedPartService.IsExist(replacedPartId))
             {
-                _logger.LogInfo($"ReplacedPart with id: {replacedPartId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"ReplacedPart with id: {replacedPartId} doesn`t exist in the database.");
             }
 
             var replacedPart = await _replacedPartService.GetAsync(replacedPartId);
@@ -77,8 +73,7 @@ namespace Intership.Controllers
         {
             if (!await _replacedPartService.IsExist(replacedPartId))
             {
-                _logger.LogInfo($"ReplacedPart with id: {replacedPartId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"ReplacedPart with id: {replacedPartId} doesn`t exist in the database.");
             }
 
             _ = await _replacedPartService.UpdateAsync(replacedPartId, model);
@@ -96,8 +91,7 @@ namespace Intership.Controllers
         {
             if (!await _replacedPartService.IsExist(replacedPartId))
             {
-                _logger.LogInfo($"ReplacedPart with id: {replacedPartId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"ReplacedPart with id: {replacedPartId} doesn`t exist in the database.");
             }
 
             await _replacedPartService.DeleteAsync(replacedPartId);

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership", "Intership\Inte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Data", "Intership.Data\Intership.Data.csproj", "{1C1F4CFA-2422-488A-8918-B8BD91181824}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.LoggerService", "Intership.LoggerService\Intership.LoggerService.csproj", "{BB805DE4-7904-4F96-96C5-6D672EBBB990}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Models", "Intership.Models\Intership.Models.csproj", "{3A6A2DB0-D613-4D09-A390-EBE451D11F5F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Tests", "Intership.Tests\Intership.Tests.csproj", "{4E61B04A-55B1-4918-A865-DE893DFC50AF}"
@@ -27,10 +25,6 @@ Global
 		{1C1F4CFA-2422-488A-8918-B8BD91181824}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C1F4CFA-2422-488A-8918-B8BD91181824}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C1F4CFA-2422-488A-8918-B8BD91181824}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB805DE4-7904-4F96-96C5-6D672EBBB990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB805DE4-7904-4F96-96C5-6D672EBBB990}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB805DE4-7904-4F96-96C5-6D672EBBB990}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB805DE4-7904-4F96-96C5-6D672EBBB990}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A6A2DB0-D613-4D09-A390-EBE451D11F5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A6A2DB0-D613-4D09-A390-EBE451D11F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A6A2DB0-D613-4D09-A390-EBE451D11F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU

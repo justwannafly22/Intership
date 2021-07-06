@@ -1,5 +1,4 @@
-﻿using Intership.LoggerService.Abstracts;
-using Intership.Models.RequestModels.RepairInfo;
+﻿using Intership.Models.RequestModels.RepairInfo;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,12 +12,10 @@ namespace Intership.Controllers
     public class RepairInfoController : Controller
     {
         private readonly IRepairInfoService _repairInfoService;
-        private readonly ILoggerManager _logger;
 
-        public RepairInfoController (IRepairInfoService repairInfoService, ILoggerManager logger)
+        public RepairInfoController (IRepairInfoService repairInfoService)
         {
             _repairInfoService = repairInfoService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -31,8 +28,7 @@ namespace Intership.Controllers
         {
             if (!await _repairInfoService.IsExist(repairInfoId))
             {
-                _logger.LogInfo($"RepairInfo with id: {repairInfoId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"RepairInfo with id: {repairInfoId} doesn`t exist in the database.");
             }
 
             return Ok(await _repairInfoService.GetAsync(repairInfoId));
@@ -48,8 +44,7 @@ namespace Intership.Controllers
         {
             if (!await _repairInfoService.IsExist(repairInfoId))
             {
-                _logger.LogInfo($"RepairInfo with id: {repairInfoId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"RepairInfo with id: {repairInfoId} doesn`t exist in the database.");
             }
 
             await _repairInfoService.DeleteAsync(repairInfoId);
@@ -68,8 +63,7 @@ namespace Intership.Controllers
         {
             if (!await _repairInfoService.IsExist(repairInfoId))
             {
-                _logger.LogInfo($"RepairInfo with id: {repairInfoId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"RepairInfo with id: {repairInfoId} doesn`t exist in the database.");
             }
 
             _ = await _repairInfoService.UpdateAsync(repairInfoId, model);

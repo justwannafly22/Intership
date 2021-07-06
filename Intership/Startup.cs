@@ -1,5 +1,4 @@
 using Intership.Extensions;
-using Intership.LoggerService.Abstracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -25,7 +24,6 @@ namespace Intership
         public void ConfigureContainer(IUnityContainer container)
         {
             container.ConfirureFilters();
-            container.ConfigureLoggerManager();
             container.ConfigureData();
             container.ConfigureLogic();
         }
@@ -51,7 +49,7 @@ namespace Intership
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwagger();
             app.UseSwaggerUI(s =>
@@ -70,7 +68,7 @@ namespace Intership
                 app.UseHsts();
             }
 
-            app.ConfigureExceptionHandler(logger);
+            app.UseMiddleware<ExceptionHandler>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

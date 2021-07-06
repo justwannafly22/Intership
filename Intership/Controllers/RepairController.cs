@@ -1,5 +1,4 @@
 ﻿using Intership.Filters;
-using Intership.LoggerService.Abstracts;
 using Intership.Models.RequestModels.Repair;
 using Intership.Models.RequestModels.RepairInfo;
 using Intership.Services.Abstracts;
@@ -16,13 +15,11 @@ namespace Intership.Controllers
     {
         private readonly IRepairService _repairService;
         private readonly IRepairInfoService _repairInfoService;
-        private readonly ILoggerManager _logger;
 
-        public RepairController(IRepairService repairService, IRepairInfoService repairInfoService, ILoggerManager logger)
+        public RepairController(IRepairService repairService, IRepairInfoService repairInfoService)
         {
             _repairService = repairService;
             _repairInfoService = repairInfoService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -47,8 +44,7 @@ namespace Intership.Controllers
         {
             if (!await _repairService.IsExist(repairId))
             {
-                _logger.LogInfo($"Repair with id: {repairId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Repair with id: {repairId} doesn`t exist in the database.");
             }
 
             return Ok(await _repairService.GetAsync(repairId));
@@ -60,7 +56,6 @@ namespace Intership.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Create([FromBody] AddRepairModel model)
         {
             var addedRepairId = await _repairService.CreateAsync(model);
@@ -75,13 +70,11 @@ namespace Intership.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{repairId}")]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Update(Guid repairId, [FromBody] UpdateRepairModel model)
         {
             if (!await _repairService.IsExist(repairId))
             {
-                _logger.LogInfo($"Repair with id: {repairId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Repair with id: {repairId} doesn`t exist in the database.");
             }
 
             _ = await _repairService.UpdateAsync(repairId, model);
@@ -99,8 +92,7 @@ namespace Intership.Controllers
         {
             if (!await _repairService.IsExist(repairId))
             {
-                _logger.LogInfo($"Repair with id: {repairId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Repair with id: {repairId} doesn`t exist in the database.");
             }
 
             await _repairService.DeleteAsync(repairId);
@@ -115,7 +107,6 @@ namespace Intership.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("{repairId}/repairsInfo")]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Create(Guid repairId, [FromBody] AddRepairInfoModel model)
         {
             var addedRepairInfoId = await _repairInfoService.CreateAsync(model, repairId);
@@ -133,8 +124,7 @@ namespace Intership.Controllers
         {
             if (!await _repairService.IsExist(repairId))
             {
-                _logger.LogInfo($"Repair with id: {repairId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Repair with id: {repairId} doesn`t exist in the database.");
             }
 
             var replacedParts = await _repairService.GetAllForRepair(repairId);

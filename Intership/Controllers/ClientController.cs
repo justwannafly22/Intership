@@ -2,7 +2,6 @@
 using System;
 using System.Threading.Tasks;
 using Intership.Filters;
-using Intership.LoggerService.Abstracts;
 using Intership.Services.Abstracts;
 using Intership.Models.RequestModels.Client;
 
@@ -14,12 +13,10 @@ namespace Intership.Controllers
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;
-        private readonly ILoggerManager _logger;
 
-        public ClientController(IClientService clientService, ILoggerManager logger)
+        public ClientController(IClientService clientService)
         {
             _clientService = clientService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -44,8 +41,7 @@ namespace Intership.Controllers
         {
             if (!await _clientService.IsExist(clientId)) 
             {
-                _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Client with id: {clientId} doesn`t exist in the database.");
             }
 
             return Ok(await _clientService.GetAsync(clientId));
@@ -57,7 +53,6 @@ namespace Intership.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateClient([FromBody] AddClientModel model)
         {
             var addedClientId = await _clientService.CreateAsync(model);
@@ -75,8 +70,7 @@ namespace Intership.Controllers
         {
             if (!await _clientService.IsExist(clientId))
             {
-                _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Client with id: {clientId} doesn`t exist in the database.");
             }
 
             await _clientService.DeleteAsync(clientId);
@@ -95,8 +89,7 @@ namespace Intership.Controllers
         {
             if (!await _clientService.IsExist(clientId))
             {
-                _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Client with id: {clientId} doesn`t exist in the database.");
             }
 
             _ = await _clientService.UpdateAsync(clientId, model);
@@ -114,8 +107,7 @@ namespace Intership.Controllers
         {
             if (!await _clientService.IsExist(clientId))
             {
-                _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Client with id: {clientId} doesn`t exist in the database.");
             }
 
             var repairs = await _clientService.GetRepairs(clientId);

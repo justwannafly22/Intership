@@ -1,5 +1,4 @@
-﻿using Intership.LoggerService.Abstracts;
-using Intership.Models.RequestModels.Status;
+﻿using Intership.Models.RequestModels.Status;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,12 +12,10 @@ namespace Intership.Controllers
     public class StatusController : Controller
     {
         private readonly IStatusService _statusService;
-        private readonly ILoggerManager _logger;
 
-        public StatusController (IStatusService statusService, ILoggerManager logger)
+        public StatusController (IStatusService statusService)
         {
             _statusService = statusService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -43,8 +40,7 @@ namespace Intership.Controllers
         {
             if (!await _statusService.IsExist(statusId))
             {
-                _logger.LogInfo($"Status with id: {statusId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Status with id: {statusId} doesn`t exist in the database.");
             }
 
             return Ok(await _statusService.GetAsync(statusId));
@@ -73,8 +69,7 @@ namespace Intership.Controllers
         {
             if (!await _statusService.IsExist(statusId))
             {
-                _logger.LogInfo($"Status with id: {statusId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Status with id: {statusId} doesn`t exist in the database.");
             }
 
             await _statusService.DeleteAsync(statusId);
@@ -93,8 +88,7 @@ namespace Intership.Controllers
         {
             if (!await _statusService.IsExist(statusId))
             {
-                _logger.LogInfo($"Status with id: {statusId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Status with id: {statusId} doesn`t exist in the database.");
             }
 
             _ = await _statusService.UpdateAsync(statusId, model);

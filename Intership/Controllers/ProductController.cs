@@ -1,5 +1,4 @@
 ﻿using Intership.Filters;
-using Intership.LoggerService.Abstracts;
 using Intership.Models.RequestModels.Product;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +13,10 @@ namespace Intership.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
-        private readonly ILoggerManager _logger;
 
-        public ProductController(IProductService productService, ILoggerManager logger)
+        public ProductController(IProductService productService)
         {
             _productService = productService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -44,8 +41,7 @@ namespace Intership.Controllers
         {
             if (!await _productService.IsExist(productId))
             {
-                _logger.LogInfo($"Product with id: {productId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
             }
 
             return Ok(await _productService.GetAsync(productId));
@@ -57,7 +53,6 @@ namespace Intership.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Create([FromBody] AddProductModel model)
         {
             var addedProductId = await _productService.CreateAsync(model);
@@ -75,8 +70,7 @@ namespace Intership.Controllers
         {
             if (!await _productService.IsExist(productId))
             {
-                _logger.LogInfo($"Product with id: {productId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
             }
             
             await _productService.DeleteAsync(productId);
@@ -95,8 +89,7 @@ namespace Intership.Controllers
         {
             if (!await _productService.IsExist(productId))
             {
-                _logger.LogInfo($"Product with id: {productId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
             }
 
             _ = await _productService.UpdateAsync(productId, model);
@@ -114,8 +107,7 @@ namespace Intership.Controllers
         {
             if (!await _productService.IsExist(productId))
             {
-                _logger.LogInfo($"Product with id: {productId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
             }
 
             var repairs = await _productService.GetRepairsByProduct(productId);
@@ -130,16 +122,14 @@ namespace Intership.Controllers
         /// <param name="repairId"></param>
         /// <returns></returns>
         [HttpGet("{productId}/repairs/{repairId}")]
-        public async Task<IActionResult> GetRepairByProduct(Guid productId, Guid repairId)
+        public async Task<IActionResult> GetRepairByProduct(Guid productId, Guid repairId)//wrong realization
         {
             if (!await _productService.IsExist(productId))
             {
-                _logger.LogInfo($"Product with id: {productId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
             }
             else if (!await _productService.IsRepairExist(productId, repairId))
             {
-                _logger.LogInfo($"Repair with id: {repairId} doesn`t exist in the product.");
                 return NotFound();
             }
 

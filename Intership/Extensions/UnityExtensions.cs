@@ -1,12 +1,10 @@
 ﻿using Intership.Filters;
-using LoggerService;
 using Microsoft.AspNetCore.Hosting;
 using Unity;
 using Intership.Data.Abstracts;
 using Intership.Data.Repositories;
 using Intership.Services;
 using Intership.Services.Abstracts;
-using Intership.LoggerService.Abstracts;
 
 namespace Intership.Extensions
 {
@@ -15,12 +13,6 @@ namespace Intership.Extensions
         public static void ConfirureFilters(this IUnityContainer container)
         {
             container.RegisterType<IStartupFilter, DatabaseInitFilter>();
-            container.RegisterType<ValidationFilterAttribute>();
-        }
-
-        public static void ConfigureLoggerManager(this IUnityContainer container)
-        {
-            container.RegisterType<ILoggerManager, LoggerManager>();
         }
 
         public static void ConfigureData(this IUnityContainer container)
