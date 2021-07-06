@@ -2,6 +2,9 @@
 
 namespace Intership.Models.ResponseModels
 {
+    /// <summary>
+    /// Replaced part model to response to client
+    /// </summary>
     public class ReplacedPartResponseModel
     {
         public Guid Id { get; set; }

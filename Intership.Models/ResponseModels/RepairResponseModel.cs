@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Intership.Models.ResponseModels
 {
+    /// <summary>
+    /// Repair model to response to client
+    /// </summary>
     public class RepairResponseModel
     {
         #region Taked from Repair

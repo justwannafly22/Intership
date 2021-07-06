@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Intership.Models.ResponseModels
 {
+    /// <summary>
+    /// Product model to response to client
+    /// </summary>
     public class ProductResponseModel
     {
         public Guid Id { get; set; }
