@@ -13,6 +13,7 @@ namespace Intership.Models.ResponseModels
         #endregion
 
         #region Taked from RepairInfo
+        public Guid RepairInfoId { get; set; }
         public DateTime Date { get; set; }
         public string AdvancedInfo { get; set; }
         #endregion
@@ -20,7 +21,5 @@ namespace Intership.Models.ResponseModels
         #region Taked from Status
         public string StatusInfo { get; set; }
         #endregion
-
-        public Guid RepairInfoId { get; set; }
     }
 }

@@ -40,6 +40,8 @@ namespace Intership
                 .IncludeMembers(source => source.RepairInfo, source => source.RepairInfo.Status);
 
             CreateMap<RepairInfo, RepairResponseModel>()
+                .ForMember(r => r.RepairInfoId,
+                    opt => opt.MapFrom(x => x.Id))
                 .ForMember(r => r.Date,
                     opt => opt.MapFrom(x => x.Date))
                 .ForMember(r => r.AdvancedInfo,
