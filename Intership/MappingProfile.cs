@@ -54,6 +54,7 @@ namespace Intership
 
             CreateMap<UpdateRepairModel, RepairParameter>();
 
+            CreateMap<RepairResponseModel, UpdateRepairModel>();
             #endregion
 
             #region Status
