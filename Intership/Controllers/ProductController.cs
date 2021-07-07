@@ -3,6 +3,7 @@ using Intership.Models.RequestModels.Product;
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
@@ -34,17 +35,19 @@ namespace Intership.Controllers
         /// <summary>
         /// Returns a product or 404 status code if product doesn`t exist in the database
         /// </summary>
-        /// <param name="productId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{productId}")]
-        public async Task<IActionResult> Get(Guid productId)
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            if (!await _productService.IsExist(productId))
+            if (!await _productService.IsExist(id))
             {
-                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
+                return NotFound($"Product with id: {id} doesn`t exist in the database.");
             }
 
-            return Ok(await _productService.GetAsync(productId));
+            var product = await _productService.GetAsync(id);
+
+            return Ok(product);
         }
 
         /// <summary>
@@ -55,25 +58,30 @@ namespace Intership.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddProductModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
+            }
+
             var addedProductId = await _productService.CreateAsync(model);
 
-            return Created($"api/v1/products/{addedProductId}", new { productId = addedProductId });
+            return CreatedAtRoute("Get", new { productId = addedProductId });
         }
 
         /// <summary>
         /// Delete a product and returns 200 status code or 404 status code if product doesn`t exist in the database
         /// </summary>
-        /// <param name="productId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("{productId}")]
-        public async Task<IActionResult> Delete(Guid productId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            if (!await _productService.IsExist(productId))
+            if (!await _productService.IsExist(id))
             {
-                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
+                return NotFound($"Product with id: {id} doesn`t exist in the database.");
             }
             
-            await _productService.DeleteAsync(productId);
+            await _productService.DeleteAsync(id);
             
             return NoContent();
         }
@@ -81,36 +89,41 @@ namespace Intership.Controllers
         /// <summary>
         /// Update a product and returns 200 status code or 404 status code if product doesn`t exist in the database
         /// </summary>
-        /// <param name="productId"></param>
+        /// <param name="id"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("{productId}")]
-        public async Task<IActionResult> Update(Guid productId, [FromBody] UpdateProductModel model)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateProductModel model)
         {
-            if (!await _productService.IsExist(productId))
+            if (!await _productService.IsExist(id))
             {
-                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
+                return NotFound($"Product with id: {id} doesn`t exist in the database.");
             }
 
-            _ = await _productService.UpdateAsync(productId, model);
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
+            }
 
-            return NoContent();
+            var updatedProductId = await _productService.UpdateAsync(id, model);
+
+            return RedirectToAction("Get", "ProductController", new { id = updatedProductId });
         }
 
         /// <summary>
         /// Returns all repairs by product or 404 status code if product doesn`t exist in the database
         /// </summary>
-        /// <param name="productId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{productId}/repairs")]
-        public async Task<IActionResult> GetRepairsByProduct(Guid productId)
+        [HttpGet("{id}/repairs")]
+        public async Task<IActionResult> GetRepairsByProduct([FromRoute] Guid id)
         {
-            if (!await _productService.IsExist(productId))
+            if (!await _productService.IsExist(id))
             {
-                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
+                return NotFound($"Product with id: {id} doesn`t exist in the database.");
             }
 
-            var repairs = await _productService.GetRepairsByProduct(productId);
+            var repairs = await _productService.GetRepairsByProduct(id);
 
             return Ok(repairs);
         }
@@ -118,23 +131,19 @@ namespace Intership.Controllers
         /// <summary>
         /// Get repair for the product and returns 404 status code if product or repair doesn`t exist in the database
         /// </summary>
-        /// <param name="productId"></param>
+        /// <param name="id"></param>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        [HttpGet("{productId}/repairs/{repairId}")]
-        public async Task<IActionResult> GetRepairByProduct(Guid productId, Guid repairId)//wrong realization
+        [HttpGet("{id}/repairs/{repairId}")]
+        public async Task<IActionResult> GetRepair([FromRoute] Guid id, [FromRoute] Guid repairId)
         {
-            if (!await _productService.IsExist(productId))
+            if (!await _productService.IsRepairExist(id, repairId))
             {
-                return NotFound($"Product with id: {productId} doesn`t exist in the database.");
-            }
-            else if (!await _productService.IsRepairExist(productId, repairId))
-            {
-                return NotFound();
+                return NotFound($"Repair with id: {repairId} doesn`t exist in the product.");
             }
 
-            var repair = await _productService.GetRepairByProduct(productId, repairId);
-
+            var repair = await _productService.GetRepairByProduct(id, repairId);
+            
             return Ok(repair);
         }
     }

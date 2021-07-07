@@ -28,7 +28,7 @@ namespace Intership.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetRepairs()
+        public async Task<IActionResult> GetAll()
         {
             var repairs = await _repairService.GetAllAsync();
 
@@ -38,17 +38,19 @@ namespace Intership.Controllers
         /// <summary>
         /// Returns a repair or 404 status code if repair doesn`t exist in the database
         /// </summary>
-        /// <param name="repairId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}", Name = "GetRepair")]
-        public async Task<IActionResult> GetRepair(Guid id)
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             if (!await _repairService.IsExist(id))
             {
                 return NotFound($"Repair with id: {id} doesn`t exist in the database.");
             }
 
-            return Ok(await _repairService.GetAsync(id));
+            var repair = await _repairService.GetAsync(id);
+
+            return Ok(repair);
         }
 
         /// <summary>
@@ -66,17 +68,17 @@ namespace Intership.Controllers
 
             var addedRepairId = await _repairService.CreateAsync(model);
 
-            return CreatedAtRoute($"GetRepair", new { id = addedRepairId });
+            return CreatedAtRoute("Get", new { id = addedRepairId });
         }
 
         /// <summary>
         /// Update a repair and returns 200 status code or 404 one if repair doesn`t exist in the database
         /// </summary>
-        /// <param name="repairId"></param>
+        /// <param name="id"></param>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateRepairModel model)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRepairModel model)
         {
             if (!await _repairService.IsExist(id))
             {
@@ -90,16 +92,16 @@ namespace Intership.Controllers
 
             var updatedRepairId = await _repairService.UpdateAsync(id, model);
 
-            return RedirectToAction("GetRepair", "RepairController", new { id = updatedRepairId });
+            return RedirectToAction("Get", "RepairController", new { id = updatedRepairId });
         }
 
         /// <summary>
         /// Delete a repair and repair info and returns a 200 status code or 404 one if repair doesn`t exist in the database
         /// </summary>
-        /// <param name="repairId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             if (!await _repairService.IsExist(id))
             {
@@ -110,14 +112,14 @@ namespace Intership.Controllers
 
             return NoContent();
         }
-        
+
         /// <summary>
         /// Returns a replaced parts for the repair or 404 status code if repair doesn`t exist in the database
         /// </summary>
-        /// <param name="repairId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}/replacedParts")]
-        public async Task<IActionResult> GetAllForRepair(Guid id)
+        public async Task<IActionResult> GetAllForRepair([FromRoute] Guid id)
         {
             if (!await _repairService.IsExist(id))
             {
@@ -130,13 +132,13 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Update a status and 
+        /// Update a status and returns updated model or 404 status code if repair doesn`t exist in the database
         /// </summary>
         /// <param name="id"></param>
         /// <param name="patchModel"></param>
         /// <returns></returns>
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateStatus([FromRoute]Guid id, [FromBody] JsonPatchDocument<UpdateRepairModel> patchModel)//test
+        public async Task<IActionResult> UpdateStatus([FromRoute] Guid id, [FromBody] JsonPatchDocument<UpdateRepairModel> patchModel)//test
         {
             if (!await _repairService.IsExist(id))
             {
@@ -153,7 +155,7 @@ namespace Intership.Controllers
 
             var updatedRepairId = await _repairService.UpdateAsync(id, model);
 
-            return RedirectToAction("GetRepair", "RepairController", new { id = updatedRepairId });
+            return RedirectToAction("Get", "RepairController", new { id = updatedRepairId });
         }
     }
 }

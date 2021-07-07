@@ -2,6 +2,7 @@
 using Intership.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
@@ -13,7 +14,7 @@ namespace Intership.Controllers
     {
         private readonly IStatusService _statusService;
 
-        public StatusController (IStatusService statusService)
+        public StatusController(IStatusService statusService)
         {
             _statusService = statusService;
         }
@@ -33,17 +34,19 @@ namespace Intership.Controllers
         /// <summary>
         /// Returns a status or 404 status code
         /// </summary>
-        /// <param name="statusId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{statusId}")]
-        public async Task<IActionResult> Get(Guid statusId)
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            if (!await _statusService.IsExist(statusId))
+            if (!await _statusService.IsExist(id))
             {
-                return NotFound($"Status with id: {statusId} doesn`t exist in the database.");
+                return NotFound($"Status with id: {id} doesn`t exist in the database.");
             }
 
-            return Ok(await _statusService.GetAsync(statusId));
+            var status = await _statusService.GetAsync(id);
+
+            return Ok(status);
         }
 
         /// <summary>
@@ -54,25 +57,30 @@ namespace Intership.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddStatusModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
+            }
+
             var addedStatusId = await _statusService.CreateAsync(model);
 
-            return Created($"api/v1/{addedStatusId}", new { AddedStatusId = addedStatusId });
+            return CreatedAtRoute($"Get", new { id = addedStatusId });
         }
 
         /// <summary>
         /// Delete a status and returns 200 or 404 status code
         /// </summary>
-        /// <param name="statusId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("{statusId}")]
-        public async Task<IActionResult> Delete(Guid statusId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (!await _statusService.IsExist(statusId))
+            if (!await _statusService.IsExist(id))
             {
-                return NotFound($"Status with id: {statusId} doesn`t exist in the database.");
+                return NotFound($"Status with id: {id} doesn`t exist in the database.");
             }
 
-            await _statusService.DeleteAsync(statusId);
+            await _statusService.DeleteAsync(id);
 
             return NoContent();
         }
@@ -80,20 +88,25 @@ namespace Intership.Controllers
         /// <summary>
         /// Update a status and returns 200 or 404 status code
         /// </summary>
-        /// <param name="statusId"></param>
+        /// <param name="id"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("{statusId}")]
-        public async Task<IActionResult> Update(Guid statusId, [FromBody] UpdateStatusModel model)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateStatusModel model)
         {
-            if (!await _statusService.IsExist(statusId))
+            if (!await _statusService.IsExist(id))
             {
-                return NotFound($"Status with id: {statusId} doesn`t exist in the database.");
+                return NotFound($"Status with id: {id} doesn`t exist in the database.");
             }
 
-            _ = await _statusService.UpdateAsync(statusId, model);
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
+            }
 
-            return NoContent();
+            var updatedStatusId = await _statusService.UpdateAsync(id, model);
+
+            return RedirectToAction("Get", "StatusController", new { id = updatedStatusId });
         }
     }
 }

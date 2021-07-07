@@ -123,6 +123,11 @@ namespace Intership.Services
         {
             var product = await _productRepository.GetAsync(productId);
 
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product));
+            }
+
             return product.ReplacedParts.Where(r => r.RepairId.Equals(repairId)).SingleOrDefault() != null;
         }
     }
