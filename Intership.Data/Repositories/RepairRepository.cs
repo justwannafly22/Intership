@@ -78,7 +78,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Repair> GetWithReplacedParts(Guid repairId) =>
-            await FindByCondition(r => r.Id.Equals(repairId), trackChanges : true)
+            await FindByCondition(r => r.Id.Equals(repairId), trackChanges : false)
             .Include(r => r.ReplacedParts)
             .SingleOrDefaultAsync();
         

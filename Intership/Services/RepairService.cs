@@ -16,11 +16,13 @@ namespace Intership.Services
     public class RepairService : IRepairService
     {
         private readonly IRepairRepository _repairRepository;
+        private readonly IRepairInfoRepository _repairInfoRepository;
         private readonly IMapper _mapper;
 
-        public RepairService(IRepairRepository repairRepository, IMapper mapper)
+        public RepairService(IRepairRepository repairRepository, IRepairInfoRepository repairInfoRepository, IMapper mapper)
         {
             _repairRepository = repairRepository;
+            _repairInfoRepository = repairInfoRepository;
             _mapper = mapper;
         }
 
@@ -37,7 +39,8 @@ namespace Intership.Services
             }
 
             var addedRepairId = await _repairRepository.CreateAsync(_mapper.Map<RepairParameter>(model));
-            
+            _ = await _repairInfoRepository.CreateAsync(_mapper.Map<RepairInfoParameter>(model), addedRepairId);
+
             return addedRepairId;
         }
 
@@ -46,9 +49,12 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)//fix
         {
-            await _repairRepository.DeleteAsync(id);
+            var repair = await _repairRepository.GetAsync(id);
+
+            await _repairRepository.DeleteAsync(repair.Id);
+            await _repairInfoRepository.DeleteAsync(repair.RepairInfoId);
         }
 
         /// <summary>
@@ -57,14 +63,14 @@ namespace Intership.Services
         /// <param name="repairId"></param>
         /// <returns></returns>
         public async Task<RepairResponseModel> GetAsync(Guid repairId) =>
-            _mapper.Map<RepairResponseModel>(await _repairRepository.GetAsync(repairId, trackChanges: true));
+            _mapper.Map<RepairResponseModel>(await _repairRepository.GetAsync(repairId));
 
         /// <summary>
         /// Returns a repairs
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<RepairResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<RepairResponseModel>>(await _repairRepository.GetAllAsync(trackChanges: false));
+            _mapper.Map<IEnumerable<RepairResponseModel>>(await _repairRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing repair
@@ -72,7 +78,7 @@ namespace Intership.Services
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<bool> IsExist(Guid id) =>
-            await _repairRepository.GetAsync(id, trackChanges: false) != null;
+            await _repairRepository.GetAsync(id) != null;
 
         /// <summary>
         /// Update a repair
@@ -86,7 +92,12 @@ namespace Intership.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _repairRepository.UpdateAsync(id, _mapper.Map<RepairParameter>(model));
+            var repair = await _repairRepository.GetAsync(id);
+
+            var updatedRepairId = await _repairRepository.UpdateAsync(repair.Id, _mapper.Map<RepairParameter>(model));
+            _ = await _repairInfoRepository.UpdateAsync(repair.RepairInfoId, _mapper.Map<RepairInfoParameter>(model));
+
+            return updatedRepairId;
         }
 
         /// <summary>
@@ -94,9 +105,9 @@ namespace Intership.Services
         /// </summary>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<ReplacedPartResponseModel>> GetAllForRepair(Guid repairId)
+        public async Task<IEnumerable<ReplacedPartResponseModel>> GetAllReplacedParts(Guid repairId)
         {
-            var repair = await _repairRepository.GetWithReplacedParts(repairId, trackChanges: false);
+            var repair = await _repairRepository.GetWithReplacedParts(repairId);
 
             return _mapper.Map<IEnumerable<ReplacedPartResponseModel>>(repair.ReplacedParts);
         }

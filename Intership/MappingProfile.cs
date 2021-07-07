@@ -4,7 +4,6 @@ using Intership.Data.Parameters;
 using Intership.Models.RequestModels.Client;
 using Intership.Models.RequestModels.Product;
 using Intership.Models.RequestModels.Repair;
-using Intership.Models.RequestModels.RepairInfo;
 using Intership.Models.RequestModels.ReplacedPart;
 using Intership.Models.RequestModels.Status;
 using Intership.Models.ResponseModels;
@@ -54,20 +53,6 @@ namespace Intership
             CreateMap<AddRepairModel, RepairParameter>();
 
             CreateMap<UpdateRepairModel, RepairParameter>();
-
-            #endregion
-
-            #region RepairInfo
-            CreateMap<RepairInfo, RepairInfoResponseModel>()
-                .IncludeMembers(source => source.Status);
-
-            CreateMap<Status, RepairInfoResponseModel>()
-                .ForMember(r => r.StatusInfo,
-                    opt => opt.MapFrom(x => x.StatusInfo));
-
-            CreateMap<AddRepairInfoModel, RepairInfoParameter>();
-
-            CreateMap<UpdateRepairInfoModel, RepairInfoParameter>();
 
             #endregion
 
