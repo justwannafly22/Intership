@@ -1,16 +1,10 @@
-﻿using Intership.Abstracts;
-using Intership.Abstracts.Services;
-using Intership.Abstracts.Repositories;
-using Intership.Data;
-using Intership.Filters;
-using Intership.Logic;
-using LoggerService;
+﻿using Intership.Filters;
 using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Unity;
+using Intership.Data.Abstracts;
+using Intership.Data.Repositories;
+using Intership.Services;
+using Intership.Services.Abstracts;
 
 namespace Intership.Extensions
 {
@@ -19,15 +13,6 @@ namespace Intership.Extensions
         public static void ConfirureFilters(this IUnityContainer container)
         {
             container.RegisterType<IStartupFilter, DatabaseInitFilter>();
-            container.RegisterType<ValidationFilterAttribute>();
-            container.RegisterType<ValidateClientExistAttribute>();
-            container.RegisterType<ValidateProductExistAttribute>();
-            container.RegisterType<ValidateRepairForProductExistAttribute>();
-        }
-
-        public static void ConfigureLoggerManager(this IUnityContainer container)
-        {
-            container.RegisterType<ILoggerManager, LoggerManager>();
         }
 
         public static void ConfigureData(this IUnityContainer container)
@@ -36,6 +21,8 @@ namespace Intership.Extensions
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IRepairRepository, RepairRepository>();
             container.RegisterType<IRepairInfoRepository, RepairInfoRepository>();
+            container.RegisterType<IStatusRepository, StatusRepository>();
+            container.RegisterType<IReplacedPartRepository, ReplacedPartRepository>();
         }
 
         public static void ConfigureLogic(this IUnityContainer container)
@@ -43,7 +30,8 @@ namespace Intership.Extensions
             container.RegisterType<IClientService, ClientService>();
             container.RegisterType<IProductService, ProductService>();
             container.RegisterType<IRepairService, RepairService>();
-            container.RegisterType<IRepairInfoService, RepairInfoService>();
+            container.RegisterType<IStatusService, StatusService>();
+            container.RegisterType<IReplacedPartService, ReplacedPartService>();
         }
     }
 }

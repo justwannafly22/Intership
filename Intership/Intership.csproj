@@ -17,6 +17,8 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="DbUp" Version="4.5.0" />
     <PackageReference Include="dbup-core" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.16" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
@@ -25,6 +27,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NLog" Version="4.7.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
     <PackageReference Include="Unity" Version="5.11.10" />
     <PackageReference Include="Unity.Microsoft.DependencyInjection" Version="5.11.5" />
   </ItemGroup>
@@ -39,21 +42,15 @@
   <ItemGroup>
     <None Remove="Scripts\01_feed.sql" />
     <None Remove="Scripts\02_feed.sql" />
-    <None Remove="Scripts\03_add_repairInfoId`s.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\01_feed.sql" />
     <EmbeddedResource Include="Scripts\02_feed.sql" />
-    <EmbeddedResource Include="Scripts\03_add_repairInfoId`s.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Intership.Abstracts\Intership.Abstracts.csproj" />
     <ProjectReference Include="..\Intership.Data\Intership.Data.csproj" />
-    <ProjectReference Include="..\Intership.DTO\Intership.DTO.csproj" />
-    <ProjectReference Include="..\Intership.LoggerService\Intership.LoggerService.csproj" />
-    <ProjectReference Include="..\Intership.Logic\Intership.Logic.csproj" />
     <ProjectReference Include="..\Intership.Models\Intership.Models.csproj" />
   </ItemGroup>
 

@@ -1,10 +1,6 @@
-using Intership.Abstracts;
-using Intership.Abstracts.Services;
 using Intership.Extensions;
-using Intership.Logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +24,6 @@ namespace Intership
         public void ConfigureContainer(IUnityContainer container)
         {
             container.ConfirureFilters();
-            container.ConfigureLoggerManager();
             container.ConfigureData();
             container.ConfigureLogic();
         }
@@ -38,14 +33,13 @@ namespace Intership
         {
             services.ConfigureSqlContext(Configuration);
             services.AddAutoMapper(typeof(Startup));
+            services.ConfigureSwagger();
 
             services.AddControllersWithViews(config =>
             {
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
-            })
-                //.AddXmlDataContractSerializerFormatters()
-                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            }).AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -55,8 +49,14 @@ namespace Intership
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "Intership API v1");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -68,7 +68,7 @@ namespace Intership
                 app.UseHsts();
             }
 
-            app.ConfigureExceptionHandler(logger);
+            app.UseMiddleware<ExceptionHandler>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

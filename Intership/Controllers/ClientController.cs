@@ -1,91 +1,130 @@
-﻿using Intership.Abstracts.Services;
-using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Intership.Models.Entities;
-using Intership.DTO.Client;
-using Intership.Abstracts;
-using Intership.Filters;
-using Unity;
+using Intership.Services.Abstracts;
+using Intership.Models.RequestModels.Client;
+using System.Linq;
 
 namespace Intership.Controllers
 {
     [ApiController]
     [Route("api/v1/clients")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;
-        private readonly ILoggerManager _logger;
-        private readonly IMapper _mapper;
 
-        public ClientController(IClientService clientService, ILoggerManager logger, IMapper mapper)
+        public ClientController(IClientService clientService)
         {
             _clientService = clientService;
-            _logger = logger;
-            _mapper = mapper;
         }
 
+        /// <summary>
+        /// Returns all clients or empty array if clients don`t exist in the database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetClients()
+        public async Task<IActionResult> GetAll()
         {
-            var clientsEntity = await _clientService.GetClientsAsync();
+            var clients = await _clientService.GetAllAsync();
 
-            var clientsDto = _mapper.Map<IEnumerable<ClientDto>>(clientsEntity);
-
-            return Ok(clientsDto);
+            return Ok(clients);
         }
 
-        [HttpGet("{clientId}")]
-        public async Task<IActionResult> GetClient(Guid clientId)
+        /// <summary>
+        /// Returns a client or 404 status code if client doesn`t exist in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}", Name = "Get")]
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var clientEntity = await _clientService.GetClientAsync(clientId);
-            if (clientEntity == null) 
+            if (!await _clientService.IsExist(id)) 
             {
-                _logger.LogInfo($"Client with id: {clientId} doesn`t exist in the database.");
-                return NotFound();
+                return NotFound($"Client with id: {id} doesn`t exist in the database.");
             }
 
-            var clientDto = _mapper.Map<ClientDto>(clientEntity);
+            var client = await _clientService.GetAsync(id);
 
-            return Ok(clientDto);
+            return Ok(client);
         }
 
+        /// <summary>
+        /// Create a new client and returns added client id
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateClient([FromBody] ClientForCreateDto clientDto)
+        public async Task<IActionResult> Create([FromBody] AddClientModel model)
         {
-            var clientEntity = _mapper.Map<Client>(clientDto);
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
+            }
 
-            await _clientService.CreateClientAsync(clientEntity);
+            var addedClientId = await _clientService.CreateAsync(model);
 
-            return Created($"api/v1/{clientEntity.Id}", new { clientId = clientEntity.Id });
+            return CreatedAtRoute("Get", new { id = addedClientId });
         }
 
-        [HttpDelete("{clientId}")]
-        [ServiceFilter(typeof(ValidateClientExistAttribute))]
-        public async Task<IActionResult> DeleteClient(Guid clientId)
+        /// <summary>
+        /// Delete a client and returns 200 status code or 404 status code if client doesn`t exist in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            var client = HttpContext.Items["client"] as Client;
+            if (!await _clientService.IsExist(id))
+            {
+                return NotFound($"Client with id: {id} doesn`t exist in the database.");
+            }
 
-            await _clientService.DeleteClientAsync(client);
+            await _clientService.DeleteAsync(id);
 
             return NoContent();
         }
 
-        [HttpPut("{clientId}")]
-        [ServiceFilter(typeof(ValidateClientExistAttribute))]
-        public async Task<IActionResult> UpdateClient(Guid clientId, [FromBody] ClientForUpdateDto clientDto)
+        /// <summary>
+        /// Update a client and returns 200 status code or 404 status code if client doesn`t exist in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateClientModel model)
         {
-            var client = HttpContext.Items["client"] as Client;
+            if (!await _clientService.IsExist(id))
+            {
+                return NotFound($"Client with id: {id} doesn`t exist in the database.");
+            }
 
-            _mapper.Map(clientDto, client);
+            if (!ModelState.IsValid)
+            {
+                throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
+            }
 
-            await _clientService.UpdateClientAsync(client);
+            var updatedClientId = await _clientService.UpdateAsync(id, model);
 
-            return NoContent();
+            return RedirectToAction("Get", "ClientController", new { id = updatedClientId });
+        }
+
+        /// <summary>
+        /// Returns a repairs for the client or 404 status code if client doesn`t exist in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}/repairs")]
+        public async Task<IActionResult> GetRepairs([FromRoute] Guid id)
+        {
+            if (!await _clientService.IsExist(id))
+            {
+                return NotFound($"Client with id: {id} doesn`t exist in the database.");
+            }
+
+            var repairs = await _clientService.GetRepairs(id);
+
+            return Ok(repairs);
         }
     }
 }
