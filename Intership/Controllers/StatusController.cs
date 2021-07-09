@@ -1,7 +1,10 @@
 ﻿using Intership.Models.RequestModels.Status;
+using Intership.Models.ResponseModels;
 using Intership.Services.Abstracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,9 +23,12 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns all statuses or empty array if statuses doesn`t exist in the database
+        /// Returns all statuses 
         /// </summary>
-        /// <returns></returns>
+        /// <response code="200">Success. Statuses were received successfully</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(List<StatusResponseModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,19 +38,26 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns a status or 404 status code
+        /// Returns a status
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}", Name = "Get")]
+        /// <response code="200">Success. Status model was received successfully</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Status with provided id cannot be found</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(StatusResponseModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
+        [HttpGet("{id}", Name = "GetStatus")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            if (!await _statusService.IsExist(id))
+            var status = await _statusService.GetAsync(id);
+
+            if (status == null)
             {
                 return NotFound($"Status with id: {id} doesn`t exist in the database.");
             }
-
-            var status = await _statusService.GetAsync(id);
 
             return Ok(status);
         }
@@ -53,7 +66,12 @@ namespace Intership.Controllers
         /// Create a new status and returns an id
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
+        /// <response code="201">Success. Status model was created successfully</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(AddedResponseModel), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddStatusModel model)
         {
@@ -64,14 +82,19 @@ namespace Intership.Controllers
 
             var addedStatusId = await _statusService.CreateAsync(model);
 
-            return CreatedAtRoute($"Get", new { id = addedStatusId });
+            return CreatedAtRoute($"GetStatus", new { id = addedStatusId });
         }
 
         /// <summary>
-        /// Delete a status and returns 200 or 404 status code
+        /// Delete a status
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <response code="204">Status was deleted successfully</response>
+        /// <response code="404">Status with provided id cannot be found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -86,11 +109,18 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Update a status and returns 200 or 404 status code
+        /// Update a status
         /// </summary>
         /// <param name="id"></param>
         /// <param name="model"></param>
-        /// <returns></returns>
+        /// <response code="200">Status was updated successfully</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Status with provided id cannot be found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateStatusModel model)
         {
@@ -106,7 +136,7 @@ namespace Intership.Controllers
 
             var updatedStatusId = await _statusService.UpdateAsync(id, model);
 
-            return RedirectToAction("Get", "StatusController", new { id = updatedStatusId });
+            return RedirectToAction("Get", new { id = updatedStatusId });
         }
     }
 }
