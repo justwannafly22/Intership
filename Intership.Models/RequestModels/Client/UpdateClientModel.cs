@@ -13,8 +13,7 @@ namespace Intership.Models.RequestModels.Client
         [MaxLength(60, ErrorMessage = "Max length for Surname is 60 characters.")]
         public string Surname { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "Age is required and it can`t be lower than 0.")]
+        [Range(0, 150, ErrorMessage = "Age is required and it can`t be lower than 0.")]
         public int Age { get; set; }
 
         [Required(ErrorMessage = "Contact number is a required field.")]
