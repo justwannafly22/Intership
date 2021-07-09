@@ -47,7 +47,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var client = await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
+            var client = await FindByCondition(c => c.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             await DeleteAsync(client);
@@ -60,7 +60,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Client> GetAsync(Guid id) =>
-            await FindByCondition(c => c.Id.Equals(id), trackChanges : true)
+            await FindByCondition(c => c.Id.Equals(id))
             .SingleOrDefaultAsync();
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<List<Client>> GetAllAsync() =>
-            await FindAll(trackChanges : true)
+            await FindAll()
             .ToListAsync();
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Intership.Data.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<Client> GetWithRepairsAsync(Guid id) =>
-            await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
+            await FindByCondition(c => c.Id.Equals(id))
             .Include(c => c.Repairs)
             .SingleOrDefaultAsync();
         
@@ -90,7 +90,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, ClientParameter model)
         {
-            var client = await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
+            var client = await FindByCondition(c => c.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             client.Name = model.Name;

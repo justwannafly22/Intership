@@ -45,7 +45,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var repairInfo = await FindByCondition(r => r.Id.Equals(id), trackChanges: false)
+            var repairInfo = await FindByCondition(r => r.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             await DeleteAsync(repairInfo);
@@ -58,7 +58,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<RepairInfo> GetAsync(Guid id) =>
-            await FindByCondition(r => r.Id.Equals(id), trackChanges : true)
+            await FindByCondition(r => r.Id.Equals(id))
             .Include(r => r.Status)
             .SingleOrDefaultAsync();
         
@@ -70,7 +70,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, RepairInfoParameter model)
         {
-            var repairInfo = await FindByCondition(r => r.Id.Equals(id), trackChanges: false)
+            var repairInfo = await FindByCondition(r => r.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             repairInfo.Date = model.Date;
