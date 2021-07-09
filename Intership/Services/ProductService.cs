@@ -62,8 +62,8 @@ namespace Intership.Services
         /// Returns all products
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<ProductResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<ProductResponseModel>>(await _productRepository.GetAllAsync());
+        public async Task<List<ProductResponseModel>> GetAllAsync() =>
+            _mapper.Map<List<ProductResponseModel>>(await _productRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing product
@@ -78,11 +78,11 @@ namespace Intership.Services
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<RepairResponseModel>> GetRepairsByProduct(Guid productId)
+        public async Task<List<RepairResponseModel>> GetRepairsByProduct(Guid productId)
         {
             var product = await _productRepository.GetWithRepairsAsync(productId);
 
-            return _mapper.Map<IEnumerable<RepairResponseModel>>(product.ReplacedParts.Select(r => r.Repair));
+            return _mapper.Map<List<RepairResponseModel>>(product.ReplacedParts.Select(r => r.Repair));
         }
 
         /// <summary>

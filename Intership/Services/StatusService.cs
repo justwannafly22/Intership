@@ -63,8 +63,8 @@ namespace Intership.Services
         /// </summary>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<StatusResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<StatusResponseModel>>(await _statusRepository.GetAllAsync());
+        public async Task<List<StatusResponseModel>> GetAllAsync() =>
+            _mapper.Map<List<StatusResponseModel>>(await _statusRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing status in the database

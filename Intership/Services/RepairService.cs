@@ -69,8 +69,8 @@ namespace Intership.Services
         /// Returns a repairs
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<RepairResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<RepairResponseModel>>(await _repairRepository.GetAllAsync());
+        public async Task<List<RepairResponseModel>> GetAllAsync() =>
+            _mapper.Map<List<RepairResponseModel>>(await _repairRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing repair
@@ -105,11 +105,11 @@ namespace Intership.Services
         /// </summary>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<ReplacedPartResponseModel>> GetAllReplacedParts(Guid repairId)
+        public async Task<List<ReplacedPartResponseModel>> GetAllReplacedParts(Guid repairId)
         {
             var repair = await _repairRepository.GetWithReplacedParts(repairId);
 
-            return _mapper.Map<IEnumerable<ReplacedPartResponseModel>>(repair.ReplacedParts);
+            return _mapper.Map<List<ReplacedPartResponseModel>>(repair.ReplacedParts);
         }
     }
 }

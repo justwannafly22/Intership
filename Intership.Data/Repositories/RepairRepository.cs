@@ -42,7 +42,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var repair = await FindByCondition(r => r.Id.Equals(id))
+            var repair = await FindByCondition(r => r.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();
 
             await DeleteAsync(repair);
@@ -55,7 +55,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Repair> GetAsync(Guid id) =>
-            await FindByCondition(r => r.Id.Equals(id))
+            await FindByCondition(r => r.Id.Equals(id), trackChanges : true)
             .Include(r => r.RepairInfo)
                 .ThenInclude(r => r.Status)
             .SingleOrDefaultAsync();
@@ -66,7 +66,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<IEnumerable<Repair>> GetAllAsync() =>
-            await FindAll()
+            await FindAll(trackChanges : false)
             .Include(r => r.RepairInfo)
                 .ThenInclude(r => r.Status)
             .ToListAsync();
@@ -78,7 +78,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Repair> GetWithReplacedParts(Guid repairId) =>
-            await FindByCondition(r => r.Id.Equals(repairId))
+            await FindByCondition(r => r.Id.Equals(repairId), trackChanges : false)
             .Include(r => r.ReplacedParts)
             .SingleOrDefaultAsync();
         
@@ -90,7 +90,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, RepairParameter model)
         {
-            var repair = await FindByCondition(r => r.Id.Equals(id))
+            var repair = await FindByCondition(r => r.Id.Equals(id), trackChanges: true)
                 .SingleOrDefaultAsync();
 
             repair.Name = model.Name;

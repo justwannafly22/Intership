@@ -1,4 +1,6 @@
 ﻿using Intership.Data.Abstracts;
+using Intership.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,7 @@ namespace Intership.Data.Repositories
             await RepositoryContext.SaveChangesAsync();
         }
 
-        public async Task CreateRangeAsync(List<T> entities)
+        public async Task CreateRangeAsync(IEnumerable<T> entities)
         {
             RepositoryContext.Set<T>().AddRange(entities);
 
@@ -37,10 +39,17 @@ namespace Intership.Data.Repositories
             await RepositoryContext.SaveChangesAsync();
         }
 
-        public IQueryable<T> FindAll() =>
+        public IQueryable<T> FindAll(bool trackChanges) =>
+            !trackChanges ?
+            RepositoryContext.Set<T>()
+                .AsNoTracking() :
             RepositoryContext.Set<T>();
 
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression) =>
+        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
+            !trackChanges ?
+            RepositoryContext.Set<T>()
+                .Where(expression)
+                .AsNoTracking() :
             RepositoryContext.Set<T>()
                 .Where(expression);
 

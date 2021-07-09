@@ -10,9 +10,9 @@ namespace Intership.Data.Abstracts
     {
         Task<Guid> CreateAsync(ReplacedPartParameter model);
         Task<Guid> UpdateAsync(Guid id, ReplacedPartParameter model);
-        Task<List<ReplacedPart>> GetAllAsync();
+        Task<IEnumerable<ReplacedPart>> GetAllAsync();
         Task<ReplacedPart> GetAsync(Guid id);
         Task DeleteAsync(Guid id);
-        Task<List<Guid>> CreateRangeAsync(List<ReplacedPartParameter> models);
+        Task<IEnumerable<Guid>> CreateRangeAsync(IEnumerable<ReplacedPartParameter> models);
     }
 }

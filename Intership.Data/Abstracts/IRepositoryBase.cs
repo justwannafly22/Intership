@@ -8,10 +8,10 @@ namespace Intership.Data.Abstracts
 {
     public interface IRepositoryBase<T>
     {
-        IQueryable<T> FindAll();
-        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
+        IQueryable<T> FindAll(bool trackChanges);
+        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges);
         Task CreateAsync(T entity);
-        Task CreateRangeAsync(List<T> entities);
+        Task CreateRangeAsync(IEnumerable<T> entities);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
     }

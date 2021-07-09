@@ -47,7 +47,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var client = await FindByCondition(c => c.Id.Equals(id))
+            var client = await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();
 
             await DeleteAsync(client);
@@ -60,7 +60,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Client> GetAsync(Guid id) =>
-            await FindByCondition(c => c.Id.Equals(id))
+            await FindByCondition(c => c.Id.Equals(id), trackChanges : true)
             .SingleOrDefaultAsync();
 
         /// <summary>
@@ -68,8 +68,8 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<List<Client>> GetAllAsync() =>
-            await FindAll()
+        public async Task<IEnumerable<Client>> GetAllAsync() =>
+            await FindAll(trackChanges : true)
             .ToListAsync();
 
         /// <summary>
@@ -77,8 +77,8 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Client> GetWithRepairsAsync(Guid id) =>
-            await FindByCondition(c => c.Id.Equals(id))
+        public async Task<Client> GetRepairWithRepairsAsync(Guid id) =>
+            await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
             .Include(c => c.Repairs)
             .SingleOrDefaultAsync();
         
@@ -90,7 +90,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, ClientParameter model)
         {
-            var client = await FindByCondition(c => c.Id.Equals(id))
+            var client = await FindByCondition(c => c.Id.Equals(id), trackChanges: false)
                 .SingleOrDefaultAsync();
 
             client.Name = model.Name;
