@@ -42,7 +42,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var status = await FindByCondition(s => s.Id.Equals(id), trackChanges: false)
+            var status = await FindByCondition(s => s.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             await DeleteAsync(status);
@@ -55,7 +55,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Status> GetAsync(Guid id) =>
-            await FindByCondition(s => s.Id.Equals(id), trackChanges : true)
+            await FindByCondition(s => s.Id.Equals(id))
             .SingleOrDefaultAsync();
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<IEnumerable<Status>> GetAllAsync() =>
-            await FindAll(trackChanges : false)
+            await FindAll()
             .ToListAsync();
         
         /// <summary>
@@ -75,7 +75,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, StatusParameter model)
         {
-            var status = await FindByCondition(s => s.Id.Equals(id), trackChanges: false)
+            var status = await FindByCondition(s => s.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             status.StatusInfo = model.StatusInfo;

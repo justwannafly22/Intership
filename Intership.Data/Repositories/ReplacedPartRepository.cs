@@ -46,7 +46,7 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="models"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Guid>> CreateRangeAsync(IEnumerable<ReplacedPartParameter> models)
+        public async Task<List<Guid>> CreateRangeAsync(List<ReplacedPartParameter> models)
         {
             var replacedParts = models.Select(r => new ReplacedPart()
             {
@@ -54,11 +54,11 @@ namespace Intership.Data.Repositories
                 Price = r.Price,
                 Count = r.Count,
                 AdvancedInfo = r.AdvancedInfo
-            });
+            }).ToList();
 
             await CreateRangeAsync(replacedParts);
 
-            return replacedParts.Select(r => r.Id);
+            return replacedParts.Select(r => r.Id).ToList();
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, ReplacedPartParameter model)
         {
-            var replacedPart = await FindByCondition(r => r.Id.Equals(id), trackChanges: true)
+            var replacedPart = await FindByCondition(r => r.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             replacedPart.Name = model.Name;
@@ -87,8 +87,8 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="trackChanges"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<ReplacedPart>> GetAllAsync() =>
-            await FindAll(trackChanges : false)
+        public async Task<List<ReplacedPart>> GetAllAsync() =>
+            await FindAll()
             .ToListAsync();
         
         /// <summary>
@@ -98,7 +98,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<ReplacedPart> GetAsync(Guid id) =>
-            await FindByCondition(r => r.Id.Equals(id), trackChanges : true)
+            await FindByCondition(r => r.Id.Equals(id))
             .SingleOrDefaultAsync();
         
         /// <summary>
@@ -107,6 +107,6 @@ namespace Intership.Data.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task DeleteAsync(Guid id) =>
-            await DeleteAsync(await FindByCondition(r => r.Id.Equals(id), trackChanges: false).SingleOrDefaultAsync());
+            await DeleteAsync(await FindByCondition(r => r.Id.Equals(id)).SingleOrDefaultAsync());
     }
 }
