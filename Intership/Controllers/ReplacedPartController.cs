@@ -65,7 +65,7 @@ namespace Intership.Controllers
         /// <summary>
         /// Create a replaced parts
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="models"></param>
         /// <response code="201">Success. Replaced part models were created successfully</response>
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
