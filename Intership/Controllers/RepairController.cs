@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using Intership.Models.RequestModels.Repair;
+using Intership.Models.ResponseModels;
 using Intership.Services.Abstracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
@@ -24,9 +28,12 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns all repairs or empty array if repairs don`t exist in the database
+        /// Returns all repairs
         /// </summary>
-        /// <returns></returns>
+        /// <response code="200">Success. Repairs were received successfully</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(List<RepairResponseModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -36,11 +43,18 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns a repair or 404 status code if repair doesn`t exist in the database
+        /// Returns a repair
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}", Name = "Get")]
+        /// <response code="200">Success. Repair model was received successfully</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Repair with provided id cannot be found</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(RepairResponseModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             if (!await _repairService.IsExist(id))
@@ -54,10 +68,15 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Create a repair and returns added repair id
+        /// Create a repair
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
+        /// <response code="201">Success. Repair model was created successfully</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(RepairResponseModel), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddRepairModel model)
         {
@@ -68,15 +87,22 @@ namespace Intership.Controllers
 
             var addedRepairId = await _repairService.CreateAsync(model);
 
-            return CreatedAtRoute("Get", new { id = addedRepairId });
+            return CreatedAtAction("Get", new { id = addedRepairId }, new AddedResponseModel(addedRepairId, HttpStatusCode.Created));
         }
 
         /// <summary>
-        /// Update a repair and returns 200 status code or 404 one if repair doesn`t exist in the database
+        /// Update a repair
         /// </summary>
         /// <param name="id"></param>
         /// <param name="model"></param>
-        /// <returns></returns>
+        /// <response code="200">Repair was updated successfully</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Repair with provided id cannot be found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRepairModel model)
         {
@@ -92,14 +118,19 @@ namespace Intership.Controllers
 
             var updatedRepairId = await _repairService.UpdateAsync(id, model);
 
-            return RedirectToAction("Get", "RepairController", new { id = updatedRepairId });
+            return RedirectToAction("Get", new { id = updatedRepairId });
         }
 
         /// <summary>
-        /// Delete a repair and repair info and returns a 200 status code or 404 one if repair doesn`t exist in the database
+        /// Delete a repair and repair info
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <response code="204">Repair was deleted successfully</response>
+        /// <response code="404">Repair with provided id cannot be found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
@@ -114,10 +145,13 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns a replaced parts for the repair or 404 status code if repair doesn`t exist in the database
+        /// Returns a replaced parts for the repair
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <response code="200">Success. Replaced parts were received successfully</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(List<ReplacedPartResponseModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpGet("{id}/replacedParts")]
         public async Task<IActionResult> GetAllForRepair([FromRoute] Guid id)
         {
@@ -132,11 +166,18 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Update a status and returns updated model or 404 status code if repair doesn`t exist in the database
+        /// Update a status
         /// </summary>
         /// <param name="id"></param>
         /// <param name="patchModel"></param>
-        /// <returns></returns>
+        /// <response code="200">Repair was updated successfully</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Repair with provided id cannot be found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateStatus([FromRoute] Guid id, [FromBody] JsonPatchDocument<UpdateRepairModel> patchModel)//test
         {
@@ -155,7 +196,7 @@ namespace Intership.Controllers
 
             var updatedRepairId = await _repairService.UpdateAsync(id, model);
 
-            return RedirectToAction("Get", "RepairController", new { id = updatedRepairId });
+            return RedirectToAction("GetRepair", "RepairController", new { id = updatedRepairId });
         }
     }
 }

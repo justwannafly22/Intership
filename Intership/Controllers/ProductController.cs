@@ -1,9 +1,12 @@
-﻿using Intership.Filters;
-using Intership.Models.RequestModels.Product;
+﻿using Intership.Models.RequestModels.Product;
+using Intership.Models.ResponseModels;
 using Intership.Services.Abstracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
@@ -21,9 +24,12 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns all products or empty array if products doesn`t exist in the database
+        /// Returns all products
         /// </summary>
-        /// <returns></returns>
+        /// <response code="200">Success. Products were received successfully</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(List<ProductResponseModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -33,11 +39,18 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Returns a product or 404 status code if product doesn`t exist in the database
+        /// Returns a product
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}", Name = "Get")]
+        /// <response code="200">Success. Product model was received successfully</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Product with provided id cannot be found</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(ProductResponseModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             if (!await _productService.IsExist(id))
@@ -51,10 +64,15 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Create a product and returns added product id
+        /// Create a product
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
+        /// <response code="201">Success. Product model was created successfully</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(ProductResponseModel), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddProductModel model)
         {
@@ -65,14 +83,19 @@ namespace Intership.Controllers
 
             var addedProductId = await _productService.CreateAsync(model);
 
-            return CreatedAtRoute("Get", new { productId = addedProductId });
+            return CreatedAtAction("Get", new { productId = addedProductId }, new AddedResponseModel(addedProductId, HttpStatusCode.Created));
         }
 
         /// <summary>
-        /// Delete a product and returns 200 status code or 404 status code if product doesn`t exist in the database
+        /// Delete a product
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <response code="204">Product was deleted successfully</response>
+        /// <response code="404">Product with provided id cannot be found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
@@ -87,11 +110,18 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Update a product and returns 200 status code or 404 status code if product doesn`t exist in the database
+        /// Update a product
         /// </summary>
         /// <param name="id"></param>
         /// <param name="model"></param>
-        /// <returns></returns>
+        /// <response code="200">Product was updated successfully</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Product with provided id cannot be found</response>
+        /// <response code="500">Internal server error</response>
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateProductModel model)
         {
@@ -107,14 +137,17 @@ namespace Intership.Controllers
 
             var updatedProductId = await _productService.UpdateAsync(id, model);
 
-            return RedirectToAction("Get", "ProductController", new { id = updatedProductId });
+            return RedirectToAction("Get", new { id = updatedProductId });
         }
 
         /// <summary>
-        /// Returns all repairs by product or 404 status code if product doesn`t exist in the database
+        /// Returns all repairs by product
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <response code="200">Success. Products were received successfully</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(List<RepairResponseModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpGet("{id}/repairs")]
         public async Task<IActionResult> GetRepairsByProduct([FromRoute] Guid id)
         {
@@ -129,11 +162,18 @@ namespace Intership.Controllers
         }
 
         /// <summary>
-        /// Get repair for the product and returns 404 status code if product or repair doesn`t exist in the database
+        /// Get repair for the product
         /// </summary>
         /// <param name="id"></param>
         /// <param name="repairId"></param>
-        /// <returns></returns>
+        /// <response code="200">Success. Product model was received successfully</response>
+        /// <response code="400">Bad request</response>
+        /// <response code="404">Product with provided id cannot be found</response>
+        /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(ProductResponseModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpGet("{id}/repairs/{repairId}")]
         public async Task<IActionResult> GetRepair([FromRoute] Guid id, [FromRoute] Guid repairId)
         {
