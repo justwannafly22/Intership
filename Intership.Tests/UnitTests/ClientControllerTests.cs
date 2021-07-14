@@ -21,7 +21,14 @@ namespace Intership.Tests.Tests
             
             var fakeService = new ClientFakeService();
             fakeService.Mock.Setup(s => s.CreateAsync(It.IsAny<AddClientModel>()))
-                .ReturnsAsync(clientId);
+                .ReturnsAsync(new ClientResponseModel()
+                {
+                    FullName = "Vutin Por",
+                    Age = 18,
+                    ContactNumber = "+375 (29) 123-45-67",
+                    Email = "kekov@mail.ru",
+                    AllowEmailNotification = false
+                });
 
             var controller = new ClientController(fakeService.Service);
 
@@ -41,11 +48,14 @@ namespace Intership.Tests.Tests
             Assert.Equal((int)HttpStatusCode.Created, createdAtActionResult.StatusCode);
 
             Assert.NotNull(createdAtActionResult.Value);
-            var addedResponse = Assert.IsType<AddedResponseModel>(createdAtActionResult.Value);
+            var addedResponse = Assert.IsType<ClientResponseModel>(createdAtActionResult.Value);
 
             Assert.NotNull(addedResponse);
-            Assert.Equal((int)HttpStatusCode.Created, (int)addedResponse.StatusCode);
-            Assert.Equal(clientId, addedResponse.Id);
+            Assert.Equal("Vutin Por", addedResponse.FullName);
+            Assert.Equal(18, addedResponse.Age);
+            Assert.Equal("+375 (29) 123-45-67", addedResponse.ContactNumber);
+            Assert.Equal("kekov@mail.ru", addedResponse.Email);
+            Assert.False(addedResponse.AllowEmailNotification);
         }
 
         [Fact]

@@ -123,7 +123,15 @@ namespace Intership.Tests.Tests
 
             var fakeRepository = new ClientFakeRepository();
             fakeRepository.Mock.Setup(s => s.CreateAsync(It.IsAny<ClientParameter>()))
-                .ReturnsAsync(clientId);
+                .ReturnsAsync(new Client()
+                {
+                    Name = "Vutin",
+                    Surname = "Por",
+                    Age = 18,
+                    ContactNumber = "+375 (29) 123-45-67",
+                    Email = "kekov@mail.ru",
+                    AllowEmailNotification = false
+                });
 
             var service = new ClientService(fakeRepository.Repository, _mapper);
 
@@ -137,7 +145,12 @@ namespace Intership.Tests.Tests
                 AllowEmailNotification = false
             });
 
-            Assert.Equal(clientId, response);
+            Assert.NotNull(response);
+            Assert.Equal("Vutin Por", response.FullName);
+            Assert.Equal(18, response.Age);
+            Assert.Equal("+375 (29) 123-45-67", response.ContactNumber);
+            Assert.Equal("kekov@mail.ru", response.Email);
+            Assert.False(response.AllowEmailNotification);
         }
 
         [Fact]
