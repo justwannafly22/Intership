@@ -29,14 +29,16 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(AddClientModel model)
+        public async Task<ClientResponseModel> CreateAsync(AddClientModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _clientRepository.CreateAsync(_mapper.Map<ClientParameter>(model));
+            var addedClient = await _clientRepository.CreateAsync(_mapper.Map<ClientParameter>(model));
+
+            return _mapper.Map<ClientResponseModel>(addedClient);
         }
 
         /// <summary>

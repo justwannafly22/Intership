@@ -16,7 +16,7 @@ namespace Intership.Services.Abstracts
         Task<ClientResponseModel> GetAsync(Guid id);
         Task<Guid> UpdateAsync(Guid id, UpdateClientModel model);
         Task DeleteAsync(Guid id);
-        Task<Guid> CreateAsync(AddClientModel climodelent);
+        Task<ClientResponseModel> CreateAsync(AddClientModel climodelent);
         Task<bool> IsExist(Guid id);
         Task<List<RepairResponseModel>> GetRepairs(Guid id);
     }

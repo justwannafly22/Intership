@@ -23,7 +23,7 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(ClientParameter model)
+        public async Task<Client> CreateAsync(ClientParameter model)
         {
             var client = new Client()
             {
@@ -37,7 +37,7 @@ namespace Intership.Data.Repositories
 
             await CreateAsync(client);
 
-            return client.Id;
+            return client;
         }
 
         /// <summary>
