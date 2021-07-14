@@ -55,7 +55,7 @@ namespace Intership.Controllers
         {
             if (!await _clientService.IsExist(id)) 
             {
-                return NotFound($"Client with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Client with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             var client = await _clientService.GetAsync(id);
@@ -70,7 +70,7 @@ namespace Intership.Controllers
         /// <response code="201">Success. Status model was created successfully</response>
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
-        [ProducesResponseType(typeof(AddedResponseModel), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ClientResponseModel), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
         [HttpPost]
@@ -81,15 +81,14 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var addedClientId = await _clientService.CreateAsync(model);
+            var addedClient = await _clientService.CreateAsync(model);
 
-            return CreatedAtAction("Get", new { id = addedClientId }, new AddedResponseModel(addedClientId, HttpStatusCode.Created));
+            return CreatedAtAction(nameof(Get), new { id = addedClient.Id }, addedClient);
         }
 
         /// <summary>
         /// Delete a client
         /// </summary>
-        /// <param name="id"></param>
         /// <param name="id"></param>
         /// <response code="204">Client was deleted successfully</response>
         /// <response code="404">Client with provided id cannot be found</response>
@@ -102,7 +101,7 @@ namespace Intership.Controllers
         {
             if (!await _clientService.IsExist(id))
             {
-                return NotFound($"Client with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Client with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             await _clientService.DeleteAsync(id);
@@ -128,7 +127,7 @@ namespace Intership.Controllers
         {
             if (!await _clientService.IsExist(id))
             {
-                return NotFound($"Client with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Client with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             if (!ModelState.IsValid)
@@ -156,7 +155,7 @@ namespace Intership.Controllers
         {
             if (!await _clientService.IsExist(id))
             {
-                return NotFound($"Client with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Client with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             var repairs = await _clientService.GetRepairs(id);
