@@ -13,6 +13,6 @@ namespace Intership.Data.Abstracts
         Task<List<ReplacedPart>> GetAllAsync();
         Task<ReplacedPart> GetAsync(Guid id);
         Task DeleteAsync(Guid id);
-        Task<List<Guid>> CreateRangeAsync(List<ReplacedPartParameter> models);
+        Task<List<ReplacedPart>> CreateRangeAsync(List<ReplacedPartParameter> models);
     }
 }

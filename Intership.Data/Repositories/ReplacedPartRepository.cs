@@ -46,7 +46,7 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="models"></param>
         /// <returns></returns>
-        public async Task<List<Guid>> CreateRangeAsync(List<ReplacedPartParameter> models)
+        public async Task<List<ReplacedPart>> CreateRangeAsync(List<ReplacedPartParameter> models)
         {
             var replacedParts = models.Select(r => new ReplacedPart()
             {
@@ -58,7 +58,7 @@ namespace Intership.Data.Repositories
 
             await CreateRangeAsync(replacedParts);
 
-            return replacedParts.Select(r => r.Id).ToList();
+            return replacedParts.ToList();
         }
 
         /// <summary>
