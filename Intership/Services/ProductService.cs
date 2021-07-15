@@ -30,20 +30,22 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(AddProductModel model)
+        public async Task<ProductResponseModel> CreateAsync(AddProductModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _productRepository.CreateAsync(_mapper.Map<ProductParameter>(model));
+            var addedProduct = await _productRepository.CreateAsync(_mapper.Map<ProductParameter>(model));
+
+            return _mapper.Map<ProductResponseModel>(addedProduct);
         }
 
         /// <summary>
         /// Delete a product
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
@@ -101,6 +103,7 @@ namespace Intership.Services
         /// <summary>
         /// Update a product
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="model"></param>
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, UpdateProductModel model)

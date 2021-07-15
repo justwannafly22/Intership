@@ -31,17 +31,17 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(AddRepairModel model)
+        public async Task<RepairResponseModel> CreateAsync(AddRepairModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var addedRepairId = await _repairRepository.CreateAsync(_mapper.Map<RepairParameter>(model));
-            _ = await _repairInfoRepository.CreateAsync(_mapper.Map<RepairInfoParameter>(model), addedRepairId);
+            var addedRepair = await _repairRepository.CreateAsync(_mapper.Map<RepairParameter>(model));
+            _ = await _repairInfoRepository.CreateAsync(_mapper.Map<RepairInfoParameter>(model), addedRepair.Id);
 
-            return addedRepairId;
+            return _mapper.Map<RepairResponseModel>(addedRepair);
         }
 
         /// <summary>

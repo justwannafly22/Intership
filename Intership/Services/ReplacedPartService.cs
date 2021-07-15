@@ -27,18 +27,18 @@ namespace Intership.Services
         /// <summary>
         /// Create a replaced parts
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="models"></param>
         /// <returns></returns>
-        public async Task<List<Guid>> CreateManyAsync(List<AddReplacedPartModel> models)
+        public async Task<List<ReplacedPartResponseModel>> CreateManyAsync(List<AddReplacedPartModel> models)
         {
             if (models == null)
             {
                 throw new ArgumentNullException(nameof(models));
             }
 
-            var addedReplacedPartsId = await _replacedPartRepository.CreateRangeAsync(_mapper.Map<List<ReplacedPartParameter>>(models));
+            var addedReplacedParts = await _replacedPartRepository.CreateRangeAsync(_mapper.Map<List<ReplacedPartParameter>>(models));
 
-            return addedReplacedPartsId;
+            return _mapper.Map<List<ReplacedPartResponseModel>>(addedReplacedParts);
         }
 
         /// <summary>

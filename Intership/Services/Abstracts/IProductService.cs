@@ -16,7 +16,7 @@ namespace Intership.Services.Abstracts
         Task<RepairResponseModel> GetRepairByProduct(Guid productId, Guid repairId);
         Task<List<ProductResponseModel>> GetAllAsync();
         Task<ProductResponseModel> GetAsync(Guid id);
-        Task<Guid> CreateAsync(AddProductModel model);
+        Task<ProductResponseModel> CreateAsync(AddProductModel model);
         Task<Guid> UpdateAsync(Guid id, UpdateProductModel model);
         Task DeleteAsync(Guid id);
         Task<bool> IsRepairExist(Guid productId, Guid repairsIds);

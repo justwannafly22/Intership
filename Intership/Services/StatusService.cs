@@ -29,14 +29,16 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(AddStatusModel model)
+        public async Task<StatusResponseModel> CreateAsync(AddStatusModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _statusRepository.CreateAsync(_mapper.Map<StatusParameter>(model));
+            var addedStatus = await _statusRepository.CreateAsync(_mapper.Map<StatusParameter>(model));
+
+            return _mapper.Map<StatusResponseModel>(addedStatus);
         }
 
         /// <summary>

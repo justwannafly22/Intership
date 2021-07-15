@@ -8,7 +8,7 @@ namespace Intership.Services.Abstracts
 {
     public interface IReplacedPartService
     {
-        Task<List<Guid>> CreateManyAsync(List<AddReplacedPartModel> models);
+        Task<List<ReplacedPartResponseModel>> CreateManyAsync(List<AddReplacedPartModel> models);
         Task<Guid> UpdateAsync(Guid id, UpdateReplacedPartModel model);
         Task<List<ReplacedPartResponseModel>> GetAllAsync();
         Task<ReplacedPartResponseModel> GetAsync(Guid id);
