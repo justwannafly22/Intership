@@ -118,7 +118,7 @@ namespace Intership.Controllers
         /// <response code="400">Bad request</response>
         /// <response code="404">Client with provided id cannot be found</response>
         /// <response code="500">Internal server error</response>
-        [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ClientResponseModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
