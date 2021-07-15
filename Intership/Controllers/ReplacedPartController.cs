@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
@@ -54,7 +55,7 @@ namespace Intership.Controllers
         {
             if (!await _replacedPartService.IsExist(id))
             {
-                return NotFound($"ReplacedPart with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"ReplacedPart with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             var replacedPart = await _replacedPartService.GetAsync(id);
@@ -80,9 +81,9 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var addedReplacedPartsId = await _replacedPartService.CreateManyAsync(models);
+            var addedReplacedParts = await _replacedPartService.CreateManyAsync(models);
 
-            return CreatedAtAction("Get", new { id = addedReplacedPartsId });
+            return CreatedAtAction(nameof(Get), new { ids = addedReplacedParts.Select(a => a.Id) }, addedReplacedParts);
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace Intership.Controllers
         {
             if (!await _replacedPartService.IsExist(id))
             {
-                return NotFound($"ReplacedPart with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"ReplacedPart with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             if (!ModelState.IsValid)
@@ -113,7 +114,7 @@ namespace Intership.Controllers
 
             var updatedReplacedPartId = await _replacedPartService.UpdateAsync(id, model);
 
-            return RedirectToAction("Get",  new { id = updatedReplacedPartId });
+            return RedirectToAction(nameof(Get), new { id = updatedReplacedPartId });
         }
 
         /// <summary>
@@ -131,7 +132,7 @@ namespace Intership.Controllers
         {
             if (!await _replacedPartService.IsExist(id))
             {
-                return NotFound($"ReplacedPart with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"ReplacedPart with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             await _replacedPartService.DeleteAsync(id);

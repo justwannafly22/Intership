@@ -137,7 +137,7 @@ namespace Intership.Controllers
 
             var updatedClientId = await _clientService.UpdateAsync(id, model);
 
-            return RedirectToAction("Get", new { id = updatedClientId });
+            return RedirectToAction(nameof(Get), new { id = updatedClientId});
         }
 
         /// <summary>

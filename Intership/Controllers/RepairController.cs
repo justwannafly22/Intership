@@ -59,7 +59,7 @@ namespace Intership.Controllers
         {
             if (!await _repairService.IsExist(id))
             {
-                return NotFound($"Repair with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Repair with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             var repair = await _repairService.GetAsync(id);
@@ -85,9 +85,9 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var addedRepairId = await _repairService.CreateAsync(model);
+            var addedRepair = await _repairService.CreateAsync(model);
 
-            return CreatedAtAction("Get", new { id = addedRepairId }, new AddedResponseModel(addedRepairId, HttpStatusCode.Created));
+            return CreatedAtAction(nameof(Get), new { id = addedRepair.Id }, addedRepair);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Intership.Controllers
         {
             if (!await _repairService.IsExist(id))
             {
-                return NotFound($"Repair with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Repair with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             if (!ModelState.IsValid)
@@ -118,7 +118,7 @@ namespace Intership.Controllers
 
             var updatedRepairId = await _repairService.UpdateAsync(id, model);
 
-            return RedirectToAction("Get", new { id = updatedRepairId });
+            return RedirectToAction(nameof(Get), new { id = updatedRepairId });
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Intership.Controllers
         {
             if (!await _repairService.IsExist(id))
             {
-                return NotFound($"Repair with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Repair with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             await _repairService.DeleteAsync(id);
@@ -157,7 +157,7 @@ namespace Intership.Controllers
         {
             if (!await _repairService.IsExist(id))
             {
-                return NotFound($"Repair with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Repair with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             var replacedParts = await _repairService.GetAllReplacedParts(id);
@@ -183,7 +183,7 @@ namespace Intership.Controllers
         {
             if (!await _repairService.IsExist(id))
             {
-                return NotFound($"Repair with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Repair with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             var model = _mapper.Map<UpdateRepairModel>(await _repairService.GetAsync(id));
@@ -196,7 +196,7 @@ namespace Intership.Controllers
 
             var updatedRepairId = await _repairService.UpdateAsync(id, model);
 
-            return RedirectToAction("GetRepair", "RepairController", new { id = updatedRepairId });
+            return RedirectToAction(nameof(Get));
         }
     }
 }

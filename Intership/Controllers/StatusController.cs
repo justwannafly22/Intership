@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Intership.Controllers
@@ -49,14 +50,14 @@ namespace Intership.Controllers
         [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(BaseResponseModel), StatusCodes.Status500InternalServerError)]
-        [HttpGet("{id}", Name = "GetStatus")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var status = await _statusService.GetAsync(id);
 
             if (status == null)
             {
-                return NotFound($"Status with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Status with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             return Ok(status);
@@ -80,9 +81,9 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var addedStatusId = await _statusService.CreateAsync(model);
+            var addedStatus = await _statusService.CreateAsync(model);
 
-            return CreatedAtRoute($"GetStatus", new { id = addedStatusId });
+            return CreatedAtRoute(nameof(Get), new { id = addedStatus.Id }, addedStatus);
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Intership.Controllers
         {
             if (!await _statusService.IsExist(id))
             {
-                return NotFound($"Status with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Status with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             await _statusService.DeleteAsync(id);
@@ -126,7 +127,7 @@ namespace Intership.Controllers
         {
             if (!await _statusService.IsExist(id))
             {
-                return NotFound($"Status with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Status with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             if (!ModelState.IsValid)
@@ -136,7 +137,7 @@ namespace Intership.Controllers
 
             var updatedStatusId = await _statusService.UpdateAsync(id, model);
 
-            return RedirectToAction("Get", new { id = updatedStatusId });
+            return RedirectToAction(nameof(Get), new { id = updatedStatusId });
         }
     }
 }

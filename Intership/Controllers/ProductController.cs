@@ -55,7 +55,7 @@ namespace Intership.Controllers
         {
             if (!await _productService.IsExist(id))
             {
-                return NotFound($"Product with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Product with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             var product = await _productService.GetAsync(id);
@@ -81,9 +81,9 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var addedProductId = await _productService.CreateAsync(model);
+            var addedProduct = await _productService.CreateAsync(model);
 
-            return CreatedAtAction("Get", new { productId = addedProductId }, new AddedResponseModel(addedProductId, HttpStatusCode.Created));
+            return CreatedAtAction(nameof(Get), new { productId = addedProduct.Id }, addedProduct);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Intership.Controllers
         {
             if (!await _productService.IsExist(id))
             {
-                return NotFound($"Product with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Product with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
             
             await _productService.DeleteAsync(id);
@@ -127,7 +127,7 @@ namespace Intership.Controllers
         {
             if (!await _productService.IsExist(id))
             {
-                return NotFound($"Product with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Product with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             if (!ModelState.IsValid)
@@ -137,7 +137,7 @@ namespace Intership.Controllers
 
             var updatedProductId = await _productService.UpdateAsync(id, model);
 
-            return RedirectToAction("Get", new { id = updatedProductId });
+            return RedirectToAction(nameof(Get), new { id = updatedProductId });
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Intership.Controllers
         {
             if (!await _productService.IsExist(id))
             {
-                return NotFound($"Product with id: {id} doesn`t exist in the database.");
+                return NotFound(new BaseResponseModel($"Product with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             var repairs = await _productService.GetRepairsByProduct(id);
@@ -179,7 +179,7 @@ namespace Intership.Controllers
         {
             if (!await _productService.IsRepairExist(id, repairId))
             {
-                return NotFound($"Repair with id: {repairId} doesn`t exist in the product.");
+                return NotFound(new BaseResponseModel($"Product with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
             var repair = await _productService.GetRepairByProduct(id, repairId);
