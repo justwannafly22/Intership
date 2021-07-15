@@ -23,7 +23,7 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(StatusParameter model)
+        public async Task<Status> CreateAsync(StatusParameter model)
         {
             var status = new Status()
             {
@@ -32,7 +32,7 @@ namespace Intership.Data.Repositories
 
             await CreateAsync(status);
 
-            return status.Id;
+            return status;
         }
 
         /// <summary>

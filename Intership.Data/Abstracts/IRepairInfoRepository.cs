@@ -11,7 +11,7 @@ namespace Intership.Data.Abstracts
     public interface IRepairInfoRepository
     {
         Task<RepairInfo> GetAsync(Guid id);
-        Task<Guid> CreateAsync(RepairInfoParameter model, Guid repairId);
+        Task<RepairInfo> CreateAsync(RepairInfoParameter model, Guid repairId);
         Task<Guid> UpdateAsync(Guid id, RepairInfoParameter model);
         Task DeleteAsync(Guid id);
     }

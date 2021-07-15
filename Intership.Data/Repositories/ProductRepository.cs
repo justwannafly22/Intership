@@ -23,7 +23,7 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(ProductParameter model)
+        public async Task<Product> CreateAsync(ProductParameter model)
         {
             var product = new Product()
             {
@@ -34,7 +34,7 @@ namespace Intership.Data.Repositories
 
             await CreateAsync(product);
 
-            return product.Id;
+            return product;
         }
         
         /// <summary>

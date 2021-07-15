@@ -23,7 +23,7 @@ namespace Intership.Data.Repositories
         /// <param name="model"></param>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(RepairInfoParameter model, Guid repairId)
+        public async Task<RepairInfo> CreateAsync(RepairInfoParameter model, Guid repairId)
         {
             var repairInfo = new RepairInfo()
             {
@@ -35,7 +35,7 @@ namespace Intership.Data.Repositories
 
             await CreateAsync(repairInfo);
 
-            return repairInfo.Id;
+            return repairInfo;
         }
 
         /// <summary>

@@ -8,7 +8,7 @@ namespace Intership.Data.Abstracts
 {
     public interface IReplacedPartRepository
     {
-        Task<Guid> CreateAsync(ReplacedPartParameter model);
+        Task<ReplacedPart> CreateAsync(ReplacedPartParameter model);
         Task<Guid> UpdateAsync(Guid id, ReplacedPartParameter model);
         Task<List<ReplacedPart>> GetAllAsync();
         Task<ReplacedPart> GetAsync(Guid id);

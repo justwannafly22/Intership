@@ -24,7 +24,7 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(ReplacedPartParameter model)
+        public async Task<ReplacedPart> CreateAsync(ReplacedPartParameter model)
         {
             var replacedPart = new ReplacedPart()
             {
@@ -38,7 +38,7 @@ namespace Intership.Data.Repositories
             
             await CreateAsync(replacedPart);
 
-            return replacedPart.Id;
+            return replacedPart;
         }
         
         /// <summary>
