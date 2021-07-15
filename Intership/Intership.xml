@@ -35,7 +35,6 @@
             Delete a client
             </summary>
             <param name="id"></param>
-            <param name="id"></param>
             <response code="204">Client was deleted successfully</response>
             <response code="404">Client with provided id cannot be found</response>
             <response code="500">Internal server error</response>
@@ -371,7 +370,7 @@
             <summary>
             Delete a product
             </summary>
-            <param name="model"></param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Intership.Services.ProductService.GetAsync(System.Guid)">
@@ -413,6 +412,7 @@
             <summary>
             Update a product
             </summary>
+            <param name="id"></param>
             <param name="model"></param>
             <returns></returns>
         </member>
@@ -486,7 +486,7 @@
             <summary>
             Create a replaced parts
             </summary>
-            <param name="model"></param>
+            <param name="models"></param>
             <returns></returns>
         </member>
         <member name="M:Intership.Services.ReplacedPartService.UpdateAsync(System.Guid,Intership.Models.RequestModels.ReplacedPart.UpdateReplacedPartModel)">
