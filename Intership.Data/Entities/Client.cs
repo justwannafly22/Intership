@@ -21,6 +21,7 @@ namespace Intership.Data.Entities
 
         [Column("age")]
         [Range(0, 150)]
+        [Required]
         public int Age { get; set; }
 
         [Column("contact_number")]
@@ -32,11 +33,10 @@ namespace Intership.Data.Entities
         public string Email { get; set; }
         
         [Column("allow_email_notifications")]
-        [Required]
         public bool AllowEmailNotification { get; set; }
 
         [ForeignKey(nameof(User))]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
 
         public ICollection<Repair> Repairs { get; set; }
