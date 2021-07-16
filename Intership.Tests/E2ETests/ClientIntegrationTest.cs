@@ -24,6 +24,8 @@ namespace Intership.Tests.E2ETests
             _fixture = new Fixture();
             _fixture.Customize<Client>(composer =>
                 composer.Without(c => c.Repairs));
+            _fixture.Customize<User>(composer =>
+                composer.Without(c => c.Profile));
         }
 
         /// <summary>
