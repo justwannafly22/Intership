@@ -9,6 +9,7 @@ namespace Intership.Models.RequestModels.Product
         [MaxLength(60, ErrorMessage = "Max length for Name is 60 characters.")]
         public string Name { get; set; }
 
+        [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Price is required and it can`t be lower than 0.")]
         public double Price { get; set; }
 

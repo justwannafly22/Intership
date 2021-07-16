@@ -30,20 +30,22 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(AddProductModel model)
+        public async Task<ProductResponseModel> CreateAsync(AddProductModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _productRepository.CreateAsync(_mapper.Map<ProductParameter>(model));
+            var addedProduct = await _productRepository.CreateAsync(_mapper.Map<ProductParameter>(model));
+
+            return _mapper.Map<ProductResponseModel>(addedProduct);
         }
 
         /// <summary>
         /// Delete a product
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
@@ -62,8 +64,8 @@ namespace Intership.Services
         /// Returns all products
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<ProductResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<ProductResponseModel>>(await _productRepository.GetAllAsync());
+        public async Task<List<ProductResponseModel>> GetAllAsync() =>
+            _mapper.Map<List<ProductResponseModel>>(await _productRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing product
@@ -78,11 +80,11 @@ namespace Intership.Services
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<RepairResponseModel>> GetRepairsByProduct(Guid productId)
+        public async Task<List<RepairResponseModel>> GetRepairsByProduct(Guid productId)
         {
             var product = await _productRepository.GetWithRepairsAsync(productId);
 
-            return _mapper.Map<IEnumerable<RepairResponseModel>>(product.ReplacedParts.Select(r => r.Repair));
+            return _mapper.Map<List<RepairResponseModel>>(product.ReplacedParts.Select(r => r.Repair));
         }
 
         /// <summary>
@@ -101,6 +103,7 @@ namespace Intership.Services
         /// <summary>
         /// Update a product
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="model"></param>
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, UpdateProductModel model)

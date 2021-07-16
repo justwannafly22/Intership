@@ -10,7 +10,7 @@ namespace Intership.Data.Abstracts
     {
         Task<IEnumerable<Product>> GetAllAsync();
         Task<Product> GetAsync(Guid id);
-        Task<Guid> CreateAsync(ProductParameter model);
+        Task<Product> CreateAsync(ProductParameter model);
         Task<Guid> UpdateAsync(Guid id, ProductParameter model);
         Task DeleteAsync(Guid id);
         Task<Product> GetWithRepairsAsync(Guid id);

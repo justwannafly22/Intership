@@ -23,7 +23,7 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(ProductParameter model)
+        public async Task<Product> CreateAsync(ProductParameter model)
         {
             var product = new Product()
             {
@@ -34,7 +34,7 @@ namespace Intership.Data.Repositories
 
             await CreateAsync(product);
 
-            return product.Id;
+            return product;
         }
         
         /// <summary>
@@ -44,7 +44,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var product = await FindByCondition(p => p.Id.Equals(id), trackChanges: false)
+            var product = await FindByCondition(p => p.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             await DeleteAsync(product);
@@ -57,7 +57,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Product> GetAsync(Guid id) =>
-            await FindByCondition(p => p.Id.Equals(id), trackChanges : true)
+            await FindByCondition(p => p.Id.Equals(id))
             .SingleOrDefaultAsync();
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<IEnumerable<Product>> GetAllAsync() =>
-            await FindAll(trackChanges : false)
+            await FindAll()
             .ToListAsync();
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, ProductParameter model)
         {
-            var product = await FindByCondition(p => p.Id.Equals(id), trackChanges: true).
+            var product = await FindByCondition(p => p.Id.Equals(id)).
                 SingleOrDefaultAsync();
 
             product.Name = model.Name;
@@ -96,7 +96,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Product> GetWithRepairsAsync(Guid id) =>
-            await FindByCondition(p => p.Id.Equals(id), trackChanges : false)
+            await FindByCondition(p => p.Id.Equals(id))
             .Include(p => p.ReplacedParts)
                 .ThenInclude(r => r.Repair)
                     .ThenInclude(r => r.RepairInfo)

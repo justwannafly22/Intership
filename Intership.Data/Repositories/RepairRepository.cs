@@ -23,7 +23,7 @@ namespace Intership.Data.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(RepairParameter model)
+        public async Task<Repair> CreateAsync(RepairParameter model)
         {
             var repair = new Repair()
             {
@@ -32,7 +32,7 @@ namespace Intership.Data.Repositories
 
             await CreateAsync(repair);
 
-            return repair.Id;
+            return repair;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var repair = await FindByCondition(r => r.Id.Equals(id), trackChanges: false)
+            var repair = await FindByCondition(r => r.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             await DeleteAsync(repair);
@@ -55,7 +55,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Repair> GetAsync(Guid id) =>
-            await FindByCondition(r => r.Id.Equals(id), trackChanges : true)
+            await FindByCondition(r => r.Id.Equals(id))
             .Include(r => r.RepairInfo)
                 .ThenInclude(r => r.Status)
             .SingleOrDefaultAsync();
@@ -66,7 +66,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<IEnumerable<Repair>> GetAllAsync() =>
-            await FindAll(trackChanges : false)
+            await FindAll()
             .Include(r => r.RepairInfo)
                 .ThenInclude(r => r.Status)
             .ToListAsync();
@@ -78,7 +78,7 @@ namespace Intership.Data.Repositories
         /// <param name="trackChanges"></param>
         /// <returns></returns>
         public async Task<Repair> GetWithReplacedParts(Guid repairId) =>
-            await FindByCondition(r => r.Id.Equals(repairId), trackChanges : false)
+            await FindByCondition(r => r.Id.Equals(repairId))
             .Include(r => r.ReplacedParts)
             .SingleOrDefaultAsync();
         
@@ -90,7 +90,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, RepairParameter model)
         {
-            var repair = await FindByCondition(r => r.Id.Equals(id), trackChanges: true)
+            var repair = await FindByCondition(r => r.Id.Equals(id))
                 .SingleOrDefaultAsync();
 
             repair.Name = model.Name;

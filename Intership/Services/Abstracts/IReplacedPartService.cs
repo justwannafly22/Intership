@@ -8,9 +8,9 @@ namespace Intership.Services.Abstracts
 {
     public interface IReplacedPartService
     {
-        Task<IEnumerable<Guid>> CreateManyAsync(IEnumerable<AddReplacedPartModel> models);
+        Task<List<ReplacedPartResponseModel>> CreateManyAsync(List<AddReplacedPartModel> models);
         Task<Guid> UpdateAsync(Guid id, UpdateReplacedPartModel model);
-        Task<IEnumerable<ReplacedPartResponseModel>> GetAllAsync();
+        Task<List<ReplacedPartResponseModel>> GetAllAsync();
         Task<ReplacedPartResponseModel> GetAsync(Guid id);
         Task DeleteAsync(Guid id);
         Task<bool> IsExist(Guid id);

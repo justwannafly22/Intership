@@ -13,7 +13,7 @@ namespace Intership.Data.Abstracts
     {
         Task<IEnumerable<Repair>> GetAllAsync();
         Task<Repair> GetAsync(Guid id);
-        Task<Guid> CreateAsync(RepairParameter model);
+        Task<Repair> CreateAsync(RepairParameter model);
         Task<Guid> UpdateAsync(Guid id, RepairParameter model);
         Task DeleteAsync(Guid id);
         Task<Repair> GetWithReplacedParts(Guid repairId);

@@ -29,14 +29,16 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(AddClientModel model) //AddClientParamater;
+        public async Task<ClientResponseModel> CreateAsync(AddClientModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            return await _clientRepository.CreateAsync(_mapper.Map<ClientParameter>(model));
+            var addedClient = await _clientRepository.CreateAsync(_mapper.Map<ClientParameter>(model));
+
+            return _mapper.Map<ClientResponseModel>(addedClient);
         }
 
         /// <summary>
@@ -61,8 +63,8 @@ namespace Intership.Services
         /// Returns a list of clients
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<ClientResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<ClientResponseModel>>(await _clientRepository.GetAllAsync());
+        public async Task<List<ClientResponseModel>> GetAllAsync() =>
+            _mapper.Map<List<ClientResponseModel>>(await _clientRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing client
@@ -92,11 +94,11 @@ namespace Intership.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<RepairResponseModel>> GetRepairs(Guid id)
+        public async Task<List<RepairResponseModel>> GetRepairs(Guid id)
         {
-            var client = await _clientRepository.GetRepairWithRepairsAsync(id);
+            var client = await _clientRepository.GetWithRepairsAsync(id);
 
-            return _mapper.Map<IEnumerable<RepairResponseModel>>(client.Repairs);
+            return _mapper.Map<List<RepairResponseModel>>(client.Repairs);
         }
     }
 }

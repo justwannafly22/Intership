@@ -1,0 +1,576 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Intership</name>
+    </assembly>
+    <members>
+        <member name="M:Intership.Controllers.ClientController.GetAll">
+            <summary>
+            Returns all clients
+            </summary>
+            <response code="200">Success. Clients were received successfully</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ClientController.Get(System.Guid)">
+            <summary>
+            Returns a client
+            </summary>
+            <param name="id"></param>
+            <response code="200">Success. Client model was received successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Client with provided id cannot be found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ClientController.Create(Intership.Models.RequestModels.Client.AddClientModel)">
+            <summary>
+            Create a client
+            </summary>
+            <param name="model"></param>
+            <response code="201">Success. Status model was created successfully</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ClientController.Delete(System.Guid)">
+            <summary>
+            Delete a client
+            </summary>
+            <param name="id"></param>
+            <response code="204">Client was deleted successfully</response>
+            <response code="404">Client with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.ClientController.Update(System.Guid,Intership.Models.RequestModels.Client.UpdateClientModel)">
+            <summary>
+            Update a client
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <response code="200">Client was updated successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Client with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.ClientController.GetRepairs(System.Guid)">
+            <summary>
+            Returns a repairs for the client
+            </summary>
+            <param name="id"></param>
+            <response code="200">Success. Repairs were received successfully</response>
+            <response code="404">Client with provided id cannot be found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ProductController.GetAll">
+            <summary>
+            Returns all products
+            </summary>
+            <response code="200">Success. Products were received successfully</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ProductController.Get(System.Guid)">
+            <summary>
+            Returns a product
+            </summary>
+            <param name="id"></param>
+            <response code="200">Success. Product model was received successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Product with provided id cannot be found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ProductController.Create(Intership.Models.RequestModels.Product.AddProductModel)">
+            <summary>
+            Create a product
+            </summary>
+            <param name="model"></param>
+            <response code="201">Success. Product model was created successfully</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ProductController.Delete(System.Guid)">
+            <summary>
+            Delete a product
+            </summary>
+            <param name="id"></param>
+            <response code="204">Product was deleted successfully</response>
+            <response code="404">Product with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.ProductController.Update(System.Guid,Intership.Models.RequestModels.Product.UpdateProductModel)">
+            <summary>
+            Update a product
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <response code="200">Product was updated successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Product with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.ProductController.GetRepairsByProduct(System.Guid)">
+            <summary>
+            Returns all repairs by product
+            </summary>
+            <param name="id"></param>
+            <response code="200">Success. Products were received successfully</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ProductController.GetRepair(System.Guid,System.Guid)">
+            <summary>
+            Get repair for the product
+            </summary>
+            <param name="id"></param>
+            <param name="repairId"></param>
+            <response code="200">Success. Product model was received successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Product with provided id cannot be found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.RepairController.GetAll">
+            <summary>
+            Returns all repairs
+            </summary>
+            <response code="200">Success. Repairs were received successfully</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.RepairController.Get(System.Guid)">
+            <summary>
+            Returns a repair
+            </summary>
+            <param name="id"></param>
+            <response code="200">Success. Repair model was received successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Repair with provided id cannot be found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.RepairController.Create(Intership.Models.RequestModels.Repair.AddRepairModel)">
+            <summary>
+            Create a repair
+            </summary>
+            <param name="model"></param>
+            <response code="201">Success. Repair model was created successfully</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.RepairController.Update(System.Guid,Intership.Models.RequestModels.Repair.UpdateRepairModel)">
+            <summary>
+            Update a repair
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <response code="200">Repair was updated successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Repair with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.RepairController.Delete(System.Guid)">
+            <summary>
+            Delete a repair and repair info
+            </summary>
+            <param name="id"></param>
+            <response code="204">Repair was deleted successfully</response>
+            <response code="404">Repair with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.RepairController.GetAllForRepair(System.Guid)">
+            <summary>
+            Returns a replaced parts for the repair
+            </summary>
+            <param name="id"></param>
+            <response code="200">Success. Replaced parts were received successfully</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.RepairController.UpdateStatus(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Intership.Models.RequestModels.Repair.UpdateRepairModel})">
+            <summary>
+            Update a status
+            </summary>
+            <param name="id"></param>
+            <param name="patchModel"></param>
+            <response code="200">Repair was updated successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Repair with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.ReplacedPartController.GetAll">
+            <summary>
+            Returns a replaced parts
+            </summary>
+            <response code="200">Success. Replaced parts were received successfully</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ReplacedPartController.Get(System.Guid)">
+            <summary>
+            Returns a replaced part
+            </summary>
+            <param name="id"></param>
+            <response code="200">Success. Replaced part model was received successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Replaced part  with provided id cannot be found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ReplacedPartController.Create(System.Collections.Generic.List{Intership.Models.RequestModels.ReplacedPart.AddReplacedPartModel})">
+            <summary>
+            Create a replaced parts
+            </summary>
+            <param name="models"></param>
+            <response code="201">Success. Replaced part models were created successfully</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.ReplacedPartController.Update(System.Guid,Intership.Models.RequestModels.ReplacedPart.UpdateReplacedPartModel)">
+            <summary>
+            Update a replaced part
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <response code="200">Replaced part was updated successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Replaced part with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.ReplacedPartController.Delete(System.Guid)">
+            <summary>
+            Delete a replaced part
+            </summary>
+            <param name="id"></param>
+            <response code="204">Replaced part was deleted successfully</response>
+            <response code="404">Replaced part with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.StatusController.GetAll">
+            <summary>
+            Returns all statuses 
+            </summary>
+            <response code="200">Success. Statuses were received successfully</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.StatusController.Get(System.Guid)">
+            <summary>
+            Returns a status
+            </summary>
+            <param name="id"></param>
+            <response code="200">Success. Status model was received successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Status with provided id cannot be found</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.StatusController.Create(Intership.Models.RequestModels.Status.AddStatusModel)">
+            <summary>
+            Create a new status and returns an id
+            </summary>
+            <param name="model"></param>
+            <response code="201">Success. Status model was created successfully</response>
+            <response code="400">Bad Request</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="M:Intership.Controllers.StatusController.Delete(System.Guid)">
+            <summary>
+            Delete a status
+            </summary>
+            <param name="id"></param>
+            <response code="204">Status was deleted successfully</response>
+            <response code="404">Status with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="M:Intership.Controllers.StatusController.Update(System.Guid,Intership.Models.RequestModels.Status.UpdateStatusModel)">
+            <summary>
+            Update a status
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <response code="200">Status was updated successfully</response>
+            <response code="400">Bad request</response>
+            <response code="404">Status with provided id cannot be found</response>
+            <response code="500">Internal server error</response>
+        </member>
+        <member name="T:Intership.Services.Abstracts.IClientService">
+            <summary>
+            Clieng logic behavior
+            </summary>
+        </member>
+        <member name="T:Intership.Services.Abstracts.IProductService">
+            <summary>
+            Product logic behavior
+            </summary>
+        </member>
+        <member name="T:Intership.Services.Abstracts.IRepairService">
+            <summary>
+            Repair logic behavior
+            </summary>
+        </member>
+        <member name="T:Intership.Services.Abstracts.IStatusService">
+            <summary>
+            Status logic behavior
+            </summary>
+        </member>
+        <member name="T:Intership.Services.ClientService">
+            <summary>
+            Client logic implementation
+            </summary>
+        </member>
+        <member name="M:Intership.Services.ClientService.CreateAsync(Intership.Models.RequestModels.Client.AddClientModel)">
+            <summary>
+            Add a new client
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ClientService.DeleteAsync(System.Guid)">
+            <summary>
+            Delete a client
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ClientService.GetAsync(System.Guid)">
+            <summary>
+            Returns a single client
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ClientService.GetAllAsync">
+            <summary>
+            Returns a list of clients
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ClientService.IsExist(System.Guid)">
+            <summary>
+            Check for existing client
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ClientService.UpdateAsync(System.Guid,Intership.Models.RequestModels.Client.UpdateClientModel)">
+            <summary>
+            Client update
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ClientService.GetRepairs(System.Guid)">
+            <summary>
+            Returns a repairs
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intership.Services.ProductService">
+            <summary>
+            Product logic implementation
+            </summary>
+        </member>
+        <member name="M:Intership.Services.ProductService.CreateAsync(Intership.Models.RequestModels.Product.AddProductModel)">
+            <summary>
+            Create a new product
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ProductService.DeleteAsync(System.Guid)">
+            <summary>
+            Delete a product
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ProductService.GetAsync(System.Guid)">
+            <summary>
+            Returns a single product
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ProductService.GetAllAsync">
+            <summary>
+            Returns all products
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ProductService.IsExist(System.Guid)">
+            <summary>
+            Check for existing product
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ProductService.GetRepairsByProduct(System.Guid)">
+            <summary>
+            Returns a repairs for the product
+            </summary>
+            <param name="productId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ProductService.GetRepairByProduct(System.Guid,System.Guid)">
+            <summary>
+            Get a single repair for the product
+            </summary>
+            <param name="productId"></param>
+            <param name="repairId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ProductService.UpdateAsync(System.Guid,Intership.Models.RequestModels.Product.UpdateProductModel)">
+            <summary>
+            Update a product
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ProductService.IsRepairExist(System.Guid,System.Guid)">
+            <summary>
+            Check for existing repair for the product
+            </summary>
+            <param name="productId"></param>
+            <param name="repairId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intership.Services.RepairService">
+            <summary>
+            Repair logic implementation
+            </summary>
+        </member>
+        <member name="M:Intership.Services.RepairService.CreateAsync(Intership.Models.RequestModels.Repair.AddRepairModel)">
+            <summary>
+            Create a repair
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.RepairService.DeleteAsync(System.Guid)">
+            <summary>
+            Delete a repair
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.RepairService.GetAsync(System.Guid)">
+            <summary>
+            Returns a repair
+            </summary>
+            <param name="repairId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.RepairService.GetAllAsync">
+            <summary>
+            Returns a repairs
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.RepairService.IsExist(System.Guid)">
+            <summary>
+            Check for existing repair
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.RepairService.UpdateAsync(System.Guid,Intership.Models.RequestModels.Repair.UpdateRepairModel)">
+            <summary>
+            Update a repair
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.RepairService.GetAllReplacedParts(System.Guid)">
+            <summary>
+            Returns a repair with replaced parts
+            </summary>
+            <param name="repairId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intership.Services.ReplacedPartService">
+            <summary>
+            ReplacedPart logic implementation
+            </summary>
+        </member>
+        <member name="M:Intership.Services.ReplacedPartService.CreateManyAsync(System.Collections.Generic.List{Intership.Models.RequestModels.ReplacedPart.AddReplacedPartModel})">
+            <summary>
+            Create a replaced parts
+            </summary>
+            <param name="models"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ReplacedPartService.UpdateAsync(System.Guid,Intership.Models.RequestModels.ReplacedPart.UpdateReplacedPartModel)">
+            <summary>
+            Update a replaced part
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ReplacedPartService.GetAllAsync">
+            <summary>
+            Returns a replaced parts
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ReplacedPartService.GetAsync(System.Guid)">
+            <summary>
+            Returns a replaced part
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ReplacedPartService.DeleteAsync(System.Guid)">
+            <summary>
+            Delete a replaced part
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.ReplacedPartService.IsExist(System.Guid)">
+            <summary>
+            Check for existing a replaced part
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intership.Services.StatusService">
+            <summary>
+            Status logic implementation
+            </summary>
+        </member>
+        <member name="M:Intership.Services.StatusService.CreateAsync(Intership.Models.RequestModels.Status.AddStatusModel)">
+            <summary>
+            Create a status
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.StatusService.DeleteAsync(System.Guid)">
+            <summary>
+            Delete a status
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.StatusService.GetAsync(System.Guid)">
+            <summary>
+            Returns a status
+            </summary>
+            <param name="id"></param>
+            <param name="trackChanges"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.StatusService.GetAllAsync">
+            <summary>
+            Returns all statuses
+            </summary>
+            <param name="trackChanges"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.StatusService.IsExist(System.Guid)">
+            <summary>
+            Check for existing status in the database
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Intership.Services.StatusService.UpdateAsync(System.Guid,Intership.Models.RequestModels.Status.UpdateStatusModel)">
+            <summary>
+            Update a status and returns id
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

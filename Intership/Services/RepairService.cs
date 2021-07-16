@@ -31,17 +31,17 @@ namespace Intership.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Guid> CreateAsync(AddRepairModel model)
+        public async Task<RepairResponseModel> CreateAsync(AddRepairModel model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var addedRepairId = await _repairRepository.CreateAsync(_mapper.Map<RepairParameter>(model));
-            _ = await _repairInfoRepository.CreateAsync(_mapper.Map<RepairInfoParameter>(model), addedRepairId);
+            var addedRepair = await _repairRepository.CreateAsync(_mapper.Map<RepairParameter>(model));
+            _ = await _repairInfoRepository.CreateAsync(_mapper.Map<RepairInfoParameter>(model), addedRepair.Id);
 
-            return addedRepairId;
+            return _mapper.Map<RepairResponseModel>(addedRepair);
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace Intership.Services
         /// Returns a repairs
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<RepairResponseModel>> GetAllAsync() =>
-            _mapper.Map<IEnumerable<RepairResponseModel>>(await _repairRepository.GetAllAsync());
+        public async Task<List<RepairResponseModel>> GetAllAsync() =>
+            _mapper.Map<List<RepairResponseModel>>(await _repairRepository.GetAllAsync());
 
         /// <summary>
         /// Check for existing repair
@@ -105,11 +105,11 @@ namespace Intership.Services
         /// </summary>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<ReplacedPartResponseModel>> GetAllReplacedParts(Guid repairId)
+        public async Task<List<ReplacedPartResponseModel>> GetAllReplacedParts(Guid repairId)
         {
             var repair = await _repairRepository.GetWithReplacedParts(repairId);
 
-            return _mapper.Map<IEnumerable<ReplacedPartResponseModel>>(repair.ReplacedParts);
+            return _mapper.Map<List<ReplacedPartResponseModel>>(repair.ReplacedParts);
         }
     }
 }

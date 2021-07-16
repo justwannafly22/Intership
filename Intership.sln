@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Data", "Intership
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intership.Models", "Intership.Models\Intership.Models.csproj", "{3A6A2DB0-D613-4D09-A390-EBE451D11F5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Tests", "Intership.Tests\Intership.Tests.csproj", "{4E61B04A-55B1-4918-A865-DE893DFC50AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intership.Tests", "Intership.Tests\Intership.Tests.csproj", "{3D0A4E28-2D3B-4FAB-842F-9671223BA9CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{3A6A2DB0-D613-4D09-A390-EBE451D11F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A6A2DB0-D613-4D09-A390-EBE451D11F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A6A2DB0-D613-4D09-A390-EBE451D11F5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E61B04A-55B1-4918-A865-DE893DFC50AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E61B04A-55B1-4918-A865-DE893DFC50AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E61B04A-55B1-4918-A865-DE893DFC50AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E61B04A-55B1-4918-A865-DE893DFC50AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D0A4E28-2D3B-4FAB-842F-9671223BA9CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D0A4E28-2D3B-4FAB-842F-9671223BA9CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D0A4E28-2D3B-4FAB-842F-9671223BA9CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D0A4E28-2D3B-4FAB-842F-9671223BA9CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
