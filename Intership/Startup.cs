@@ -33,6 +33,7 @@ namespace Intership
         {
             services.ConfigureSqlContext(Configuration);
             services.AddAutoMapper(typeof(Startup));
+            services.ConfigureIdentity();
             services.ConfigureSwagger();
 
             services.AddControllersWithViews(config =>

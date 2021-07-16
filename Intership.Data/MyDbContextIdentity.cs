@@ -22,6 +22,7 @@ namespace Intership.Data
             modelBuilder.ApplyConfiguration(new StatusesConfiguration());
             modelBuilder.ApplyConfiguration(new RepairsInfoConfiguration());
             modelBuilder.ApplyConfiguration(new ReplacedPartsConfiguration());
+            modelBuilder.ApplyConfiguration(new RolesConfiguration());
 
             modelBuilder.Entity<RepairInfo>()
                 .HasOne(r => r.Repair)
