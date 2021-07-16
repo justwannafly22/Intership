@@ -16,11 +16,11 @@ namespace Intership.Tests
             {
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
-                        typeof(DbContextOptions<MyDbContext>));
+                        typeof(DbContextOptions<MyDbContextIdentity>));
 
                 services.Remove(descriptor);
 
-                services.AddDbContext<MyDbContext>(options =>
+                services.AddDbContext<MyDbContextIdentity>(options =>
                 {
                     options.UseInMemoryDatabase("InMemoryDbForTesting");
                 });
@@ -30,7 +30,7 @@ namespace Intership.Tests
                 using var scope = sp.CreateScope();
 
                 var scopedServices = scope.ServiceProvider;
-                var db = scopedServices.GetRequiredService<MyDbContext>();
+                var db = scopedServices.GetRequiredService<MyDbContextIdentity>();
                 var logger = scopedServices.
                     GetRequiredService<ILogger<MSSQL_WebApplicationFactory<TStartup>>>();
 
