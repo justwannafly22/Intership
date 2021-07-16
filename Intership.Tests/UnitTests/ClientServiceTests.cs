@@ -2,7 +2,6 @@
 using Intership.Data.Entities;
 using Intership.Data.Parameters;
 using Intership.Models.RequestModels.Client;
-using Intership.Models.ResponseModels;
 using Intership.Services;
 using Intership.Tests.Mocks;
 using Moq;
@@ -198,7 +197,7 @@ namespace Intership.Tests.Tests
 
             var service = new ClientService(fakeRepository.Repository, _mapper);
 
-            var repairs = await service.GetRepairs(clientId);
+            var repairs = await service.GetRepairsAsync(clientId);
 
             Assert.NotNull(repairs);
             Assert.Equal(repairId, repairs[0].Id);
