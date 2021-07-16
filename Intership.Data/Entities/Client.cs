@@ -35,6 +35,10 @@ namespace Intership.Data.Entities
         [Required]
         public bool AllowEmailNotification { get; set; }
 
+        [ForeignKey(nameof(User))]
+        public Guid UserId { get; set; }
+        public User User { get; set; }
+
         public ICollection<Repair> Repairs { get; set; }
     }
 }
