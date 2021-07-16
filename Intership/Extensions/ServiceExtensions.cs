@@ -13,9 +13,14 @@ namespace Intership.Extensions
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
+        {
             services.AddDbContext<MyDbContextIdentity>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("Intership")));
+
+            services.AddDbContext<MyDbContext>(opts =>
+                opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("Intership")));
+        }
 
         public static void ConfigureSwagger(this IServiceCollection services)
         {
