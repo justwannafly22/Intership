@@ -317,7 +317,7 @@
             <summary>
             Delete a client
             </summary>
-            <param name="model"></param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Intership.Services.ClientService.GetAsync(System.Guid)">
@@ -344,10 +344,11 @@
             <summary>
             Client update
             </summary>
+            <param name="id"></param>
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:Intership.Services.ClientService.GetRepairs(System.Guid)">
+        <member name="M:Intership.Services.ClientService.GetRepairsAsync(System.Guid)">
             <summary>
             Returns a repairs
             </summary>
@@ -393,14 +394,14 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Intership.Services.ProductService.GetRepairsByProduct(System.Guid)">
+        <member name="M:Intership.Services.ProductService.GetRepairsByProductAsync(System.Guid)">
             <summary>
             Returns a repairs for the product
             </summary>
             <param name="productId"></param>
             <returns></returns>
         </member>
-        <member name="M:Intership.Services.ProductService.GetRepairByProduct(System.Guid,System.Guid)">
+        <member name="M:Intership.Services.ProductService.GetRepairByProductAsync(System.Guid,System.Guid)">
             <summary>
             Get a single repair for the product
             </summary>
