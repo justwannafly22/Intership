@@ -2,12 +2,13 @@
 using Intership.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Intership.Data
 {
     public class MyDbContextIdentity : IdentityDbContext<User>
     {
-        public MyDbContextIdentity(DbContextOptions options) :
+        public MyDbContextIdentity(DbContextOptions<MyDbContextIdentity> options) :
             base(options)
         {
         }

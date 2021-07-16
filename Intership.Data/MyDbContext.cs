@@ -6,7 +6,7 @@ namespace Intership.Data
 {
     public class MyDbContext : DbContext
     {
-        public MyDbContext(DbContextOptions options) :
+        public MyDbContext(DbContextOptions<MyDbContext> options) :
             base(options)
         {
         }

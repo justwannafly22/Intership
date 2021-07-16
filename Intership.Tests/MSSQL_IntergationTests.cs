@@ -1,12 +1,8 @@
 ﻿using Intership.Data;
-using Intership.Tests.E2ETests;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using Xunit;
 
 namespace Intership.Tests
 {
@@ -16,12 +12,12 @@ namespace Intership.Tests
 
         private readonly MSSQL_WebApplicationFactory<TStartup> _factory;
         protected List<Action> CleanupActions { get; set; }
-        protected MyDbContext Context { get; private set; }
+        protected MyDbContextIdentity Context { get; private set; }
 
         public MSSQL_IntergationTests(MSSQL_WebApplicationFactory<TStartup> factory)
         {
             _factory = factory;
-            Context = _factory.Services.GetRequiredService<MyDbContext>();
+            Context = _factory.Services.GetRequiredService<MyDbContextIdentity>();
             Client = _factory.CreateClient();
             CleanupActions = new List<Action>();
         }
