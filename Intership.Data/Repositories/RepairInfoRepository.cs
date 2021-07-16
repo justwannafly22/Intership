@@ -12,7 +12,7 @@ namespace Intership.Data.Repositories
     /// </summary>
     public class RepairInfoRepository : RepositoryBase<RepairInfo>, IRepairInfoRepository
     {
-        public RepairInfoRepository(MyDbContext context)
+        public RepairInfoRepository(MyDbContextIdentity context)
             : base(context)
         {
         }

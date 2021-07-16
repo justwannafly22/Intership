@@ -13,7 +13,7 @@ namespace Intership.Data.Repositories
     /// </summary>
     public class ClientRepository : RepositoryBase<Client>, IClientRepository
     {
-        public ClientRepository(MyDbContext context)
+        public ClientRepository(MyDbContextIdentity context)
             :base(context)
         {
         }

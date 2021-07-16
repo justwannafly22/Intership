@@ -14,7 +14,7 @@ namespace Intership.Data.Repositories
     /// </summary>
     public class ReplacedPartRepository : RepositoryBase<ReplacedPart>, IReplacedPartRepository
     {
-        public ReplacedPartRepository(MyDbContext context)
+        public ReplacedPartRepository(MyDbContextIdentity context)
             : base(context)
         {
         }

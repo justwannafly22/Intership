@@ -13,7 +13,7 @@ namespace Intership.Data.Repositories
     /// </summary>
     public class StatusRepository : RepositoryBase<Status>, IStatusRepository
     {
-        public StatusRepository (MyDbContext context)
+        public StatusRepository (MyDbContextIdentity context)
             : base(context)
         {
         }

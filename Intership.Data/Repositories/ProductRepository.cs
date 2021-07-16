@@ -13,7 +13,7 @@ namespace Intership.Data.Repositories
     /// </summary>
     public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
-        public ProductRepository(MyDbContext context)
+        public ProductRepository(MyDbContextIdentity context)
             : base(context)
         {
         }

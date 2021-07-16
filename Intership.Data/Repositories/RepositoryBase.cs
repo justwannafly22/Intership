@@ -1,6 +1,4 @@
 ﻿using Intership.Data.Abstracts;
-using Intership.Data.Entities;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +9,9 @@ namespace Intership.Data.Repositories
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        protected MyDbContext RepositoryContext;
+        protected MyDbContextIdentity RepositoryContext;
 
-        public RepositoryBase(MyDbContext repositoryContext)
+        public RepositoryBase(MyDbContextIdentity repositoryContext)
         {
             RepositoryContext = repositoryContext;
         }
