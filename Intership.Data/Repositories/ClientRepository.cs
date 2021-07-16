@@ -35,7 +35,7 @@ namespace Intership.Data.Repositories
                 AllowEmailNotification = model.AllowEmailNotification
             };
 
-            await CreateAsync(client);
+            await CreateAsync(client).ConfigureAwait(false);
 
             return client;
         }
@@ -48,9 +48,9 @@ namespace Intership.Data.Repositories
         public async Task DeleteAsync(Guid id)
         {
             var client = await FindByCondition(c => c.Id.Equals(id))
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync().ConfigureAwait(false);
 
-            await DeleteAsync(client);
+            await DeleteAsync(client).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Client> GetAsync(Guid id) =>
             await FindByCondition(c => c.Id.Equals(id))
-            .SingleOrDefaultAsync();
+            .SingleOrDefaultAsync().ConfigureAwait(false);
 
         /// <summary>
         /// Returns all clients
@@ -70,7 +70,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<List<Client>> GetAllAsync() =>
             await FindAll()
-            .ToListAsync();
+            .ToListAsync().ConfigureAwait(false);
 
         /// <summary>
         /// Returns a client
@@ -80,8 +80,8 @@ namespace Intership.Data.Repositories
         public async Task<Client> GetWithRepairsAsync(Guid id) =>
             await FindByCondition(c => c.Id.Equals(id))
             .Include(c => c.Repairs)
-            .SingleOrDefaultAsync();
-        
+            .SingleOrDefaultAsync().ConfigureAwait(false);
+
         /// <summary>
         /// Update a client
         /// </summary>
@@ -91,7 +91,7 @@ namespace Intership.Data.Repositories
         public async Task<Guid> UpdateAsync(Guid id, ClientParameter model)
         {
             var client = await FindByCondition(c => c.Id.Equals(id))
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync().ConfigureAwait(false);
 
             client.Name = model.Name;
             client.Surname = model.Surname;
@@ -100,7 +100,7 @@ namespace Intership.Data.Repositories
             client.Email = model.Email;
             client.AllowEmailNotification = model.AllowEmailNotification;
 
-            await UpdateAsync(client);
+            await UpdateAsync(client).ConfigureAwait(false);
 
             return client.Id;
         }
