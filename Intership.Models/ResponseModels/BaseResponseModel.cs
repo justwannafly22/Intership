@@ -11,8 +11,8 @@ namespace Intership.Models.ResponseModels
         public BaseResponseModel() { }
         public BaseResponseModel(string message, HttpStatusCode code)
         {
-            StatusCode = code;
             Message = message;
+            StatusCode = code;
         }
 
         public override string ToString() => JsonConvert.SerializeObject(this);
