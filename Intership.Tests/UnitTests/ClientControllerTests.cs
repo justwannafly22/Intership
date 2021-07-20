@@ -59,6 +59,25 @@ namespace Intership.Tests.Tests
         }
 
         [Fact]
+        public async Task Create_NullModel_ShouldThrowNullArgumentException()
+        {
+            var fakeService = new ClientFakeService();
+            fakeService.Mock.Setup(s => s.CreateAsync(It.IsAny<AddClientModel>()))
+                .ThrowsAsync(new ArgumentNullException(nameof(AddClientModel)));
+
+            var controller = new ClientController(fakeService.Service);
+
+            try
+            {
+                var response = await controller.Create(null).ConfigureAwait(false);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.Equal(nameof(AddClientModel), ex.ParamName);
+            }
+        }
+
+        [Fact]
         public async Task Update_ValidModel_ShouldReturnOK()
         {
             var clientId = Guid.NewGuid();
@@ -87,9 +106,9 @@ namespace Intership.Tests.Tests
             Assert.Equal("Get", redirectToActionResult.ActionName);
             Assert.Equal(clientId, redirectToActionResult.RouteValues["id"]);
         }
-
+        
         [Fact]
-        public async Task GetAll_ShouldReturnOk_WithData()
+        public async Task GetAll_WithData_ShouldReturnOk()
         {
             var clientId = Guid.NewGuid();
 
@@ -127,9 +146,9 @@ namespace Intership.Tests.Tests
             Assert.Equal("+375 (29) 123-45-67", clients[0].ContactNumber);
             Assert.False(clients[0].AllowEmailNotification);
         }
-
+        
         [Fact]
-        public async Task GetAll_ShouldReturnOk_NoData()
+        public async Task GetAll_NoData_ShouldReturnOk()
         {
             var clientId = Guid.NewGuid();
 

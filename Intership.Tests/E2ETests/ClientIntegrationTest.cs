@@ -56,11 +56,13 @@ namespace Intership.Tests.E2ETests
             
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
 
+            response.Should().NotBeNull();
+
             var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var apiEntity = JsonConvert.DeserializeObject<BaseResponseModel>(responseContent);
 
             apiEntity.Should().NotBeNull();
-            apiEntity.Message.Should().NotBeNull();
+            apiEntity.Message.Should().Be($"Client with id: {clientId} doesn`t exist in the database.");
         }
 
         [Fact]
@@ -99,6 +101,32 @@ namespace Intership.Tests.E2ETests
 
             response.Should().NotBeNull();
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var baseResponseModel = JsonConvert.DeserializeObject<BaseResponseModel>(responseContent);
+
+            baseResponseModel.Message.Should().Contain("Age is required and it can`t be lower than 0.");
+        }
+
+        [Fact]
+        public async Task CreateClientAndThrowArgumentNullException()
+        {
+            var uri = new Uri($"api/v1/clients", UriKind.Relative);
+
+            var body = JsonConvert.SerializeObject(null);
+
+            using StringContent stringContent = new StringContent(body);
+            stringContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            using var response = await Client.PostAsync(uri, stringContent).ConfigureAwait(false);
+
+            response.Should().NotBeNull();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var baseResponseModel = JsonConvert.DeserializeObject<BaseResponseModel>(responseContent);
+
+            baseResponseModel.Message.Should().Contain("A non-empty request body is required");
         }
 
         [Fact]
