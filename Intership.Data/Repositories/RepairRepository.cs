@@ -30,7 +30,7 @@ namespace Intership.Data.Repositories
                 Name = model.Name
             };
 
-            await CreateAsync(repair);
+            await CreateAsync(repair).ConfigureAwait(false);
 
             return repair;
         }
@@ -43,9 +43,9 @@ namespace Intership.Data.Repositories
         public async Task DeleteAsync(Guid id)
         {
             var repair = await FindByCondition(r => r.Id.Equals(id))
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync().ConfigureAwait(false);
 
-            await DeleteAsync(repair);
+            await DeleteAsync(repair).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Intership.Data.Repositories
             await FindByCondition(r => r.Id.Equals(id))
             .Include(r => r.RepairInfo)
                 .ThenInclude(r => r.Status)
-            .SingleOrDefaultAsync();
-        
+            .SingleOrDefaultAsync().ConfigureAwait(false);
+
         /// <summary>
         /// Returns all repairs
         /// </summary>
@@ -69,8 +69,8 @@ namespace Intership.Data.Repositories
             await FindAll()
             .Include(r => r.RepairInfo)
                 .ThenInclude(r => r.Status)
-            .ToListAsync();
-        
+            .ToListAsync().ConfigureAwait(false);
+
         /// <summary>
         /// Returns a repair
         /// </summary>
@@ -80,8 +80,8 @@ namespace Intership.Data.Repositories
         public async Task<Repair> GetWithReplacedParts(Guid repairId) =>
             await FindByCondition(r => r.Id.Equals(repairId))
             .Include(r => r.ReplacedParts)
-            .SingleOrDefaultAsync();
-        
+            .SingleOrDefaultAsync().ConfigureAwait(false);
+
         /// <summary>
         /// Update a repair
         /// </summary>
@@ -91,11 +91,11 @@ namespace Intership.Data.Repositories
         public async Task<Guid> UpdateAsync(Guid id, RepairParameter model)
         {
             var repair = await FindByCondition(r => r.Id.Equals(id))
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync().ConfigureAwait(false);
 
             repair.Name = model.Name;
 
-            await UpdateAsync(repair);
+            await UpdateAsync(repair).ConfigureAwait(false);
 
             return repair.Id;
         }

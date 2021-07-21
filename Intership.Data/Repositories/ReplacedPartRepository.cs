@@ -36,7 +36,7 @@ namespace Intership.Data.Repositories
                 ProductId = model.ProductId
             };
             
-            await CreateAsync(replacedPart);
+            await CreateAsync(replacedPart).ConfigureAwait(false);
 
             return replacedPart;
         }
@@ -56,7 +56,7 @@ namespace Intership.Data.Repositories
                 AdvancedInfo = r.AdvancedInfo
             });
 
-            await CreateRangeAsync(replacedParts);
+            await CreateRangeAsync(replacedParts).ConfigureAwait(false);
 
             return replacedParts.ToList();
         }
@@ -70,14 +70,14 @@ namespace Intership.Data.Repositories
         public async Task<Guid> UpdateAsync(Guid id, ReplacedPartParameter model)
         {
             var replacedPart = await FindByCondition(r => r.Id.Equals(id))
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync().ConfigureAwait(false);
 
             replacedPart.Name = model.Name;
             replacedPart.Price = model.Price;
             replacedPart.Count = model.Count;
             replacedPart.AdvancedInfo = model.AdvancedInfo;
 
-            await UpdateAsync(replacedPart);
+            await UpdateAsync(replacedPart).ConfigureAwait(false);
 
             return replacedPart.Id;
         }
@@ -89,8 +89,8 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<List<ReplacedPart>> GetAllAsync() =>
             await FindAll()
-            .ToListAsync();
-        
+            .ToListAsync().ConfigureAwait(false);
+
         /// <summary>
         /// Returns a replaced part
         /// </summary>
@@ -99,14 +99,14 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<ReplacedPart> GetAsync(Guid id) =>
             await FindByCondition(r => r.Id.Equals(id))
-            .SingleOrDefaultAsync();
-        
+            .SingleOrDefaultAsync().ConfigureAwait(false);
+
         /// <summary>
         /// Delete a replaced part
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task DeleteAsync(Guid id) =>
-            await DeleteAsync(await FindByCondition(r => r.Id.Equals(id)).SingleOrDefaultAsync());
+            await DeleteAsync(await FindByCondition(r => r.Id.Equals(id)).SingleOrDefaultAsync()).ConfigureAwait(false);
     }
 }

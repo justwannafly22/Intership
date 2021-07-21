@@ -172,43 +172,11 @@ namespace Intership.Tests.Tests
         }
         
         [Fact]
-        public async Task Get_InvalidId_ShouldReturnNotFound()
-        {
-            var clientId = Guid.NewGuid();
-
-            var fakeService = new ClientFakeService();
-            fakeService.Mock.Setup(s => s.IsExist(It.IsAny<Guid>()))
-                .ReturnsAsync(false);
-            fakeService.Mock.Setup(s => s.GetAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(new ClientResponseModel()
-                {
-                    Id = clientId,
-                    FullName = "Vutin por",
-                    Age = 23,
-                    ContactNumber = "+375 (29) 123-45-67",
-                    Email = "kekov@mail.ru",
-                    AllowEmailNotification = false
-                });
-
-            var controller = new ClientController(fakeService.Service);
-
-            var response = await controller.Get(clientId);
-
-            Assert.NotNull(response);
-            var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(response);
-
-            Assert.NotNull(notFoundObjectResult);
-            Assert.Equal((int)HttpStatusCode.NotFound, notFoundObjectResult.StatusCode);
-        }
-        
-        [Fact]
         public async Task Get_ValidId_ShouldReturnOk()
         {
             var clientId = Guid.NewGuid();
 
             var fakeService = new ClientFakeService();
-            fakeService.Mock.Setup(s => s.IsExist(It.IsAny<Guid>()))
-                .ReturnsAsync(true);
             fakeService.Mock.Setup(s => s.GetAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(new ClientResponseModel()
                 {

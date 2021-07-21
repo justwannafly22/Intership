@@ -33,7 +33,7 @@ namespace Intership.Data.Repositories
                 StatusId = (Guid)model.StatusId
             };
 
-            await CreateAsync(repairInfo);
+            await CreateAsync(repairInfo).ConfigureAwait(false);
 
             return repairInfo;
         }
@@ -46,9 +46,9 @@ namespace Intership.Data.Repositories
         public async Task DeleteAsync(Guid id)
         {
             var repairInfo = await FindByCondition(r => r.Id.Equals(id))
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync().ConfigureAwait(false);
 
-            await DeleteAsync(repairInfo);
+            await DeleteAsync(repairInfo).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Intership.Data.Repositories
         public async Task<RepairInfo> GetAsync(Guid id) =>
             await FindByCondition(r => r.Id.Equals(id))
             .Include(r => r.Status)
-            .SingleOrDefaultAsync();
-        
+            .SingleOrDefaultAsync().ConfigureAwait(false);
+
         /// <summary>
         /// Update a repair info
         /// </summary>
@@ -71,13 +71,13 @@ namespace Intership.Data.Repositories
         public async Task<Guid> UpdateAsync(Guid id, RepairInfoParameter model)
         {
             var repairInfo = await FindByCondition(r => r.Id.Equals(id))
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync().ConfigureAwait(false);
 
             repairInfo.Date = model.Date;
             repairInfo.AdvancedInfo = model.AdvancedInfo;
             repairInfo.StatusId = model.StatusId;
 
-            await UpdateAsync(repairInfo);
+            await UpdateAsync(repairInfo).ConfigureAwait(false);
 
             return repairInfo.Id;
         }

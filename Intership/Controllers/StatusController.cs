@@ -33,7 +33,7 @@ namespace Intership.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var statuses = await _statusService.GetAllAsync();
+            var statuses = await _statusService.GetAllAsync().ConfigureAwait(false);
 
             return Ok(statuses);
         }
@@ -53,7 +53,7 @@ namespace Intership.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var status = await _statusService.GetAsync(id);
+            var status = await _statusService.GetAsync(id).ConfigureAwait(false);
 
             if (status == null)
             {
@@ -81,7 +81,7 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var addedStatus = await _statusService.CreateAsync(model);
+            var addedStatus = await _statusService.CreateAsync(model).ConfigureAwait(false);
 
             return CreatedAtRoute(nameof(Get), new { id = addedStatus.Id }, addedStatus);
         }
@@ -99,12 +99,12 @@ namespace Intership.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            if (!await _statusService.IsExist(id))
+            if (!await _statusService.IsExist(id).ConfigureAwait(false))
             {
                 return NotFound(new BaseResponseModel($"Status with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
-            await _statusService.DeleteAsync(id);
+            await _statusService.DeleteAsync(id).ConfigureAwait(false);
 
             return NoContent();
         }
@@ -125,7 +125,7 @@ namespace Intership.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateStatusModel model)
         {
-            if (!await _statusService.IsExist(id))
+            if (!await _statusService.IsExist(id).ConfigureAwait(false))
             {
                 return NotFound(new BaseResponseModel($"Status with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
@@ -135,7 +135,7 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var updatedStatusId = await _statusService.UpdateAsync(id, model);
+            var updatedStatusId = await _statusService.UpdateAsync(id, model).ConfigureAwait(false);
 
             return RedirectToAction(nameof(Get), new { id = updatedStatusId });
         }

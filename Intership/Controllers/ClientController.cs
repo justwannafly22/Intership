@@ -33,7 +33,7 @@ namespace Intership.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var clients = await _clientService.GetAllAsync();
+            var clients = await _clientService.GetAllAsync().ConfigureAwait(false);
 
             return Ok(clients);
         }
@@ -53,12 +53,12 @@ namespace Intership.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            if (!await _clientService.IsExist(id)) 
+            var client = await _clientService.GetAsync(id).ConfigureAwait(false);
+
+            if (client == null) 
             {
                 return NotFound(new BaseResponseModel($"Client with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
-
-            var client = await _clientService.GetAsync(id);
 
             return Ok(client);
         }
@@ -81,7 +81,7 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var addedClient = await _clientService.CreateAsync(model);
+            var addedClient = await _clientService.CreateAsync(model).ConfigureAwait(false);
 
             return CreatedAtAction(nameof(Get), new { id = addedClient.Id }, addedClient);
         }
@@ -104,7 +104,7 @@ namespace Intership.Controllers
                 return NotFound(new BaseResponseModel($"Client with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
-            await _clientService.DeleteAsync(id);
+            await _clientService.DeleteAsync(id).ConfigureAwait(false);
 
             return NoContent();
         }
@@ -135,7 +135,7 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var updatedClientId = await _clientService.UpdateAsync(id, model);
+            var updatedClientId = await _clientService.UpdateAsync(id, model).ConfigureAwait(false);
 
             return RedirectToAction(nameof(Get), new { id = updatedClientId});
         }
@@ -158,7 +158,7 @@ namespace Intership.Controllers
                 return NotFound(new BaseResponseModel($"Client with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
-            var repairs = await _clientService.GetRepairs(id);
+            var repairs = await _clientService.GetRepairsAsync(id).ConfigureAwait(false);
 
             return Ok(repairs);
         }
