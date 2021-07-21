@@ -32,7 +32,7 @@ namespace Intership.Data.Repositories
                 Price = model.Price
             };
 
-            await CreateAsync(product);
+            await CreateAsync(product).ConfigureAwait(false);
 
             return product;
         }
@@ -45,9 +45,9 @@ namespace Intership.Data.Repositories
         public async Task DeleteAsync(Guid id)
         {
             var product = await FindByCondition(p => p.Id.Equals(id))
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync().ConfigureAwait(false);
 
-            await DeleteAsync(product);
+            await DeleteAsync(product).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<Product> GetAsync(Guid id) =>
             await FindByCondition(p => p.Id.Equals(id))
-            .SingleOrDefaultAsync();
+            .SingleOrDefaultAsync().ConfigureAwait(false);
 
         /// <summary>
         /// Returns a products
@@ -67,7 +67,7 @@ namespace Intership.Data.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Product>> GetAllAsync() =>
             await FindAll()
-            .ToListAsync();
+            .ToListAsync().ConfigureAwait(false);
 
         /// <summary>
         /// Update a product
@@ -78,13 +78,13 @@ namespace Intership.Data.Repositories
         public async Task<Guid> UpdateAsync(Guid id, ProductParameter model)
         {
             var product = await FindByCondition(p => p.Id.Equals(id)).
-                SingleOrDefaultAsync();
+                SingleOrDefaultAsync().ConfigureAwait(false);
 
             product.Name = model.Name;
             product.Price = model.Price;
             product.Description = model.Description;
 
-            await UpdateAsync(product);
+            await UpdateAsync(product).ConfigureAwait(false);
 
             return product.Id;
         }
@@ -101,6 +101,6 @@ namespace Intership.Data.Repositories
                 .ThenInclude(r => r.Repair)
                     .ThenInclude(r => r.RepairInfo)
                         .ThenInclude(r => r.Status)
-            .SingleOrDefaultAsync();
+            .SingleOrDefaultAsync().ConfigureAwait(false);
     }
 }

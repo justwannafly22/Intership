@@ -80,7 +80,7 @@ namespace Intership.Services
         /// </summary>
         /// <param name="productId"></param>
         /// <returns></returns>
-        public async Task<List<RepairResponseModel>> GetRepairsByProduct(Guid productId)
+        public async Task<List<RepairResponseModel>> GetRepairsByProductAsync(Guid productId)
         {
             var product = await _productRepository.GetWithRepairsAsync(productId);
 
@@ -93,7 +93,7 @@ namespace Intership.Services
         /// <param name="productId"></param>
         /// <param name="repairId"></param>
         /// <returns></returns>
-        public async Task<RepairResponseModel> GetRepairByProduct(Guid productId, Guid repairId)
+        public async Task<RepairResponseModel> GetRepairByProductAsync(Guid productId, Guid repairId)
         {
             var product = await _productRepository.GetWithRepairsAsync(productId);
 

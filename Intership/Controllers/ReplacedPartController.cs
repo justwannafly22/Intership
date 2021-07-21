@@ -33,7 +33,7 @@ namespace Intership.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var replacedParts = await _replacedPartService.GetAllAsync();
+            var replacedParts = await _replacedPartService.GetAllAsync().ConfigureAwait(false);
 
             return Ok(replacedParts);
         }
@@ -53,12 +53,12 @@ namespace Intership.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            if (!await _replacedPartService.IsExist(id))
+            var replacedPart = await _replacedPartService.GetAsync(id).ConfigureAwait(false);
+
+            if (replacedPart == null)
             {
                 return NotFound(new BaseResponseModel($"ReplacedPart with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
-
-            var replacedPart = await _replacedPartService.GetAsync(id);
 
             return Ok(replacedPart);
         }
@@ -81,7 +81,7 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var addedReplacedParts = await _replacedPartService.CreateManyAsync(models);
+            var addedReplacedParts = await _replacedPartService.CreateManyAsync(models).ConfigureAwait(false);
 
             return CreatedAtAction(nameof(Get), new { ids = addedReplacedParts.Select(a => a.Id) }, addedReplacedParts);
         }
@@ -102,7 +102,7 @@ namespace Intership.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateReplacedPartModel model)
         {
-            if (!await _replacedPartService.IsExist(id))
+            if (!await _replacedPartService.IsExist(id).ConfigureAwait(false))
             {
                 return NotFound(new BaseResponseModel($"ReplacedPart with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
@@ -112,7 +112,7 @@ namespace Intership.Controllers
                 throw new ArgumentException(string.Join(", ", ModelState.Values.SelectMany(m => m.Errors).Select(e => e.ErrorMessage)));
             }
 
-            var updatedReplacedPartId = await _replacedPartService.UpdateAsync(id, model);
+            var updatedReplacedPartId = await _replacedPartService.UpdateAsync(id, model).ConfigureAwait(false);
 
             return RedirectToAction(nameof(Get), new { id = updatedReplacedPartId });
         }
@@ -130,12 +130,12 @@ namespace Intership.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            if (!await _replacedPartService.IsExist(id))
+            if (!await _replacedPartService.IsExist(id).ConfigureAwait(false))
             {
                 return NotFound(new BaseResponseModel($"ReplacedPart with id: {id} doesn`t exist in the database.", HttpStatusCode.NotFound));
             }
 
-            await _replacedPartService.DeleteAsync(id);
+            await _replacedPartService.DeleteAsync(id).ConfigureAwait(false);
 
             return NoContent();
         }

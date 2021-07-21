@@ -12,8 +12,8 @@ namespace Intership.Services.Abstracts
     /// </summary>
     public interface IProductService
     {
-        Task<List<RepairResponseModel>> GetRepairsByProduct(Guid productId);
-        Task<RepairResponseModel> GetRepairByProduct(Guid productId, Guid repairId);
+        Task<List<RepairResponseModel>> GetRepairsByProductAsync(Guid productId);
+        Task<RepairResponseModel> GetRepairByProductAsync(Guid productId, Guid repairId);
         Task<List<ProductResponseModel>> GetAllAsync();
         Task<ProductResponseModel> GetAsync(Guid id);
         Task<ProductResponseModel> CreateAsync(AddProductModel model);

@@ -44,7 +44,7 @@ namespace Intership.Services
         /// <summary>
         /// Delete a client
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
@@ -77,6 +77,7 @@ namespace Intership.Services
         /// <summary>
         /// Client update
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="model"></param>
         /// <returns></returns>
         public async Task<Guid> UpdateAsync(Guid id, UpdateClientModel model)
@@ -94,7 +95,7 @@ namespace Intership.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<List<RepairResponseModel>> GetRepairs(Guid id)
+        public async Task<List<RepairResponseModel>> GetRepairsAsync(Guid id)
         {
             var client = await _clientRepository.GetWithRepairsAsync(id);
 
